@@ -1,4 +1,13 @@
 -- v2 upgrade for the live database: invite codes.
+-- Also fixes ct_hash: pgcrypto lives in the extensions schema on Supabase,
+-- so digest() must be schema-qualified (functions run with search_path=public).
+
+create or replace function public.ct_hash(p_text text)
+returns text language sql immutable as $$
+  select case when p_text is null or p_text = '' then ''
+              else encode(extensions.digest(p_text, 'sha256'), 'base64') end
+$$;
+
 -- Run this whole file once in the Supabase SQL Editor (safe to re-run).
 -- Adds a 10-char joinCode to newly created trees + find_tree_by_code() lookup.
 

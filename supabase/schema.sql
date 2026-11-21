@@ -19,7 +19,7 @@ alter table public.trees enable row level security;
 create or replace function public.ct_hash(p_text text)
 returns text language sql immutable as $$
   select case when p_text is null or p_text = '' then ''
-              else encode(digest(p_text, 'sha256'), 'base64') end
+              else encode(extensions.digest(p_text, 'sha256'), 'base64') end
 $$;
 
 create or replace function public.ct_rand(p_len int, p_chars text)
