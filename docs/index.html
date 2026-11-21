@@ -335,8 +335,8 @@ function $(id){return document.getElementById(id)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function show(id){['view-loading','view-blocked','view-passcode','view-create','view-tree'].forEach(v=>$(v).classList.toggle('hidden',v!==id)); if(id!=='view-tree') $('bottom-bar').classList.add('hidden');}
 function errBox(el,msg){el.innerHTML = msg?'<div class="err" style="margin-top:12px">'+esc(msg)+'</div>':''}
-const SUPABASE_URL = "__SUPABASE_URL__";
-const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+const SUPABASE_URL = "https://ycwstwrlyhswhrepbpps.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inljd3N0d3JseWhzd2hyZXBicHBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNjMxNTcsImV4cCI6MjExMDgzOTE1N30.Lo-r4j860oVLLhTlCyeXvQTZKk69hgF5k7P0VBSwy4U";
 async function run(fn,args){
   const MAP = {
     createTree: ['create_tree', a => ({ p_data: a[0] })],
