@@ -15,7 +15,8 @@ function doGet(e) {
   return t.evaluate()
     .setTitle('グループ限定 3D＆2Dクイズ＆性格診断クリスマスツリー')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
-    .addMetaTag('robots', 'noindex, nofollow')
+    // NOTE: HtmlService only allows the viewport meta tag here. The robots
+    // noindex/nofollow tag lives in Index.html's <head> instead.
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
