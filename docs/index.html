@@ -64,7 +64,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 .rank b{font-size:15px}.rank.no{margin-left:auto;font-size:12px;color:var(--muted);font-weight:800}
 .modal{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6)}
 .modal.on{display:flex}
-.modal.sheet{background:#fff;color:var(--ink);width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;padding:20px}
+.modal .sheet{background:#fff;color:var(--ink);width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;padding:20px}
 .sealed{background:#fff3f5;border:2px dashed #ffb3c1;border-radius:14px;padding:14px;text-align:center}
 .unlockedMsg{background:#fffbe6;border:2px solid #ffe08a;border-radius:14px;padding:14px;line-height:1.7;white-space:pre-wrap}
 .err{background:#ffe9ec;color:#8f1220;border-radius:14px;padding:13px;font-weight:700;font-size:14px;line-height:1.6}
@@ -386,11 +386,11 @@ function showCreate(){ show('view-create'); if(!$('q-list').innerHTML) renderQue
 async function joinByCode(){ const code=($('join-code').value||'').trim().toUpperCase(); const err=$('code-err'); err.textContent=''; if(!code){ err.textContent='コードを入力してください'; return; } try{ const r=await run('findTreeByCode',[code]); if(!r.ok){ err.textContent=r.error||'コードが見つかりませんでした'; return; } location.href=location.pathname+'?tree='+r.id+'&invite='+r.inviteToken; }catch(e){ err.textContent='通信エラー：'+e.message; } }
 async function createTree(){
 const payload={title:$('c-title').value.trim(),ownerName:$('c-owner').value.trim(),passcode:$('c-pass').value.trim(),questions:collectQuestions()};
-if(r.joinCode) lineMsg+='\n招待コード：'+r.joinCode+'（リンクが開けない人はトップページで入力）';
 $('create-result').innerHTML='<p class="small">作成中…</p>';
 try{ const r=await run('createTree',[payload]); if(!r.ok){errBox($('create-result'),r.error);return;}
 localStorage.setItem('ct_host_'+r.id, r.hostKey); try{ if(r.joinCode) localStorage.setItem('ct_code_'+r.id, r.joinCode); }catch(e){}
 let lineMsg=payload.title+'\nホスト：'+(payload.ownerName||'ホスト')+'\nクイズに答えてツリーを飾ってね！シークレットメッセージは12/25に公開\n▼参加はこちら（グループ限定）\n'+(location.origin+r.url)+(payload.passcode?'\n合言葉：'+payload.passcode:'');
+if(r.joinCode) lineMsg+='\n招待コード：'+r.joinCode+'（リンクが開けない人はトップページで入力）';
 $('create-result').innerHTML='<div class="okbox" style="margin-top:12px"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#22c55e"/><path d="M8 12.5l2.6 2.6L16 9.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg> ツリーを作成しました！参加者はまだ0人です。<br>下のボタンでLINE招待メッセージをコピーして、グループに送ってください。</div>'+(r.joinCode?'<div class="okbox" style="margin-top:10px;text-align:center">招待コード<br><b style="font-size:22px;letter-spacing:3px">'+r.joinCode+'</b><br><span class="small">リンクが開けない人は、トップページでこのコードを入力すれば参加できます</span></div>':'')+'<button class="btn btn-line" onclick="copyText(`'+btoa(unescape(encodeURIComponent(lineMsg)))+'`,true)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"/></svg> 招待リンクをコピー（LINE用）</button><button class="btn btn-gold" onclick="location.href=\''+(location.origin+r.url).replace(/'/g,'')+'\'">自分のツリーを開く →</button>';
 }catch(e){ errBox($('create-result'),e.message||String(e));}
 }
