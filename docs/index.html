@@ -160,13 +160,13 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
         <!-- Deco-My-Tree quality illustrated scene -->
         <svg viewBox="0 0 360 480" style="position:absolute;inset:0;width:100%;height:100%" aria-label="イラストのクリスマスツリー" preserveAspectRatio="xMidYMid slice">
           <defs>
-            <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1a3f"/><stop offset="55%" stop-color="#16305e"/><stop offset="100%" stop-color="#274b7a"/></linearGradient>
+            <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f9e9cb"/><stop offset="55%" stop-color="#f4dcb2"/><stop offset="100%" stop-color="#eecfa1"/></linearGradient>
             <radialGradient id="moonG" cx="50%" cy="50%"><stop offset="0%" stop-color="#fffbe8"/><stop offset="70%" stop-color="#fdf3c4"/><stop offset="100%" stop-color="#f7e394"/></radialGradient>
             <radialGradient id="haloG" cx="50%" cy="50%"><stop offset="0%" stop-color="#fff7cc" stop-opacity=".55"/><stop offset="100%" stop-color="#fff7cc" stop-opacity="0"/></radialGradient>
-            <linearGradient id="tier1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ea36b"/><stop offset="100%" stop-color="#177a4b"/></linearGradient>
-            <linearGradient id="tier2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#27a562"/><stop offset="100%" stop-color="#126e42"/></linearGradient>
-            <linearGradient id="tier3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22995c"/><stop offset="100%" stop-color="#0f633a"/></linearGradient>
-            <linearGradient id="tier4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d8f55"/><stop offset="100%" stop-color="#0b5731"/></linearGradient>
+            <linearGradient id="tier1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#37bc7d"/><stop offset="100%" stop-color="#1d9157"/></linearGradient>
+            <linearGradient id="tier2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#31b272"/><stop offset="100%" stop-color="#198550"/></linearGradient>
+            <linearGradient id="tier3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2aa766"/><stop offset="100%" stop-color="#147a47"/></linearGradient>
+            <linearGradient id="tier4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#239e5f"/><stop offset="100%" stop-color="#106e3e"/></linearGradient>
             <linearGradient id="snowG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#c9def8"/></linearGradient>
             <linearGradient id="trunkG" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6b4423"/><stop offset="50%" stop-color="#8b5a2b"/><stop offset="100%" stop-color="#5d3a17"/></linearGradient>
             <radialGradient id="winG" cx="50%" cy="50%"><stop offset="0%" stop-color="#ffeeb0"/><stop offset="100%" stop-color="#ffb63d"/></radialGradient>
@@ -174,39 +174,45 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
-          <rect width="360" height="480" fill="url(#skyG)"/><g><path class="aurora1" d="M-20 96 C60 42 120 112 200 68 C280 24 330 80 390 46 L390 -12 L-20 -12 Z" fill="url(#auroraG)"/><path class="aurora2" d="M-20 126 C70 78 150 134 230 94 C300 60 340 102 390 76 L390 -12 L-20 -12 Z" fill="url(#auroraG2)"/></g>
-          <!-- Moon + halo + stars -->
-          <circle cx="306" cy="58" r="44" fill="url(#haloG)"/>
-          <circle cx="306" cy="58" r="21" fill="url(#moonG)"/>
-          <circle cx="298" cy="52" r="4" fill="#eed98a" opacity=".7"/><circle cx="313" cy="66" r="3" fill="#eed98a" opacity=".6"/>
-          <g fill="#fff">
-            <circle class="tw" cx="28" cy="42" r="2"/><circle class="tw2" cx="70" cy="88" r="1.6"/><circle class="tw3" cx="118" cy="34" r="1.8"/><circle class="tw2" cx="160" cy="70" r="1.4"/><circle class="tw" cx="205" cy="30" r="2"/><circle class="tw3" cx="248" cy="92" r="1.5"/><circle class="tw" cx="336" cy="120" r="1.7"/><circle class="tw2" cx="44" cy="140" r="1.4"/><circle class="tw3" cx="92" cy="168" r="1.3"/><circle class="tw" cx="150" cy="120" r="1.3"/><circle class="tw2" cx="330" cy="180" r="1.4"/><circle class="tw3" cx="262" cy="140" r="1.2"/>
-            <path class="tw2" d="M52 108 l2.2 5.4 5.4 2.2 -5.4 2.2 -2.2 5.4 -2.2 -5.4 -5.4 -2.2 5.4 -2.2z"/>
-            <path class="tw" d="M228 52 l1.8 4.4 4.4 1.8 -4.4 1.8 -1.8 4.4 -1.8 -4.4 -4.4 -1.8 4.4 -1.8z"/>
-          </g>
-          <g class="shoot"><line x1="36" y1="66" x2="82" y2="44" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/><circle cx="84" cy="43" r="2.4" fill="#fff"/></g>
-          <!-- Distant pines -->
-          <g fill="#0d2c4e" opacity=".85">
-            <polygon points="18,330 44,258 70,330"/><polygon points="30,300 44,272 58,300" fill="#123a66"/>
-            <polygon points="292,322 322,238 352,322"/><polygon points="306,288 322,256 338,288" fill="#123a66"/>
-            <polygon points="-8,318 14,262 36,318"/>
-          </g>
-          <!-- Back snow hill -->
-          <path d="M0 348 Q90 322 190 344 T360 338 V480 H0 Z" fill="#dcecfb"/>
-          <!-- Cabin -->
+          <rect width="360" height="480" fill="url(#skyG)"/>
+          <!-- Cozy room: window with night sky (left) -->
           <g>
-            <circle class="smoke" cx="76" cy="306" r="6" fill="#e8eef7"/><circle class="smoke2" cx="80" cy="300" r="8" fill="#e8eef7"/><circle class="smoke3" cx="74" cy="296" r="5" fill="#e8eef7"/>
-            <rect x="70" y="312" width="12" height="26" fill="#7c4a26"/><rect x="67" y="308" width="18" height="7" rx="2" fill="#fff"/>
-            <polygon points="14,356 62,318 110,356" fill="#5d3a17"/>
-            <polygon points="14,356 62,318 110,356 102,356 62,326 22,356" fill="#ffffff"/>
-            <rect x="24" y="354" width="76" height="58" rx="5" fill="#96622e"/>
-            <path d="M24 368 H100 M24 382 H100 M24 396 H100" stroke="#7a4c20" stroke-width="3"/>
-            <rect class="flick" x="30" y="362" width="26" height="26" rx="3" fill="url(#winG)" stroke="#5d3a17" stroke-width="3"/>
-            <path d="M43 362 V388 M30 375 H56" stroke="#5d3a17" stroke-width="2.4"/>
-            <rect x="66" y="360" width="26" height="52" rx="3" fill="#6e4423" stroke="#54330f" stroke-width="2.5"/>
-            <circle cx="87" cy="388" r="2.6" fill="#ffd66e"/>
-            <circle cx="79" cy="368" r="7" fill="none" stroke="#1f9d63" stroke-width="3.4"/><circle cx="79" cy="362.5" r="2.6" fill="#e63946"/><circle cx="73.5" cy="371" r="2.2" fill="#e63946"/><circle cx="84.5" cy="371" r="2.2" fill="#ffd66e"/>
-            <circle cx="20" cy="352" r="4" fill="#ffd66e" filter="url(#softGlow)"/>
+            <rect x="14" y="30" width="122" height="182" rx="12" fill="#5d3a17"/>
+            <rect x="21" y="37" width="108" height="168" rx="8" fill="#16305e"/>
+            <path d="M21 92 C48 62 78 100 129 66 L129 37 L21 37 Z" fill="url(#auroraG)" opacity=".65"/>
+            <circle cx="104" cy="66" r="12" fill="url(#moonG)"/><circle cx="99" cy="62" r="2.4" fill="#eed98a" opacity=".7"/>
+            <g fill="#fff"><circle class="tw" cx="36" cy="56" r="1.7"/><circle class="tw2" cx="58" cy="88" r="1.3"/><circle class="tw3" cx="44" cy="128" r="1.5"/><circle class="tw" cx="112" cy="110" r="1.4"/><circle class="tw2" cx="88" cy="150" r="1.3"/><circle class="tw3" cx="34" cy="176" r="1.4"/><circle cx="66" cy="46" r="1.1"/><circle cx="96" cy="188" r="1.2"/></g>
+            <g fill="#fff" opacity=".8"><circle cx="34" cy="150" r="1.6"/><circle cx="52" cy="112" r="1.3"/><circle cx="76" cy="168" r="1.6"/><circle cx="98" cy="132" r="1.3"/><circle cx="116" cy="182" r="1.5"/><circle cx="118" cy="88" r="1.2"/></g>
+            <path d="M75 37 V205 M21 121 H129" stroke="#5d3a17" stroke-width="5"/>
+            <rect x="8" y="208" width="134" height="9" rx="4" fill="#7a4c20"/>
+            <path d="M21 205 L34 190 L48 205 L62 190 L76 205 L90 190 L104 205 L118 190 L129 205 L129 212 L21 212 Z" fill="#fff" opacity=".9"/>
+          </g>
+          <!-- Garland swag across the top of the wall -->
+          <g>
+            <path d="M150 18 Q212 52 274 18" fill="none" stroke="#1d9157" stroke-width="5" stroke-linecap="round"/>
+            <path d="M286 14 Q322 34 352 16" fill="none" stroke="#1d9157" stroke-width="5" stroke-linecap="round"/>
+            <g><circle class="tw" cx="168" cy="30" r="3.4" fill="#e63946"/><circle class="tw2" cx="188" cy="38" r="3.4" fill="#ffd66e"/><circle class="tw3" cx="208" cy="41" r="3.4" fill="#7dd3fc"/><circle class="tw" cx="228" cy="38" r="3.4" fill="#ff8c42"/><circle class="tw2" cx="248" cy="30" r="3.4" fill="#f472b6"/><circle class="tw3" cx="304" cy="24" r="3.2" fill="#ffd66e"/><circle class="tw" cx="326" cy="27" r="3.2" fill="#e63946"/></g>
+          </g>
+          <!-- Wooden floor + rug -->
+          <rect x="0" y="398" width="360" height="10" fill="#d9b98a"/>
+          <rect x="0" y="408" width="360" height="72" fill="#a06a3c"/>
+          <path d="M0 426 H360 M0 444 H360 M0 462 H360 M60 408 V480 M150 408 V480 M246 408 V480 M316 408 V480" stroke="#8a5527" stroke-width="2" opacity=".55"/>
+          <ellipse cx="212" cy="450" rx="146" ry="25" fill="#b23a48"/>
+          <ellipse cx="212" cy="450" rx="124" ry="19" fill="none" stroke="#f6c453" stroke-width="2.4" stroke-dasharray="7 5" opacity=".85"/>
+          <!-- Fireplace -->
+          <g>
+            <rect x="294" y="316" width="62" height="96" rx="4" fill="#a34d3d"/>
+            <path d="M294 340 H356 M294 364 H356 M294 388 H356 M316 316 V340 M340 340 V364 M316 364 V388 M340 388 V412" stroke="#8a3a2d" stroke-width="2" opacity=".6"/>
+            <rect x="288" y="306" width="74" height="12" rx="3" fill="#6e4423"/>
+            <rect x="306" y="352" width="38" height="60" rx="4" fill="#180b06"/>
+            <ellipse class="flick" cx="325" cy="398" rx="13" ry="16" fill="#ff8c42"/>
+            <ellipse class="flick" cx="325" cy="402" rx="7.5" ry="10" fill="#ffd66e"/>
+            <rect x="310" y="404" width="30" height="6" rx="3" fill="#5d3a17" transform="rotate(-8 325 407)"/>
+            <g><rect x="296" y="318" width="10" height="7" fill="#fff"/><path d="M296 325 h10 v12 q0 6 -5 6 q-5 0 -5 -6 Z" fill="#e63946"/></g>
+            <g><rect x="320" y="318" width="10" height="7" fill="#fff"/><path d="M320 325 h10 v12 q0 6 -5 6 q-5 0 -5 -6 Z" fill="#1f9d63"/></g>
+            <g><rect x="344" y="318" width="10" height="7" fill="#fff"/><path d="M344 325 h10 v12 q0 6 -5 6 q-5 0 -5 -6 Z" fill="#f6c453"/></g>
+            <rect x="302" y="292" width="5" height="14" rx="2" fill="#fff"/><circle class="flick" cx="304.5" cy="289" r="3" fill="#ffd66e"/>
+            <rect x="342" y="292" width="5" height="14" rx="2" fill="#fff"/><circle class="flick" cx="344.5" cy="289" r="3" fill="#ffd66e"/>
           </g>
           <!-- Lamp post -->
           <g><rect x="122" y="356" width="4" height="52" fill="#22344f"/><circle cx="124" cy="350" r="7" fill="#ffe9a8" filter="url(#softGlow)"/><path d="M116 342 Q124 334 132 342" stroke="#22344f" stroke-width="3" fill="none"/></g>
@@ -439,7 +445,7 @@ function posFor(p,idx,total){
 function renderOrnaments(){
  const parts=state.data?state.data.participants:[]; const empty=parts.length===0;
  $('empty2d').classList.toggle('hidden',!empty); $('empty3d').classList.toggle('hidden',!empty);
- $('orns2d').innerHTML=parts.map((p,i)=>{const pos=posFor(p,i,parts.length); const strH=10+((p.no*23)%16); return '<button class="orn2" style="left:'+pos.x+'%;top:'+pos.y+'%" onclick="focusOrnament('+p.no+',true)"><span class="str" style="height:'+strH+'px"></span><span class="cap"></span><span class="bauble" style="background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),rgba(255,255,255,0) 42%),'+esc(p.color)+';color:'+esc(p.color)+'"><span style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)">'+shapeGlyph(p.shape,p.color)+'</span></span><span class="tag">No.'+p.no+' '+esc(p.nickname)+'</span></button>';}).join('');
+ $('orns2d').innerHTML=parts.map((p,i)=>{const pos=posFor(p,i,parts.length); const strH=10+((p.no*23)%16); const pat=p.shape==='ball'?'repeating-linear-gradient(45deg,rgba(255,255,255,.20) 0 5px,rgba(255,255,255,0) 5px 11px),':(p.shape==='snow'?'radial-gradient(circle,rgba(255,255,255,.4) 1.6px,rgba(255,255,255,0) 2.4px) 0 0/11px 11px,':''); return '<button class="orn2" style="left:'+pos.x+'%;top:'+pos.y+'%" onclick="focusOrnament('+p.no+',true)"><span class="str" style="height:'+strH+'px"></span><span class="cap"></span><span class="bauble" style="background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),rgba(255,255,255,0) 42%),'+pat+esc(p.color)+';color:'+esc(p.color)+'"><span style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)">'+shapeGlyph(p.shape,p.color)+'</span></span><span class="tag">No.'+p.no+' '+esc(p.nickname)+'</span></button>';}).join('');
  if(window.__render3DOrnaments) window.__render3DOrnaments(parts);
  renderRanking();
 }
@@ -516,10 +522,10 @@ async function init3D(){
   const THREE=await import('three'); const {OrbitControls}=await import('three/addons/controls/OrbitControls.js'); const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
   const canvas=$('canvas3d'); const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.75)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x081a3a,0.02);
+  const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x1c1016,0.012); scene.background=new THREE.Color(0x20131c);
   const pmrem=new THREE.PMREMGenerator(renderer); scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
   const camera=new THREE.PerspectiveCamera(46,1,0.1,120); camera.position.set(0,5.2,14.2); const introFrom=camera.position.clone(), introTo=new THREE.Vector3(0,3.4,9.6); let introT=0, introDone=false;
-  const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.enablePan=false; controls.minDistance=5.5; controls.maxDistance=14; controls.maxPolarAngle=1.53; controls.target.set(0,2.4,0); controls.autoRotate=true; controls.autoRotateSpeed=0.55;
+  const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.enablePan=false; controls.minDistance=5.5; controls.maxDistance=11.5; controls.maxPolarAngle=1.53; controls.target.set(0,2.4,0); controls.autoRotate=true; controls.autoRotateSpeed=0.55;
   let resumeAt=0; controls.addEventListener('start',()=>{controls.autoRotate=false; introDone=true;}); controls.addEventListener('end',()=>{resumeAt=Date.now()+5000;});
   scene.add(new THREE.AmbientLight(0x93a7ff,0.55));
   const moonLight=new THREE.DirectionalLight(0xdceaff,1.6); moonLight.position.set(-6,10,5); moonLight.castShadow=true; moonLight.shadow.mapSize.set(1024,1024); moonLight.shadow.camera.left=-7; moonLight.shadow.camera.right=7; moonLight.shadow.camera.top=9; moonLight.shadow.camera.bottom=-3; scene.add(moonLight);
@@ -527,16 +533,28 @@ async function init3D(){
   const starLight=new THREE.PointLight(0xffd700,20,12,1.5); starLight.position.set(0,5.9,0.6); scene.add(starLight);
   // Moon + glow
   function glowTexture(inner,outer){ const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d'); const g=x.createRadialGradient(64,64,4,64,64,64); g.addColorStop(0,inner); g.addColorStop(0.4,outer); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); }
-  const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(6.4,7.6,-7); scene.add(moon);
-  const moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,246,200,0.85)','rgba(255,240,180,0.28)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); moonGlow.scale.setScalar(4.2); moonGlow.position.copy(moon.position); scene.add(moonGlow);
-  { const cnv=document.createElement('canvas'); cnv.width=256; cnv.height=128; const g2=cnv.getContext('2d'); const gr=g2.createLinearGradient(0,0,0,128); gr.addColorStop(0,'rgba(90,255,175,0)'); gr.addColorStop(0.5,'rgba(90,255,175,0.6)'); gr.addColorStop(0.8,'rgba(130,130,255,0.25)'); gr.addColorStop(1,'rgba(130,130,255,0)'); g2.fillStyle=gr; g2.fillRect(0,0,256,128); const aur=new THREE.Mesh(new THREE.PlaneGeometry(30,10),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cnv),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); aur.position.set(-2,9.8,-14); aur.name='aurora3d'; scene.add(aur); }
-  // Snowy island with soft drifts
-  const island=new THREE.Mesh(new THREE.CylinderGeometry(5.0,3.7,1.15,40),new THREE.MeshStandardMaterial({color:0xe8f1ff,roughness:1})); island.position.y=-0.58; island.receiveShadow=true; scene.add(island);
-  const groundGeo=new THREE.CircleGeometry(5.0,48,0,Math.PI*2); { const pa=groundGeo.attributes.position; for(let i=0;i<pa.count;i++){ const x=pa.getX(i),y=pa.getY(i); const d=Math.hypot(x,y); if(d>0.6) pa.setZ(i,Math.sin(x*2.1)*Math.cos(y*1.7)*0.05); } groundGeo.computeVertexNormals(); }
-  const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.95})); ground.rotation.x=-Math.PI/2; ground.position.y=0.02; ground.receiveShadow=true; scene.add(ground);
-  { const pool=new THREE.Mesh(new THREE.CircleGeometry(3.6,40),new THREE.MeshBasicMaterial({map:glowTexture('rgba(255,190,90,0.5)','rgba(255,160,60,0.18)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); pool.rotation.x=-Math.PI/2; pool.position.y=0.045; scene.add(pool); }
-  // Sparkles on snow
-  const sparkGeo=new THREE.BufferGeometry(); const sparkPos=[]; for(let i=0;i<160;i++){ const a=Math.random()*Math.PI*2, r=0.8+Math.random()*4.0; sparkPos.push(Math.cos(a)*r,0.06,Math.sin(a)*r); } sparkGeo.setAttribute('position',new THREE.Float32BufferAttribute(sparkPos,3)); const sparkles=new THREE.Points(sparkGeo,new THREE.PointsMaterial({color:0xffffff,size:0.055,transparent:true,opacity:0.85})); scene.add(sparkles);
+  const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(-3.72,4.32,-5.33); moon.scale.setScalar(0.5); scene.add(moon);
+  const moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,246,200,0.85)','rgba(255,240,180,0.28)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); moonGlow.scale.setScalar(1.7); moonGlow.position.copy(moon.position); scene.add(moonGlow);
+  { const cnv=document.createElement('canvas'); cnv.width=256; cnv.height=128; const g2=cnv.getContext('2d'); const gr=g2.createLinearGradient(0,0,0,128); gr.addColorStop(0,'rgba(90,255,175,0)'); gr.addColorStop(0.5,'rgba(90,255,175,0.6)'); gr.addColorStop(0.8,'rgba(130,130,255,0.25)'); gr.addColorStop(1,'rgba(130,130,255,0)'); g2.fillStyle=gr; g2.fillRect(0,0,256,128); const aur=new THREE.Mesh(new THREE.PlaneGeometry(3.0,1.8),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cnv),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); aur.position.set(-3.05,4.35,-5.35); aur.name='aurora3d'; scene.add(aur); }
+  // ---- Cozy room (WishfulTree style): wood floor, rug, walls, window ----
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(10,48),new THREE.MeshStandardMaterial({color:0x7c4f2a,roughness:0.85})); floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
+  const rug=new THREE.Mesh(new THREE.CircleGeometry(3.45,44),new THREE.MeshStandardMaterial({color:0xa83240,roughness:0.95})); rug.rotation.x=-Math.PI/2; rug.position.y=0.021; rug.receiveShadow=true; scene.add(rug);
+  const rug2=new THREE.Mesh(new THREE.CircleGeometry(2.65,44),new THREE.MeshStandardMaterial({color:0xbf4553,roughness:0.95})); rug2.rotation.x=-Math.PI/2; rug2.position.y=0.026; scene.add(rug2);
+  const wallMat=new THREE.MeshStandardMaterial({color:0xefd9b8,roughness:1});
+  const wallB=new THREE.Mesh(new THREE.PlaneGeometry(17,9),wallMat); wallB.position.set(0,4.5,-5.4); scene.add(wallB);
+  const wallL=new THREE.Mesh(new THREE.PlaneGeometry(13,9),new THREE.MeshStandardMaterial({color:0xe9d2ab,roughness:1})); wallL.rotation.y=Math.PI/2; wallL.position.set(-6.6,4.5,-0.6); scene.add(wallL);
+  const wallR=wallL.clone(); wallR.rotation.y=-Math.PI/2; wallR.position.x=6.9; scene.add(wallR);
+  { const glass=new THREE.Mesh(new THREE.PlaneGeometry(2.35,2.75),new THREE.MeshBasicMaterial({color:0x16305e})); glass.position.set(-3.05,3.6,-5.37); scene.add(glass);
+    const frameMat=new THREE.MeshStandardMaterial({color:0x7a4c20,roughness:0.8});
+    const fT=new THREE.Mesh(new THREE.BoxGeometry(2.6,0.14,0.09),frameMat); fT.position.set(-3.05,5.03,-5.3); scene.add(fT);
+    const fB=fT.clone(); fB.position.y=2.17; scene.add(fB);
+    const fL=new THREE.Mesh(new THREE.BoxGeometry(0.14,3.0,0.09),frameMat); fL.position.set(-4.35,3.6,-5.3); scene.add(fL);
+    const fR=fL.clone(); fR.position.x=-1.75; scene.add(fR);
+    const fM=new THREE.Mesh(new THREE.BoxGeometry(0.07,2.75,0.06),frameMat); fM.position.set(-3.05,3.6,-5.31); scene.add(fM);
+    const fM2=new THREE.Mesh(new THREE.BoxGeometry(2.35,0.07,0.06),frameMat); fM2.position.set(-3.05,3.6,-5.31); scene.add(fM2);
+    const sill=new THREE.Mesh(new THREE.BoxGeometry(2.8,0.1,0.3),frameMat); sill.position.set(-3.05,2.08,-5.25); scene.add(sill); }
+  // Warm sparkles on the rug
+  const sparkGeo=new THREE.BufferGeometry(); const sparkPos=[]; for(let i=0;i<120;i++){ const a=Math.random()*Math.PI*2, r=Math.random()*3.1; sparkPos.push(Math.cos(a)*r,0.05,Math.sin(a)*r); } sparkGeo.setAttribute('position',new THREE.Float32BufferAttribute(sparkPos,3)); const sparkles=new THREE.Points(sparkGeo,new THREE.PointsMaterial({color:0xffe6a8,size:0.05,transparent:true,opacity:0.8})); scene.add(sparkles);
   // ---- Wishful-quality tree: 5 displaced, flat-shaded foliage tiers ----
   function foliageTier(radius,height,y,color){
     const geo=new THREE.ConeGeometry(radius,height,42,5);
@@ -565,19 +583,27 @@ async function init3D(){
   const star=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.16,bevelEnabled:true,bevelSize:0.045,bevelThickness:0.045}),new THREE.MeshPhysicalMaterial({color:0xffd700,metalness:0.85,roughness:0.18,emissive:0xff9d00,emissiveIntensity:1.5,clearcoat:0.7})); star.position.set(0,6.62,-0.08); scene.add(star);
   const starGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,215,0,0.95)','rgba(255,180,0,0.35)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); starGlow.scale.setScalar(3.1); starGlow.position.set(0,6.62,0); scene.add(starGlow);
   // Sky stars + falling snow
-  const skyGeo=new THREE.BufferGeometry(); const skyPos=[]; for(let i=0;i<420;i++){skyPos.push((Math.random()-0.5)*70,Math.random()*28+3,-Math.random()*32-6);} skyGeo.setAttribute('position',new THREE.Float32BufferAttribute(skyPos,3)); scene.add(new THREE.Points(skyGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.9})));
-  const snowGeo=new THREE.BufferGeometry(); const snowPos=[]; for(let i=0;i<680;i++){snowPos.push((Math.random()-0.5)*24,Math.random()*15,(Math.random()-0.5)*24);} snowGeo.setAttribute('position',new THREE.Float32BufferAttribute(snowPos,3)); const snow=new THREE.Points(snowGeo,new THREE.PointsMaterial({color:0xffffff,size:0.115,transparent:true,opacity:0.95})); scene.add(snow);
-  // Cabin with chimney, warm windows, snow roof
-  const cabin=new THREE.Group();
-  const cbase=new THREE.Mesh(new THREE.BoxGeometry(1.35,0.9,1.05),new THREE.MeshStandardMaterial({color:0x8b5a2b,roughness:0.95})); cbase.position.y=0.45; cbase.castShadow=true; cabin.add(cbase);
-  const croof=new THREE.Mesh(new THREE.ConeGeometry(1.22,0.62,4),new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.9,flatShading:true})); croof.position.y=1.2; croof.rotation.y=Math.PI/4; cabin.add(croof);
-  const chim=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.5,0.2),new THREE.MeshStandardMaterial({color:0x7c4a26})); chim.position.set(0.36,1.3,-0.2); cabin.add(chim);
-  for(let i=0;i<5;i++){ const ic=new THREE.Mesh(new THREE.ConeGeometry(0.045,0.24,6),new THREE.MeshStandardMaterial({color:0xdff3ff,roughness:0.12,metalness:0.05,transparent:true,opacity:0.92})); ic.rotation.x=Math.PI; ic.position.set(-0.52+i*0.26,0.82,0.52); cabin.add(ic); }
-  const winMat=new THREE.MeshBasicMaterial({color:0xffca55}); const win1=new THREE.Mesh(new THREE.PlaneGeometry(0.36,0.36),winMat); win1.position.set(-0.28,0.48,0.53); cabin.add(win1); const win2=new THREE.Mesh(new THREE.PlaneGeometry(0.3,0.42),winMat); win2.position.set(0.34,0.46,0.53); cabin.add(win2);
-  const cLight=new THREE.PointLight(0xffb63d,7,5,1.8); cLight.position.set(0,0.5,0.9); cabin.add(cLight);
-  cabin.position.set(-3.35,0,-0.55); cabin.rotation.y=0.5; scene.add(cabin);
+  const skyGeo=new THREE.BufferGeometry(); const skyPos=[]; for(let i=0;i<130;i++){skyPos.push(Math.random()*2.2-4.15,Math.random()*2.3+2.5,-5.34);} skyGeo.setAttribute('position',new THREE.Float32BufferAttribute(skyPos,3)); scene.add(new THREE.Points(skyGeo,new THREE.PointsMaterial({color:0xffffff,size:0.05,transparent:true,opacity:0.9})));
+  const snowGeo=new THREE.BufferGeometry(); const snowPos=[]; for(let i=0;i<240;i++){snowPos.push(Math.random()*2.2-4.15,Math.random()*2.3+2.5,-5.32);} snowGeo.setAttribute('position',new THREE.Float32BufferAttribute(snowPos,3)); const snow=new THREE.Points(snowGeo,new THREE.PointsMaterial({color:0xffffff,size:0.115,transparent:true,opacity:0.95})); scene.add(snow);
+  // Fireplace with flickering fire, stockings and mantel candles
+  const fireG=new THREE.Group();
+  const fbrick=new THREE.Mesh(new THREE.BoxGeometry(1.7,1.5,0.6),new THREE.MeshStandardMaterial({color:0x9a4a3a,roughness:0.95})); fbrick.position.y=0.75; fbrick.castShadow=true; fireG.add(fbrick);
+  const mantel=new THREE.Mesh(new THREE.BoxGeometry(1.95,0.12,0.78),new THREE.MeshStandardMaterial({color:0x6e4423,roughness:0.85})); mantel.position.y=1.56; fireG.add(mantel);
+  const fbox=new THREE.Mesh(new THREE.BoxGeometry(0.95,0.82,0.1),new THREE.MeshBasicMaterial({color:0x140a08})); fbox.position.set(0,0.55,0.29); fireG.add(fbox);
+  const logMat=new THREE.MeshStandardMaterial({color:0x5d3a17,roughness:1});
+  const log1=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.7,8),logMat); log1.rotation.z=Math.PI/2; log1.position.set(0,0.3,0.36); fireG.add(log1);
+  const log2=log1.clone(); log2.rotation.x=0.5; log2.position.y=0.4; fireG.add(log2);
+  const flameMat=new THREE.MeshBasicMaterial({map:glowTexture('rgba(255,225,150,0.95)','rgba(255,120,30,0.4)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+  const flames=new THREE.Group(); flames.name='flameP';
+  const fl1=new THREE.Mesh(new THREE.PlaneGeometry(0.72,1.0),flameMat); fl1.position.y=0.62; flames.add(fl1);
+  const fl2=fl1.clone(); fl2.rotation.y=Math.PI/2; flames.add(fl2);
+  flames.position.set(0,0,0.36); fireG.add(flames);
+  const fireLight=new THREE.PointLight(0xff8c3a,9,7.5,1.8); fireLight.name='fireLight'; fireLight.position.set(0,0.75,0.95); fireG.add(fireLight);
+  [0xe63946,0x1f9d63,0xf6c453].forEach((c,i)=>{ const st=new THREE.Group(); const cuff=new THREE.Mesh(new THREE.BoxGeometry(0.17,0.09,0.05),new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.9})); cuff.position.y=0; st.add(cuff); const body=new THREE.Mesh(new THREE.BoxGeometry(0.15,0.3,0.045),new THREE.MeshStandardMaterial({color:c,roughness:0.85})); body.position.y=-0.19; st.add(body); const toe=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.1,0.045),new THREE.MeshStandardMaterial({color:c,roughness:0.85})); toe.position.set(0.05,-0.33,0); st.add(toe); st.position.set(-0.45+i*0.45,1.44,0.4); fireG.add(st); });
+  [-0.72,0.72].forEach(x=>{ const cd=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.05,0.24,10),new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.6})); cd.position.set(x,1.74,0.1); fireG.add(cd); const tip=new THREE.Mesh(new THREE.SphereGeometry(0.035,8,8),new THREE.MeshBasicMaterial({color:0xffd66e})); tip.position.set(x,1.9,0.1); fireG.add(tip); });
+  fireG.position.set(3.95,0,-4.55); fireG.rotation.y=-0.28; scene.add(fireG);
   function lantern(x,z){ const g=new THREE.Group(); const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.06,1.5,8),new THREE.MeshStandardMaterial({color:0x3a2a18,roughness:0.9})); pole.position.y=0.75; pole.castShadow=true; g.add(pole); const lamp=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.36,0.3),new THREE.MeshBasicMaterial({color:0xffc766})); lamp.position.y=1.62; g.add(lamp); const capL=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.2,4),new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.9,flatShading:true})); capL.position.y=1.9; capL.rotation.y=Math.PI/4; g.add(capL); const gl=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,190,90,0.8)','rgba(255,160,60,0.25)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); gl.scale.setScalar(1.5); gl.position.y=1.62; g.add(gl); const pl=new THREE.PointLight(0xffb63d,5,4.5,1.8); pl.position.y=1.62; g.add(pl); g.position.set(x,0.02,z); scene.add(g); }
-  lantern(-2.95,2.15); lantern(2.95,2.15);
+  
   // Gift boxes with ribbons at the base
   function gift(x,z,w,h,d,color,ribbon){ const g=new THREE.Group(); const box=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color:color,roughness:0.5,metalness:0.15})); box.position.y=h/2; box.castShadow=true; g.add(box); const rMat=new THREE.MeshStandardMaterial({color:ribbon,metalness:0.7,roughness:0.3}); const r1=new THREE.Mesh(new THREE.BoxGeometry(w+0.02,h+0.015,0.07),rMat); r1.position.y=h/2; g.add(r1); const r2=new THREE.Mesh(new THREE.BoxGeometry(0.07,h+0.015,d+0.02),rMat); r2.position.y=h/2; g.add(r2); const bow=new THREE.Mesh(new THREE.TorusGeometry(0.075,0.026,8,18),rMat); bow.position.y=h+0.05; bow.rotation.x=Math.PI/2.4; g.add(bow); g.position.set(x,0.02,z); g.rotation.y=Math.random()*0.8-0.4; scene.add(g); }
   gift(1.95,1.55,0.62,0.45,0.62,0xe63946,0xffd66e); gift(2.6,0.85,0.48,0.36,0.48,0x1f7ac0,0xffffff); gift(-1.85,1.7,0.55,0.4,0.55,0x1f9d63,0xffd66e); gift(-2.5,0.95,0.42,0.3,0.42,0xa78bfa,0xffffff); gift(0.4,2.45,0.5,0.34,0.5,0xff8c42,0xffffff);
@@ -605,8 +631,8 @@ async function init3D(){
   (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
     if(!introDone){ introT+=0.006; const e=1-Math.pow(1-Math.min(introT,1),3); camera.position.lerpVectors(introFrom,introTo,e); if(introT>=1) introDone=true; }
     if(!controls.autoRotate && resumeAt && Date.now()>resumeAt){ controls.autoRotate=true; resumeAt=0; }
-    star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
-    const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.02; if(y<0)y=14; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
+    star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } const fl3=scene.getObjectByName('fireLight'); if(fl3){ fl3.intensity=8.5+Math.sin(t*11)*1.7+Math.sin(t*23+1.3)*1.2; } const fp3=scene.getObjectByName('flameP'); if(fp3){ fp3.scale.set(1,0.94+Math.sin(t*9.2)*0.09,1); } starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
+    const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.012; if(y<2.45)y=4.85; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
     ornGroup.children.forEach((m,i)=>{ m.rotation.y=Math.sin(t*0.7+i*1.7)*0.35; m.position.y+=Math.sin(t*1.4+i)*0.0006; });
     controls.update(); renderer.render(scene,camera); })();
  }catch(e){ console.warn('3D failed, use 2D',e); setMode('2d'); }
