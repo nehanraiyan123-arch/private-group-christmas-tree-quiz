@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>グループ限定 3D＆2Dクイズ＆性格診断クリスマスツリー</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#07142e;--bg2:#0b2350;--card:#ffffff;--ink:#17233b;--muted:#6b7a90;--gold:#f6c453;--red:#e63946;--green:#1f9d63;--pink:#ff6b9d;--radius:20px}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),var(--bg2) 55%,#123);color:#fff;font-family:"Hiragino Maru Gothic ProN","M PLUS Rounded 1c",system-ui,-apple-system,sans-serif;min-height:100%}
+button{font-family:inherit;cursor:pointer;border:none}
+input,textarea,select{font-family:inherit;font-size:16px}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 110px;position:relative;z-index:2}
+.top{text-align:center;padding:10px 4px 4px}
+.top h1{font-size:21px;line-height:1.35;margin:6px 0 4px;font-weight:800}
+.top p{margin:0;color:#cfe0ff;font-size:13px}
+.badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:999px;font-size:12px}
+.pill{display:flex;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px;gap:4px;margin:14px auto;max-width:340px;backdrop-filter:blur(8px)}
+.pill button{flex:1;padding:11px;border-radius:999px;background:transparent;color:#fff;font-weight:800;font-size:15px}
+.pill button.on{background:#fff;color:#0b2350;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.card{background:var(--card);color:var(--ink);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.card h2{margin:0 0 10px;font-size:18px}.card h3{margin:14px 0 8px;font-size:15px}
+label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12px 0 6px}
+.inp{width:100%;padding:13px 14px;border:2px solid #e3e9f2;border-radius:14px;background:#f8fafc;color:var(--ink)}
+.inp:focus{outline:none;border-color:var(--gold);background:#fff}
+.btn{width:100%;padding:15px;border-radius:999px;font-weight:800;font-size:16px;margin-top:12px}
+.btn-gold{background:linear-gradient(135deg,#ffd66e,#f6a93b);color:#4a2b00;box-shadow:0 8px 20px rgba(246,169,59,.4)}
+.btn-red{background:linear-gradient(135deg,#ff5a6e,#e63946);color:#fff}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#1f9d63);color:#fff}
+.btn-ghost{background:#eef3f9;color:var(--ink)}
+.btn-line{background:#06c755;color:#fff}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.small{font-size:12px;color:var(--muted);line-height:1.6}.center{text-align:center}
+.stage{position:relative;border-radius:24px;overflow:hidden;background:radial-gradient(ellipse at 50% -10%,#2a4a8a,#07142e 65%);border:1px solid rgba(255,255,255,.22);min-height:480px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+#canvas3d{width:100%;height:480px;display:block;touch-action:none}
+#view2d{height:480px;position:relative;display:none}
+#snow2d{position:absolute;inset:0;pointer-events:none}
+.orn{position:absolute;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid rgba(255,255,255,.85);box-shadow:0 0 14px currentColor;cursor:pointer;z-index:5;animation:sway 3s ease-in-out infinite}
+@keyframes sway{0%,100%{rotate:-4deg}50%{rotate:4deg}}
+@keyframes twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+.star2d{position:absolute;left:50%;top:18px;transform:translateX(-50%);font-size:46px;filter:drop-shadow(0 0 18px gold);z-index:6;animation:twinkle 1.6s infinite}
+.empty{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(255,255,255,.94);color:var(--ink);border-radius:16px;padding:14px;text-align:center;font-weight:700;font-size:14px;line-height:1.6;z-index:7}
+.qbox{border:2px solid #eef1f6;border-radius:16px;padding:14px;margin:12px 0;background:#fbfcfe}
+.qbox.del{float:right;background:#ffe9ec;color:#c81e2e;padding:7px 12px;border-radius:999px;font-weight:800;font-size:12px}
+.choice{display:block;width:100%;text-align:left;padding:13px;border-radius:14px;border:2px solid #e3e9f2;background:#fff;margin:8px 0;font-weight:700;color:var(--ink)}
+.choice.sel{border-color:var(--gold);background:#fff7df}
+.shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shapes button{padding:13px 6px;border-radius:14px;border:2px solid #e3e9f2;background:#fff;font-size:22px}
+.shapes button.sel{border-color:var(--gold);background:#fff7df}
+.colors{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.colors button{width:42px;height:42px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #d9e1ec}
+.colors button.sel{box-shadow:0 0 0 4px var(--gold)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(7,20,46,.92);backdrop-filter:blur(10px);padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+.bar.inner{max-width:560px;margin:0 auto;display:flex;gap:8px}
+.bar button{flex:1;padding:13px 6px;border-radius:999px;font-weight:800;font-size:14px}
+.drawer{position:fixed;inset:auto 0 0 0;max-height:82vh;background:#fff;color:var(--ink);z-index:60;border-radius:24px 24px 0 0;padding:18px;overflow:auto;transform:translateY(105%);transition:.3s}
+.drawer.open{transform:none}
+.mask{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:55;display:none}.mask.on{display:block}
+.rank{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#f7f9fc;border-radius:14px;padding:12px;margin:8px 0;color:var(--ink)}
+.rank b{font-size:15px}.rank.no{margin-left:auto;font-size:12px;color:var(--muted);font-weight:800}
+.modal{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6)}
+.modal.on{display:flex}
+.modal.sheet{background:#fff;color:var(--ink);width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;padding:20px}
+.sealed{background:#fff3f5;border:2px dashed #ffb3c1;border-radius:14px;padding:14px;text-align:center}
+.unlockedMsg{background:#fffbe6;border:2px solid #ffe08a;border-radius:14px;padding:14px;line-height:1.7;white-space:pre-wrap}
+.err{background:#ffe9ec;color:#8f1220;border-radius:14px;padding:13px;font-weight:700;font-size:14px;line-height:1.6}
+.okbox{background:#e8fff2;color:#0b5c36;border-radius:14px;padding:13px;font-weight:700;line-height:1.6}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f2f6fb;border-radius:14px;padding:12px;margin-top:12px;font-weight:800;font-size:14px}
+.hidden{display:none!important}
+.cabinNote{position:absolute;left:10px;bottom:10px;font-size:11px;color:#dbeafe;z-index:4}
+/* ===== v3 quality: Deco-My-Tree style 2D ornaments ===== */
+.orn2{position:absolute;transform:translateX(-50%);z-index:6;background:none;border:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;animation:sway2 3.6s ease-in-out infinite;transform-origin:top center}
+@keyframes sway2{0%,100%{rotate:-3.5deg}50%{rotate:3.5deg}}
+.orn2 .str{width:2px;background:linear-gradient(180deg,rgba(255,255,255,.05),#d8c58f);margin:0 auto}
+.orn2 .cap{width:12px;height:8px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#ffe9a8,#c9a227);margin-top:-1px;z-index:2}
+.orn2 .bauble{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;border:1.5px solid rgba(255,255,255,.75);box-shadow:inset -6px -8px 12px rgba(0,0,0,.28),inset 4px 6px 8px rgba(255,255,255,.35),0 6px 14px rgba(0,0,0,.35),0 0 16px currentColor;margin-top:-2px}
+.orn2 .tag{margin-top:5px;background:rgba(10,20,45,.78);color:#fff;font-size:10px;font-weight:800;padding:2.5px 8px;border-radius:999px;white-space:nowrap;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(2px)}
+.tw{animation:twinkle 2.2s ease-in-out infinite}.tw2{animation:twinkle 3.1s ease-in-out infinite .7s}.tw3{animation:twinkle 2.6s ease-in-out infinite 1.3s}
+.smoke{animation:smokeUp 4.5s ease-in-out infinite}.smoke2{animation:smokeUp 4.5s ease-in-out infinite 1.5s}.smoke3{animation:smokeUp 4.5s ease-in-out infinite 3s}
+@keyframes smokeUp{0%{transform:translateY(0) scale(1);opacity:.55}100%{transform:translateY(-26px) scale(1.5);opacity:0}}
+.bulbGlow{animation:twinkle 1.9s ease-in-out infinite}.bulbGlow2{animation:twinkle 2.4s ease-in-out infinite .9s}
+
+@media(max-width:380px){.top h1{font-size:19px}#canvas3d,#view2d{height:440px}.stage{min-height:440px}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<span class="badge">🔒 グループ限定 ・ 招待制</span>
+<h1>🎄 グループ限定<br>3D＆2Dクイズ＆性格診断<br>クリスマスツリー</h1>
+<p id="subtitle">友達だけの、秘密のクリスマスツリー</p>
+</div>
+
+<div id="msg"></div>
+
+<!-- LOADING -->
+<div id="view-loading" class="card center"><div style="font-size:36px">🎄</div><p><b>読み込み中…</b></p><p class="small">雪を降らせています。少々お待ちください。</p></div>
+
+<!-- BLOCKED -->
+<div id="view-blocked" class="card hidden center">
+<div style="font-size:44px">🔒</div><h2>このツリーはグループ限定です</h2>
+<p id="blocked-text" style="line-height:1.7">招待リンクから開いてください。ランダムな訪問では入ることができません。</p>
+<button class="btn btn-gold" onclick="showCreate()">🎄 自分のツリーを作る</button>
+</div>
+
+<!-- PASSCODE -->
+<div id="view-passcode" class="card hidden">
+<h2>🔑 合言葉を入力してください</h2>
+<p class="small">このツリーには合言葉（グループパスワード）が設定されています。ホストから聞いた合言葉を入力してください。</p>
+<label>合言葉</label><input id="pass-input" class="inp" type="password" autocomplete="off" placeholder="合言葉を入力">
+<button class="btn btn-gold" onclick="submitPasscode()">入る →</button>
+<div id="pass-err"></div>
+</div>
+
+<!-- CREATE -->
+<div id="view-create" class="hidden">
+<div class="card">
+<h2>🎄 ツリーを作成する</h2>
+<p class="small">あなたに関するクイズを3〜15問作れます。友達が答えると、性格診断タイトルと一緒にオーナメントが飾られます。参加者は最初は0人です。</p>
+<label>ツリーのタイトル</label><input id="c-title" class="inp" value="みんなのクリスマスツリー">
+<label>あなたの名前（ホスト名）</label><input id="c-owner" class="inp" placeholder="例：もん">
+<label>合言葉（任意・グループパスワード）</label><input id="c-pass" class="inp" placeholder="設定しない場合は空欄">
+<p class="small">合言葉を設定すると、招待リンクを知っていても合言葉を知らない人は入れません。</p>
+</div>
+<div class="card">
+<h2>❓ クイズを作る（<span id="q-count">5</span>問）</h2>
+<p class="small">各質問に選択肢を4つ入力し、正解を選んでください。</p>
+<div id="q-list"></div>
+<button class="btn btn-ghost" onclick="addQuestion()">＋ 質問を追加する</button>
+<button class="btn btn-gold" onclick="createTree()">✨ ツリーを作成して招待リンクを発行する</button>
+<div id="create-result"></div>
+</div>
+</div>
+
+<!-- TREE -->
+<div id="view-tree" class="hidden">
+<div class="pill"><button id="tab3d" onclick="setMode('3d')">🎄 3D立体</button><button id="tab2d" class="on" onclick="setMode('2d')">🎨 2Dイラスト</button></div>
+
+<div class="stage">
+<canvas id="canvas3d" style="display:none"></canvas>
+<div id="view2d" style="display:block">
+        <canvas id="snow2d"></canvas>
+        <!-- Deco-My-Tree quality illustrated scene -->
+        <svg viewBox="0 0 360 480" style="position:absolute;inset:0;width:100%;height:100%" aria-label="イラストのクリスマスツリー" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1a3f"/><stop offset="55%" stop-color="#16305e"/><stop offset="100%" stop-color="#274b7a"/></linearGradient>
+            <radialGradient id="moonG" cx="50%" cy="50%"><stop offset="0%" stop-color="#fffbe8"/><stop offset="70%" stop-color="#fdf3c4"/><stop offset="100%" stop-color="#f7e394"/></radialGradient>
+            <radialGradient id="haloG" cx="50%" cy="50%"><stop offset="0%" stop-color="#fff7cc" stop-opacity=".55"/><stop offset="100%" stop-color="#fff7cc" stop-opacity="0"/></radialGradient>
+            <linearGradient id="tier1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ea36b"/><stop offset="100%" stop-color="#177a4b"/></linearGradient>
+            <linearGradient id="tier2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#27a562"/><stop offset="100%" stop-color="#126e42"/></linearGradient>
+            <linearGradient id="tier3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22995c"/><stop offset="100%" stop-color="#0f633a"/></linearGradient>
+            <linearGradient id="tier4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d8f55"/><stop offset="100%" stop-color="#0b5731"/></linearGradient>
+            <linearGradient id="snowG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#c9def8"/></linearGradient>
+            <linearGradient id="trunkG" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6b4423"/><stop offset="50%" stop-color="#8b5a2b"/><stop offset="100%" stop-color="#5d3a17"/></linearGradient>
+            <radialGradient id="winG" cx="50%" cy="50%"><stop offset="0%" stop-color="#ffeeb0"/><stop offset="100%" stop-color="#ffb63d"/></radialGradient>
+            <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe97a"/><stop offset="55%" stop-color="#ffc61a"/><stop offset="100%" stop-color="#e79b00"/></linearGradient>
+            <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <rect width="360" height="480" fill="url(#skyG)"/>
+          <!-- Moon + halo + stars -->
+          <circle cx="306" cy="58" r="44" fill="url(#haloG)"/>
+          <circle cx="306" cy="58" r="21" fill="url(#moonG)"/>
+          <circle cx="298" cy="52" r="4" fill="#eed98a" opacity=".7"/><circle cx="313" cy="66" r="3" fill="#eed98a" opacity=".6"/>
+          <g fill="#fff">
+            <circle class="tw" cx="28" cy="42" r="2"/><circle class="tw2" cx="70" cy="88" r="1.6"/><circle class="tw3" cx="118" cy="34" r="1.8"/><circle class="tw2" cx="160" cy="70" r="1.4"/><circle class="tw" cx="205" cy="30" r="2"/><circle class="tw3" cx="248" cy="92" r="1.5"/><circle class="tw" cx="336" cy="120" r="1.7"/><circle class="tw2" cx="44" cy="140" r="1.4"/><circle class="tw3" cx="92" cy="168" r="1.3"/><circle class="tw" cx="150" cy="120" r="1.3"/><circle class="tw2" cx="330" cy="180" r="1.4"/><circle class="tw3" cx="262" cy="140" r="1.2"/>
+            <path class="tw2" d="M52 108 l2.2 5.4 5.4 2.2 -5.4 2.2 -2.2 5.4 -2.2 -5.4 -5.4 -2.2 5.4 -2.2z"/>
+            <path class="tw" d="M228 52 l1.8 4.4 4.4 1.8 -4.4 1.8 -1.8 4.4 -1.8 -4.4 -4.4 -1.8 4.4 -1.8z"/>
+          </g>
+          <!-- Distant pines -->
+          <g fill="#0d2c4e" opacity=".85">
+            <polygon points="18,330 44,258 70,330"/><polygon points="30,300 44,272 58,300" fill="#123a66"/>
+            <polygon points="292,322 322,238 352,322"/><polygon points="306,288 322,256 338,288" fill="#123a66"/>
+            <polygon points="-8,318 14,262 36,318"/>
+          </g>
+          <!-- Back snow hill -->
+          <path d="M0 348 Q90 322 190 344 T360 338 V480 H0 Z" fill="#dcecfb"/>
+          <!-- Cabin -->
+          <g>
+            <circle class="smoke" cx="76" cy="306" r="6" fill="#e8eef7"/><circle class="smoke2" cx="80" cy="300" r="8" fill="#e8eef7"/><circle class="smoke3" cx="74" cy="296" r="5" fill="#e8eef7"/>
+            <rect x="70" y="312" width="12" height="26" fill="#7c4a26"/><rect x="67" y="308" width="18" height="7" rx="2" fill="#fff"/>
+            <polygon points="14,356 62,318 110,356" fill="#5d3a17"/>
+            <polygon points="14,356 62,318 110,356 102,356 62,326 22,356" fill="#ffffff"/>
+            <rect x="24" y="354" width="76" height="58" rx="5" fill="#96622e"/>
+            <path d="M24 368 H100 M24 382 H100 M24 396 H100" stroke="#7a4c20" stroke-width="3"/>
+            <rect x="30" y="362" width="26" height="26" rx="3" fill="url(#winG)" stroke="#5d3a17" stroke-width="3"/>
+            <path d="M43 362 V388 M30 375 H56" stroke="#5d3a17" stroke-width="2.4"/>
+            <rect x="66" y="360" width="26" height="52" rx="3" fill="#6e4423" stroke="#54330f" stroke-width="2.5"/>
+            <circle cx="87" cy="388" r="2.6" fill="#ffd66e"/>
+            <circle cx="79" cy="368" r="7" fill="none" stroke="#1f9d63" stroke-width="3.4"/><circle cx="79" cy="362.5" r="2.6" fill="#e63946"/><circle cx="73.5" cy="371" r="2.2" fill="#e63946"/><circle cx="84.5" cy="371" r="2.2" fill="#ffd66e"/>
+            <circle cx="20" cy="352" r="4" fill="#ffd66e" filter="url(#softGlow)"/>
+          </g>
+          <!-- Lamp post -->
+          <g><rect x="122" y="356" width="4" height="52" fill="#22344f"/><circle cx="124" cy="350" r="7" fill="#ffe9a8" filter="url(#softGlow)"/><path d="M116 342 Q124 334 132 342" stroke="#22344f" stroke-width="3" fill="none"/></g>
+
+          <!-- TREE (center x=212) -->
+          <rect x="202" y="392" width="21" height="50" rx="4" fill="url(#trunkG)"/>
+          <path d="M202 402 h21 M202 416 h21 M202 430 h21" stroke="#54330f" stroke-width="2" opacity=".5"/>
+          <!-- Tier 4 (bottom) -->
+          <path d="M212 236 L286 356 Q268 342 252 358 Q236 344 220 360 Q212 350 204 360 Q188 344 172 358 Q156 342 138 356 Z" fill="url(#tier4)"/>
+          <path d="M212 236 L286 356 Q240 330 212 332 Q184 330 138 356 Z" fill="#fff" opacity=".07"/>
+          <!-- Tier 3 -->
+          <path d="M212 178 L272 282 Q256 269 242 284 Q228 271 214 286 Q212 280 208 286 Q194 271 180 284 Q166 269 152 282 Z" fill="url(#tier3)"/>
+          <!-- Tier 2 -->
+          <path d="M212 126 L258 216 Q244 205 232 218 Q220 207 212 220 Q204 207 192 218 Q180 205 166 216 Z" fill="url(#tier2)"/>
+          <!-- Tier 1 (top) -->
+          <path d="M212 76 L244 152 Q232 143 222 154 Q216 146 212 156 Q208 146 202 154 Q192 143 180 152 Z" fill="url(#tier1)"/>
+          <!-- Snow dusting on branch tops -->
+          <g fill="#fff" opacity=".85">
+            <path d="M196 92 Q212 82 228 92 Q220 96 212 94 Q204 96 196 92Z"/>
+            <path d="M182 140 Q212 128 242 140 Q226 146 212 143 Q198 146 182 140Z"/>
+            <path d="M168 192 Q212 178 256 192 Q232 199 212 196 Q192 199 168 192Z"/>
+            <path d="M152 252 Q212 236 272 252 Q238 260 212 256 Q186 260 152 252Z"/>
+            <path d="M140 322 Q212 304 284 322 Q242 331 212 327 Q182 331 140 322Z"/>
+          </g>
+          <!-- Garland swags + bulbs -->
+          <g fill="none" stroke="#f6c453" stroke-width="2.6" opacity=".95">
+            <path d="M186 158 Q212 176 238 158"/><path d="M168 224 Q212 248 256 224"/><path d="M152 292 Q212 322 272 292"/>
+          </g>
+          <g>
+            <circle class="bulbGlow" cx="196" cy="168" r="3.4" fill="#ff6b9d"/><circle class="bulbGlow2" cx="212" cy="173" r="3.4" fill="#ffd66e"/><circle class="bulbGlow" cx="228" cy="168" r="3.4" fill="#7dd3fc"/>
+            <circle class="bulbGlow2" cx="182" cy="236" r="3.6" fill="#ffd66e"/><circle class="bulbGlow" cx="200" cy="243" r="3.6" fill="#ff8c42"/><circle class="bulbGlow2" cx="218" cy="243" r="3.6" fill="#ff6b9d"/><circle class="bulbGlow" cx="236" cy="236" r="3.6" fill="#7dd3fc"/>
+            <circle class="bulbGlow" cx="172" cy="306" r="3.8" fill="#7dd3fc"/><circle class="bulbGlow2" cx="194" cy="314" r="3.8" fill="#ff6b9d"/><circle class="bulbGlow" cx="216" cy="315" r="3.8" fill="#ffd66e"/><circle class="bulbGlow2" cx="238" cy="308" r="3.8" fill="#2ecc71"/><circle class="bulbGlow" cx="254" cy="300" r="3.8" fill="#ff8c42"/>
+          </g>
+          <!-- Bows -->
+          <g fill="#e63946"><path d="M212 158 l-11 -7 v14 z M212 158 l11 -7 v14 z"/><circle cx="212" cy="158" r="3.2" fill="#c81e2e"/>
+          <path d="M212 226 l-12 -8 v16 z M212 226 l12 -8 v16 z"/><circle cx="212" cy="226" r="3.4" fill="#c81e2e"/></g>
+          <!-- Pinecones + candy -->
+          <g fill="#8b5a2b"><ellipse cx="188" cy="206" rx="4.6" ry="7"/><ellipse cx="240" cy="262" rx="4.6" ry="7"/><ellipse cx="176" cy="330" rx="5" ry="7.6"/></g>
+          <g stroke="#e63946" stroke-width="3.4" fill="none"><path d="M238 196 v14 a6 6 0 1 1 -6 -6"/><path d="M182 272 v14 a6 6 0 1 1 -6 -6"/></g>
+          <!-- Star -->
+          <g filter="url(#softGlow)"><polygon points="212,38 218.5,56 237,56 222.5,67 227.5,85 212,74.5 196.5,85 201.5,67 187,56 205.5,56" fill="url(#goldG)" stroke="#e79b00" stroke-width="1.4"/></g>
+          <!-- Front snow + gifts -->
+          <path d="M0 420 Q110 398 220 416 T360 410 V480 H0 Z" fill="url(#snowG)"/>
+          <g>
+            <rect x="146" y="404" width="40" height="30" rx="3" fill="#e63946"/><rect x="163" y="404" width="6" height="30" fill="#ffd66e"/><rect x="146" y="417" width="40" height="5" fill="#ffd66e"/><path d="M166 404 c-8 -10 -20 -2 -12 4 c5 4 12 -4 12 -4 c0 0 7 8 12 4 c8 -6 -4 -14 -12 -4" fill="#ffd66e"/>
+            <rect x="238" y="410" width="34" height="25" rx="3" fill="#1f7ac0"/><rect x="252" y="410" width="5" height="25" fill="#fff"/><rect x="238" y="421" width="34" height="4.4" fill="#fff"/>
+            <rect x="196" y="420" width="28" height="20" rx="3" fill="#1f9d63"/><rect x="208" y="420" width="4.6" height="20" fill="#ffd66e"/><rect x="196" y="429" width="28" height="4" fill="#ffd66e"/>
+            <path d="M146 404 q20 -8 40 0 v5 h-40z M238 410 q17 -7 34 0 v4 h-34z" fill="#fff"/>
+          </g>
+          <g fill="#fff"><circle cx="52" cy="446" r="2" opacity=".9"/><circle cx="318" cy="452" r="2.2" opacity=".9"/><circle cx="282" cy="438" r="1.6" opacity=".8"/><circle cx="96" cy="458" r="1.7" opacity=".8"/></g>
+        </svg>
+        <div id="orns2d"></div>
+        <div id="empty2d" class="empty hidden">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</div>
+      </div>
+
+      <div id="empty3d" class="empty hidden" style="z-index:8">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</div>
+</div>
+
+<div class="card">
+<h2 id="tree-title">クリスマスツリー</h2>
+<p class="small" id="tree-meta"></p>
+<div class="row">
+<button class="btn btn-line" style="margin-top:6px" onclick="copyInvite()">🔗 招待リンク</button>
+<button class="btn btn-ghost" style="margin-top:6px" onclick="openRanking()">🏆 順位・一覧</button>
+</div>
+<div id="invite-result"></div>
+<div id="host-box" class="hidden">
+<div class="switch"><span>🔒 12/25プレビュー<br><span class="small">ホストのみ：12/25の解除後カードをテスト表示</span></span><input type="checkbox" id="preview-toggle" style="width:26px;height:26px" onchange="togglePreview(this.checked)"></div>
+</div>
+<p class="small" style="margin-top:12px">🔒 シークレットメッセージは <b>2026年12月25日 0:00（JST）</b> まで封印されます。</p>
+</div>
+</div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bar hidden" id="bottom-bar"><div class="inner">
+<button style="background:#fff;color:#17233b" onclick="openRanking()">🏆 順位・一覧</button>
+<button style="background:linear-gradient(135deg,#ffd66e,#f6a93b);color:#4a2b00" onclick="openJoin()">✨ 参加してツリーを飾る</button>
+</div></div>
+
+<!-- RANKING DRAWER -->
+<div class="mask" id="mask" onclick="closeAll()"></div>
+<div class="drawer" id="drawer">
+<h2 style="margin:0 0 6px">🏆 順位・一覧</h2>
+<p class="small">人をタップすると、その人のオーナメントに注目します。</p>
+<div class="pill" style="background:#eef3f9;border-color:#e3e9f2;max-width:none"><button id="sort-rank" class="on" style="color:#17233b" onclick="setSort('rank')">正解数ランキング</button><button id="sort-join" style="color:#17233b" onclick="setSort('join')">参加順</button></div>
+<div id="rank-list"></div>
+<button class="btn btn-ghost" onclick="closeAll()">閉じる</button>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal" id="detail-modal"><div class="sheet">
+<div class="center" id="detail-emoji" style="font-size:52px"></div>
+<h2 class="center" id="detail-name"></h2>
+<p class="center" id="detail-title" style="font-weight:800;color:#b77900"></p>
+<p class="center small" id="detail-desc"></p>
+<p class="center" id="detail-score"></p>
+<div id="detail-msg"></div>
+<button class="btn btn-ghost" onclick="closeAll()">閉じる</button>
+</div></div>
+
+<!-- JOIN MODAL -->
+<div class="modal" id="join-modal"><div class="sheet">
+<h2>✨ 参加してツリーを飾る</h2>
+<div id="join-step1">
+<label>ニックネーム</label><input id="j-name" class="inp" placeholder="例：ゆき" maxlength="20">
+<div id="join-qs"></div>
+<h3>🎀 オーナメントを選ぶ</h3>
+<div class="shapes" id="shape-box">
+<button data-shape="ball" class="sel" onclick="pickShape(this)">🔴<br><small>まる</small></button>
+<button data-shape="star" onclick="pickShape(this)">⭐<br><small>ほし</small></button>
+<button data-shape="heart" onclick="pickShape(this)">💗<br><small>ハート</small></button>
+<button data-shape="bell" onclick="pickShape(this)">🔔<br><small>ベル</small></button>
+<button data-shape="snow" onclick="pickShape(this)">❄️<br><small>ゆき</small></button>
+<button data-shape="gift" onclick="pickShape(this)">🎁<br><small>ギフト</small></button>
+</div>
+<label>オーナメントの色</label>
+<div class="colors" id="color-box"></div>
+<label>シークレットメッセージ（12/25に公開）</label>
+<textarea id="j-msg" class="inp" rows="3" maxlength="300" placeholder="12月25日まで秘密のメッセージを書こう…"></textarea>
+<button class="btn btn-red" onclick="submitJoin()">🎄 この内容で飾る！</button>
+<div id="join-err"></div>
+</div>
+<div id="join-done" class="hidden center">
+<div style="font-size:52px">🎉</div><h2 id="done-title"></h2><p id="done-desc" style="line-height:1.7"></p><p id="done-no" style="font-weight:800"></p>
+<button class="btn btn-gold" onclick="closeAll()">ツリーを見る</button>
+</div>
+<button class="btn btn-ghost" onclick="closeAll()">キャンセル</button>
+</div></div>
+
+<script>
+const INITIAL_TREE = "";
+const INITIAL_INVITE = "";
+const UNLOCK_MS = Date.UTC(2026,11,24,15,0,0);
+let state = { modeDefault:'2d', treeId: INITIAL_TREE || new URLSearchParams(location.search).get('tree') || '', invite: INITIAL_INVITE || new URLSearchParams(location.search).get('invite') || '', passcode: sessionStorage.getItem('ct_pass')||'', data:null, mode:'2d', sort:'rank', shape:'ball', color:'#e63946', preview:false, previewMsgs:{}};
+const SHAPE_EMOJI = {ball:'🔴',star:'⭐',heart:'💗',bell:'🔔',snow:'❄️',gift:'🎁'};
+const COLORS = ['#e63946','#f6c453','#ff6b9d','#7dd3fc','#2ecc71','#a78bfa','#ff8c42','#ffffff'];
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(id){['view-loading','view-blocked','view-passcode','view-create','view-tree'].forEach(v=>$(v).classList.toggle('hidden',v!==id)); if(id!=='view-tree') $('bottom-bar').classList.add('hidden');}
+function errBox(el,msg){el.innerHTML = msg?'<div class="err" style="margin-top:12px">'+esc(msg)+'</div>':''}
+const SUPABASE_URL = "__SUPABASE_URL__";
+const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+async function run(fn,args){
+  const MAP = {
+    createTree: ['create_tree', a => ({ p_data: a[0] })],
+    getTreeFull: ['get_tree_full', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
+    getPreviewMessages: ['get_preview_messages', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
+    joinTree: ['join_tree', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_payload: a[3] })]
+  };
+  const m = MAP[fn]; if(!m) throw new Error('不明な操作です。');
+  const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + m[0], { method:'POST',
+    headers:{ 'Content-Type':'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization':'Bearer ' + SUPABASE_ANON_KEY },
+    body: JSON.stringify(m[1](args)) });
+  const j = await r.json().catch(()=>null);
+  if(!r.ok) throw new Error((j && (j.message || j.error)) || ('サーバーエラー (' + r.status + ')'));
+  return j;
+}
+
+/* ---------- Creator ---------- */
+const DEFAULT_QS = [
+{q:'ホストの好きな冬の飲み物は？',choices:['ホットココア','抹茶ラテ','ブラックコーヒー','オレンジジュース'],answer:0},
+{q:'ホストがクリスマスに一番欲しいものは？',choices:['ゲーム','本','お菓子の詰め合わせ','旅行'],answer:2},
+{q:'ホストの好きな冬の過ごし方は？',choices:['こたつで映画','スキー','カラオケ','早朝ランニング'],answer:0},
+{q:'ホストがサンタさんに最初に頼んだプレゼントは？',choices:['自転車','ぬいぐるみ','ピアノ','望遠鏡'],answer:1},
+{q:'ホストの好きなクリスマスソングの雰囲気は？',choices:['しっとりバラード','ノリノリポップ','ジャズ','ロック'],answer:1}
+];
+function questionCard(q,i){
+return '<div class="qbox" data-q="'+i+'"><button class="del" onclick="removeQuestion('+i+')">削除</button><label>質問 '+(i+1)+'</label><input class="inp qq" value="'+esc(q.q)+'"><label>選択肢（4つ）と正解</label>'+q.choices.map((c,j)=>'<div style="display:flex;gap:8px;margin:6px 0;align-items:center"><input type="radio" name="ans-'+i+'" value="'+j+'" '+(q.answer===j?'checked':'')+' style="width:22px;height:22px"><input class="inp qc" value="'+esc(c)+'" placeholder="選択肢'+(j+1)+'"></div>').join('')+'</div>';
+}
+function renderQuestions(qs){ $('q-list').innerHTML = qs.map(questionCard).join(''); $('q-count').textContent = qs.length;}
+function collectQuestions(){ const out=[]; document.querySelectorAll('#q-list.qbox').forEach(box=>{ const choices=[...box.querySelectorAll('.qc')].map(x=>x.value.trim()); const ans=box.querySelector('input[type=radio]:checked'); out.push({q:box.querySelector('.qq').value.trim(),choices:choices,answer:ans?parseInt(ans.value):0});}); return out;}
+function addQuestion(){ const qs=collectQuestions(); if(qs.length>=15){alert('質問は最大15問までです');return;} qs.push({q:'',choices:['','','',''],answer:0}); renderQuestions(qs);}
+function removeQuestion(i){ const qs=collectQuestions(); if(qs.length<=3){alert('質問は最低3問必要です');return;} qs.splice(i,1); renderQuestions(qs);}
+function showCreate(){ show('view-create'); if(!$('q-list').innerHTML) renderQuestions(JSON.parse(JSON.stringify(DEFAULT_QS))); window.scrollTo({top:0,behavior:'smooth'});}
+async function createTree(){
+const payload={title:$('c-title').value.trim(),ownerName:$('c-owner').value.trim(),passcode:$('c-pass').value.trim(),questions:collectQuestions()};
+$('create-result').innerHTML='<p class="small">作成中…</p>';
+try{ const r=await run('createTree',[payload]); if(!r.ok){errBox($('create-result'),r.error);return;}
+localStorage.setItem('ct_host_'+r.id, r.hostKey);
+const lineMsg='🎄'+payload.title+'\nホスト：'+(payload.ownerName||'ホスト')+'\nクイズに答えてツリーを飾ってね！シークレットメッセージは12/25に公開✨\n▼参加はこちら（グループ限定）\n'+(location.origin+r.url)+(payload.passcode?'\n合言葉：'+payload.passcode:'');
+$('create-result').innerHTML='<div class="okbox" style="margin-top:12px">✅ ツリーを作成しました！参加者はまだ0人です。<br>下のボタンでLINE招待メッセージをコピーして、グループに送ってください。</div><button class="btn btn-line" onclick="copyText(`'+btoa(unescape(encodeURIComponent(lineMsg)))+'`,true)">🔗 招待リンクをコピー（LINE用）</button><button class="btn btn-gold" onclick="location.href=\''+(location.origin+r.url).replace(/'/g,'')+'\'">自分のツリーを開く →</button>';
+}catch(e){ errBox($('create-result'),e.message||String(e));}
+}
+function copyText(b64,isB64){ const text=isB64?decodeURIComponent(escape(atob(b64))):b64; navigator.clipboard.writeText(text).then(()=>alert('コピーしました！LINEに貼り付けて送ってください。')).catch(()=>{prompt('コピーしてください',text)});}
+
+/* ---------- Load tree ---------- */
+async function boot(){
+ if(!state.treeId){ showCreate(); $('view-loading').classList.add('hidden'); return; }
+ await loadData();
+}
+async function submitPasscode(){ state.passcode=$('pass-input').value.trim(); sessionStorage.setItem('ct_pass',state.passcode); errBox($('pass-err'),''); await loadData(true); }
+async function loadData(fromPass){
+ try{
+  const hostKey=localStorage.getItem('ct_host_'+state.treeId)||'';
+  const d=await run('getTreeFull',[state.treeId,state.invite,state.passcode,hostKey]);
+  if(!d.ok){ if(d.code==='NEED_PASSCODE'||d.code==='BAD_PASSCODE'){ $('subtitle').textContent=(d.title||'クリスマスツリー')+' ・ ホスト：'+(d.ownerName||''); show('view-passcode'); if(fromPass) errBox($('pass-err'),d.error); return; } $('blocked-text').textContent=d.error; show('view-blocked'); return; }
+  state.data=d; show('view-tree'); $('bottom-bar').classList.remove('hidden');
+  $('subtitle').textContent = d.title+' ・ ホスト：'+d.ownerName;
+  $('tree-title').textContent='🎄 '+d.title; $('tree-meta').textContent='ホスト：'+d.ownerName+' ・ 参加者 '+d.participants.length+'人 ・ 質問 '+d.questions.length+'問'+(d.unlocked?' ・ 🔓 メッセージ公開中':' ・ 🔒 メッセージは12/25まで封印');
+  $('host-box').classList.toggle('hidden',!d.isHost);
+  setMode('2d'); renderOrnaments(); renderJoinQs();
+  // 3D is heavy: preload it quietly AFTER the tree is already on screen
+  if('requestIdleCallback' in window) requestIdleCallback(()=>init3D(),{timeout:4000}); else setTimeout(()=>init3D(),2500);
+ }catch(e){ $('blocked-text').textContent=e.message||String(e); show('view-blocked'); }
+}
+function copyInvite(){
+const d=state.data; if(!d) return;
+const url=location.origin+location.pathname+'?tree='+state.treeId+'&invite='+state.invite;
+// In Apps Script, location may be script.google.com URL - use current href base without extra params
+const base=location.href.split('?')[0]; const fullUrl=base+'?tree='+state.treeId+'&invite='+state.invite;
+const msg='🎄'+d.title+'\nホスト：'+d.ownerName+'\nクイズに答えて、あなただけのオーナメントでツリーを飾ってね！\n性格診断タイトルももらえるよ✨ シークレットメッセージは12/25に公開！\n▼参加はこちら（グループ限定）\n'+fullUrl+(state.passcode?'\n合言葉：'+state.passcode:'');
+navigator.clipboard.writeText(msg).then(()=>{$('invite-result').innerHTML='<div class="okbox" style="margin-top:10px">✅ LINE招待メッセージをコピーしました！グループに貼り付けてください。</div>';}).catch(()=>prompt('コピーしてください',msg));
+}
+
+/* ---------- Ornaments positioning ---------- */
+function posFor(p,idx,total){
+ // Higher percent = closer to the top star. Tree centre is x=212 in a 360-wide scene.
+ const tier = p.percent>=80?0 : p.percent>=50?1 : 2;
+ const yBase=[158,240,322][tier]; const spread=[52,92,128][tier];
+ const seed=Math.sin(p.no*127.1)*43758.5453; const frac=seed-Math.floor(seed);
+ const x=212+(frac-0.5)*2*spread*0.85; const y=yBase+((p.no*37)%30)-10;
+ return {x:x/360*100, y:y/480*100};
+}
+function renderOrnaments(){
+ const parts=state.data?state.data.participants:[]; const empty=parts.length===0;
+ $('empty2d').classList.toggle('hidden',!empty); $('empty3d').classList.toggle('hidden',!empty);
+ $('orns2d').innerHTML=parts.map((p,i)=>{const pos=posFor(p,i,parts.length); const strH=10+((p.no*23)%16); return '<button class="orn2" style="left:'+pos.x+'%;top:'+pos.y+'%" onclick="focusOrnament('+p.no+',true)"><span class="str" style="height:'+strH+'px"></span><span class="cap"></span><span class="bauble" style="background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),rgba(255,255,255,0) 42%),'+esc(p.color)+';color:'+esc(p.color)+'"><span style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)">'+SHAPE_EMOJI[p.shape]+'</span></span><span class="tag">No.'+p.no+' '+esc(p.nickname)+'</span></button>';}).join('');
+ if(window.__render3DOrnaments) window.__render3DOrnaments(parts);
+ renderRanking();
+}
+function sortedParts(){
+const parts=[...(state.data?state.data.participants:[])];
+if(state.sort==='rank') parts.sort((a,b)=> b.score-a.score || a.no-b.no); else parts.sort((a,b)=>a.no-b.no);
+return parts;
+}
+function renderRanking(){
+const parts=sortedParts();
+$('rank-list').innerHTML= parts.length? parts.map((p,i)=>{const rankLabel=state.sort==='rank'?(i+1)+'位':'No.'+p.no; return '<button class="rank" onclick="focusOrnament('+p.no+')"><span style="font-size:26px">'+SHAPE_EMOJI[p.shape]+'</span><span><b>'+esc(rankLabel)+'　'+esc(p.nickname)+'</b><br><small>'+esc(p.personality)+' ・ '+p.score+'/'+p.total+'問正解</small></span><span class="no">No.'+p.no+'</span></button>';}).join(''): '<p class="center" style="padding:18px;line-height:1.7">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</p>';
+}
+function setSort(s){ state.sort=s; $('sort-rank').classList.toggle('on',s==='rank'); $('sort-join').classList.toggle('on',s==='join'); $('sort-rank').style.background=s==='rank'?'#fff':''; $('sort-join').style.background=s==='join'?'#fff':''; renderRanking();}
+function openRanking(){ $('mask').classList.add('on'); $('drawer').classList.add('open'); renderRanking();}
+function closeAll(){ $('mask').classList.remove('on'); $('drawer').classList.remove('open'); document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));}
+function focusOrnament(no,from2d){
+const p=(state.data.participants||[]).find(x=>x.no===no); if(!p) return; closeAll();
+if(state.mode==='3d' && window.__focus3D) window.__focus3D(p);
+openDetail(p);
+}
+function openDetail(p){
+$('detail-emoji').textContent=SHAPE_EMOJI[p.shape]; $('detail-name').textContent=p.nickname+' さん（No.'+p.no+'）';
+$('detail-title').textContent='🏅 '+p.personality; $('detail-desc').textContent=p.personalityDesc||''; $('detail-score').innerHTML='<b>'+p.score+' / '+p.total+' 問正解</b>（'+p.percent+'%）';
+const unlocked=state.data.unlocked || state.preview;
+let msg=p.message;
+if(state.preview && state.previewMsgs[p.no]!==undefined) msg=state.previewMsgs[p.no];
+if(unlocked && msg!==null && msg!==undefined){ $('detail-msg').innerHTML='<div class="unlockedMsg">💌 シークレットメッセージ'+(state.preview&&!state.data.unlocked?'（プレビュー）':'')+'<br>'+esc(msg||'（メッセージなし）')+'</div>';}
+else { $('detail-msg').innerHTML='<div class="sealed">🔒 シークレットメッセージは封印中<br><small>2026年12月25日 0:00（JST）に公開されます</small></div>';}
+$('detail-modal').classList.add('on');
+}
+async function togglePreview(on){
+state.preview=on;
+if(on){ try{ const r=await run('getPreviewMessages',[state.treeId,state.invite,state.passcode,localStorage.getItem('ct_host_'+state.treeId)||'']); if(r.ok){ state.previewMsgs={}; r.participants.forEach(p=>state.previewMsgs[p.no]=p.message); alert('プレビューON：オーナメントをタップすると、12/25公開後のカードでメッセージが見られます。');} else alert(r.error);}catch(e){alert(e.message)}}
+}
+
+/* ---------- Join ---------- */
+function renderJoinQs(){
+if(!state.data) return;
+$('join-qs').innerHTML=state.data.questions.map((q,i)=>'<div style="margin-top:16px"><b>Q'+(i+1)+'. '+esc(q.q)+'</b>'+q.choices.map((c,j)=>'<button class="choice" data-q="'+i+'" data-c="'+j+'" onclick="pickChoice(this)">'+esc(c)+'</button>').join('')+'</div>').join('');
+$('color-box').innerHTML=COLORS.map((c,i)=>'<button style="background:'+c+'" class="'+(i===0?'sel':'')+'" onclick="pickColor(this,\''+c+'\')" aria-label="'+c+'"></button>').join('');
+}
+function pickChoice(btn){ const q=btn.dataset.q; document.querySelectorAll('.choice[data-q="'+q+'"]').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel');}
+function pickShape(btn){ document.querySelectorAll('#shape-box button').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); state.shape=btn.dataset.shape;}
+function pickColor(btn,c){ document.querySelectorAll('#color-box button').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); state.color=c;}
+function openJoin(){ $('join-step1').classList.remove('hidden'); $('join-done').classList.add('hidden'); errBox($('join-err'),''); $('join-modal').classList.add('on');}
+async function submitJoin(){
+const nickname=$('j-name').value.trim(); if(!nickname){errBox($('join-err'),'ニックネームを入力してください');return;}
+const answers=[]; let missing=false;
+state.data.questions.forEach((q,i)=>{ const sel=document.querySelector('.choice.sel[data-q="'+i+'"]'); if(!sel) missing=true; else answers.push(parseInt(sel.dataset.c));});
+if(missing){errBox($('join-err'),'すべての質問に答えてください');return;}
+try{ const r=await run('joinTree',[state.treeId,state.invite,state.passcode,{nickname:nickname,answers:answers,shape:state.shape,color:state.color,message:$('j-msg').value.trim()}]);
+if(!r.ok){errBox($('join-err'),r.error);return;}
+$('join-step1').classList.add('hidden'); $('join-done').classList.remove('hidden');
+$('done-title').textContent=r.participant.personality; $('done-desc').textContent=r.participant.personalityDesc+'\n'+r.participant.score+'/'+r.participant.total+'問正解（'+r.participant.percent+'%）でした！'; $('done-no').textContent='あなたは No.'+r.participant.no+' です🎄 ツリーに飾られました！';
+await loadData();
+}catch(e){errBox($('join-err'),e.message||String(e));}
+}
+
+/* ---------- Mode / Snow 2D ---------- */
+function setMode(m){ state.mode=m; if(m==='3d') init3D(); $('tab3d').classList.toggle('on',m==='3d'); $('tab2d').classList.toggle('on',m==='2d'); $('canvas3d').style.display=m==='3d'?'block':'none'; $('view2d').style.display=m==='2d'?'block':'none'; $('empty3d').style.display=(m==='3d'&&state.data&&state.data.participants.length===0)?'block':'none'; if(m==='2d') startSnow2D();}
+function startSnow2D(){
+const c=$('snow2d'); if(c.__running) return; c.__running=true; const ctx=c.getContext('2d');
+function size(){c.width=c.offsetWidth*devicePixelRatio;c.height=c.offsetHeight*devicePixelRatio;} size();
+const flakes=Array.from({length:70},()=>({x:Math.random(),y:Math.random(),r:1+Math.random()*2.2,s:.2+Math.random()*.6,ph:Math.random()*6.28}));
+(function loop(t){ ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle='rgba(255,255,255,.9)'; flakes.forEach(f=>{f.y+=f.s/c.height*2; if(f.y>1)f.y=0; const x=(f.x+Math.sin(t/1600+f.ph)*.012)*c.width; ctx.beginPath(); ctx.arc(x,f.y*c.height,f.r*devicePixelRatio,0,6.29); ctx.fill();}); if($('view2d').style.display!=='none') requestAnimationFrame(loop); else requestAnimationFrame(loop);})(0);
+}
+
+/* ---------- 3D (Three.js) ---------- */
+let threeStarted=false;
+async function init3D(){
+ if(threeStarted) { if(window.__render3DOrnaments&&state.data) window.__render3DOrnaments(state.data.participants); return; }
+ threeStarted=true;
+ try{
+  const THREE=await import('three'); const {OrbitControls}=await import('three/addons/controls/OrbitControls.js'); const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
+  const canvas=$('canvas3d'); const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.12; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x081a3a,0.02);
+  const pmrem=new THREE.PMREMGenerator(renderer); scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+  const camera=new THREE.PerspectiveCamera(46,1,0.1,120); camera.position.set(0,3.4,9.6);
+  const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.enablePan=false; controls.minDistance=5.5; controls.maxDistance=14; controls.maxPolarAngle=1.53; controls.target.set(0,2.4,0); controls.autoRotate=true; controls.autoRotateSpeed=0.55;
+  let resumeAt=0; controls.addEventListener('start',()=>{controls.autoRotate=false;}); controls.addEventListener('end',()=>{resumeAt=Date.now()+5000;});
+  scene.add(new THREE.AmbientLight(0x93a7ff,0.55));
+  const moonLight=new THREE.DirectionalLight(0xdceaff,1.6); moonLight.position.set(-6,10,5); moonLight.castShadow=true; moonLight.shadow.mapSize.set(1024,1024); moonLight.shadow.camera.left=-7; moonLight.shadow.camera.right=7; moonLight.shadow.camera.top=9; moonLight.shadow.camera.bottom=-3; scene.add(moonLight);
+  const warm=new THREE.PointLight(0xffc766,26,18,1.6); warm.position.set(0,3.2,2.4); scene.add(warm);
+  const starLight=new THREE.PointLight(0xffd700,20,12,1.5); starLight.position.set(0,5.9,0.6); scene.add(starLight);
+  // Moon + glow
+  function glowTexture(inner,outer){ const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d'); const g=x.createRadialGradient(64,64,4,64,64,64); g.addColorStop(0,inner); g.addColorStop(0.4,outer); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); }
+  const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(6.4,7.6,-7); scene.add(moon);
+  const moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,246,200,0.85)','rgba(255,240,180,0.28)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); moonGlow.scale.setScalar(4.2); moonGlow.position.copy(moon.position); scene.add(moonGlow);
+  // Snowy island with soft drifts
+  const island=new THREE.Mesh(new THREE.CylinderGeometry(5.0,3.7,1.15,40),new THREE.MeshStandardMaterial({color:0xe8f1ff,roughness:1})); island.position.y=-0.58; island.receiveShadow=true; scene.add(island);
+  const groundGeo=new THREE.CircleGeometry(5.0,48,0,Math.PI*2); { const pa=groundGeo.attributes.position; for(let i=0;i<pa.count;i++){ const x=pa.getX(i),y=pa.getY(i); const d=Math.hypot(x,y); if(d>0.6) pa.setZ(i,Math.sin(x*2.1)*Math.cos(y*1.7)*0.05); } groundGeo.computeVertexNormals(); }
+  const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.95})); ground.rotation.x=-Math.PI/2; ground.position.y=0.02; ground.receiveShadow=true; scene.add(ground);
+  // Sparkles on snow
+  const sparkGeo=new THREE.BufferGeometry(); const sparkPos=[]; for(let i=0;i<160;i++){ const a=Math.random()*Math.PI*2, r=0.8+Math.random()*4.0; sparkPos.push(Math.cos(a)*r,0.06,Math.sin(a)*r); } sparkGeo.setAttribute('position',new THREE.Float32BufferAttribute(sparkPos,3)); const sparkles=new THREE.Points(sparkGeo,new THREE.PointsMaterial({color:0xffffff,size:0.055,transparent:true,opacity:0.85})); scene.add(sparkles);
+  // ---- Wishful-quality tree: 5 displaced, flat-shaded foliage tiers ----
+  function foliageTier(radius,height,y,color){
+    const geo=new THREE.ConeGeometry(radius,height,42,5);
+    const pa=geo.attributes.position; const v=new THREE.Vector3();
+    for(let i=0;i<pa.count;i++){ v.fromBufferAttribute(pa,i); const a=Math.atan2(v.z,v.x); const n=Math.sin(a*7+y*3.1)*0.055+Math.cos(a*11+v.y*2.4)*0.04; const d=Math.hypot(v.x,v.z); if(d>0.05){ const s=1+n; pa.setX(i,v.x*s); pa.setZ(i,v.z*s); } }
+    geo.computeVertexNormals();
+    const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:color,roughness:0.92,flatShading:true})); m.position.y=y; m.castShadow=true; scene.add(m); return m;
+  }
+  foliageTier(2.75,2.3,1.95,0x0d5c33); foliageTier(2.3,2.1,3.0,0x0f6a3a); foliageTier(1.85,1.95,4.0,0x127a43); foliageTier(1.38,1.75,4.92,0x158a4c); foliageTier(0.9,1.5,5.72,0x18a058);
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.42,1.25,14),new THREE.MeshStandardMaterial({color:0x74522a,roughness:1})); trunk.position.y=0.6; trunk.castShadow=true; scene.add(trunk);
+  // Golden spiral garland (tube along a helix)
+  { const pts=[]; for(let i=0;i<=130;i++){ const t=i/130; const ang=t*Math.PI*7.5; const y=1.35+t*4.9; const rad=2.62-(t*1.95)+Math.sin(t*Math.PI)*0.06; pts.push(new THREE.Vector3(Math.cos(ang)*rad,y,Math.sin(ang)*rad)); }
+    const garland=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),260,0.032,8),new THREE.MeshStandardMaterial({color:0xf6c453,metalness:0.95,roughness:0.22,emissive:0x664400,emissiveIntensity:0.35})); scene.add(garland); }
+  // Fairy lights: instanced glossy bulbs hugging the tiers
+  const lightCols=[new THREE.Color(0xffd66e),new THREE.Color(0xff6b9d),new THREE.Color(0x7dd3fc),new THREE.Color(0xffffff),new THREE.Color(0xff8c42)];
+  const bulbGeo=new THREE.SphereGeometry(0.062,10,10); const bulbMat=new THREE.MeshStandardMaterial({roughness:0.35,metalness:0.1,emissiveIntensity:2.2});
+  const bulbCount=110; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
+  for(let i=0;i<bulbCount;i++){ const t=i/bulbCount; const y=1.45+t*4.85; const rad=2.6-(t*1.92); const ang=t*Math.PI*14+i*0.35; dummy.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); dummy.updateMatrix(); bulbs.setMatrixAt(i,dummy.matrix); bulbs.setColorAt(i,lightCols[i%lightCols.length]); }
+  { const pa=bulbMat; } bulbs.instanceColor.needsUpdate=true; scene.add(bulbs);
+  // Star with halo
+  const starShape=new THREE.Shape(); for(let i=0;i<10;i++){const r=i%2?0.23:0.52; const a=i/10*Math.PI*2-Math.PI/2; const x=Math.cos(a)*r,y=Math.sin(a)*r; i?starShape.lineTo(x,y):starShape.moveTo(x,y);} starShape.closePath();
+  const star=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.16,bevelEnabled:true,bevelSize:0.045,bevelThickness:0.045}),new THREE.MeshPhysicalMaterial({color:0xffd700,metalness:0.85,roughness:0.18,emissive:0xff9d00,emissiveIntensity:1.5,clearcoat:0.7})); star.position.set(0,6.62,-0.08); scene.add(star);
+  const starGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,215,0,0.95)','rgba(255,180,0,0.35)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); starGlow.scale.setScalar(3.1); starGlow.position.set(0,6.62,0); scene.add(starGlow);
+  // Sky stars + falling snow
+  const skyGeo=new THREE.BufferGeometry(); const skyPos=[]; for(let i=0;i<420;i++){skyPos.push((Math.random()-0.5)*70,Math.random()*28+3,-Math.random()*32-6);} skyGeo.setAttribute('position',new THREE.Float32BufferAttribute(skyPos,3)); scene.add(new THREE.Points(skyGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.9})));
+  const snowGeo=new THREE.BufferGeometry(); const snowPos=[]; for(let i=0;i<480;i++){snowPos.push((Math.random()-0.5)*24,Math.random()*15,(Math.random()-0.5)*24);} snowGeo.setAttribute('position',new THREE.Float32BufferAttribute(snowPos,3)); const snow=new THREE.Points(snowGeo,new THREE.PointsMaterial({color:0xffffff,size:0.115,transparent:true,opacity:0.95})); scene.add(snow);
+  // Cabin with chimney, warm windows, snow roof
+  const cabin=new THREE.Group();
+  const cbase=new THREE.Mesh(new THREE.BoxGeometry(1.35,0.9,1.05),new THREE.MeshStandardMaterial({color:0x8b5a2b,roughness:0.95})); cbase.position.y=0.45; cbase.castShadow=true; cabin.add(cbase);
+  const croof=new THREE.Mesh(new THREE.ConeGeometry(1.22,0.62,4),new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.9,flatShading:true})); croof.position.y=1.2; croof.rotation.y=Math.PI/4; cabin.add(croof);
+  const chim=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.5,0.2),new THREE.MeshStandardMaterial({color:0x7c4a26})); chim.position.set(0.36,1.3,-0.2); cabin.add(chim);
+  const winMat=new THREE.MeshBasicMaterial({color:0xffca55}); const win1=new THREE.Mesh(new THREE.PlaneGeometry(0.36,0.36),winMat); win1.position.set(-0.28,0.48,0.53); cabin.add(win1); const win2=new THREE.Mesh(new THREE.PlaneGeometry(0.3,0.42),winMat); win2.position.set(0.34,0.46,0.53); cabin.add(win2);
+  const cLight=new THREE.PointLight(0xffb63d,7,5,1.8); cLight.position.set(0,0.5,0.9); cabin.add(cLight);
+  cabin.position.set(-3.35,0,-0.55); cabin.rotation.y=0.5; scene.add(cabin);
+  // Gift boxes with ribbons at the base
+  function gift(x,z,w,h,d,color,ribbon){ const g=new THREE.Group(); const box=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color:color,roughness:0.5,metalness:0.15})); box.position.y=h/2; box.castShadow=true; g.add(box); const rMat=new THREE.MeshStandardMaterial({color:ribbon,metalness:0.7,roughness:0.3}); const r1=new THREE.Mesh(new THREE.BoxGeometry(w+0.02,h+0.015,0.07),rMat); r1.position.y=h/2; g.add(r1); const r2=new THREE.Mesh(new THREE.BoxGeometry(0.07,h+0.015,d+0.02),rMat); r2.position.y=h/2; g.add(r2); const bow=new THREE.Mesh(new THREE.TorusGeometry(0.075,0.026,8,18),rMat); bow.position.y=h+0.05; bow.rotation.x=Math.PI/2.4; g.add(bow); g.position.set(x,0.02,z); g.rotation.y=Math.random()*0.8-0.4; scene.add(g); }
+  gift(1.95,1.55,0.62,0.45,0.62,0xe63946,0xffd66e); gift(2.6,0.85,0.48,0.36,0.48,0x1f7ac0,0xffffff); gift(-1.85,1.7,0.55,0.4,0.55,0x1f9d63,0xffd66e); gift(-2.5,0.95,0.42,0.3,0.42,0xa78bfa,0xffffff); gift(0.4,2.45,0.5,0.34,0.5,0xff8c42,0xffffff);
+  // Participant ornaments: glossy physical baubles with gold caps
+  const ornGroup=new THREE.Group(); scene.add(ornGroup); const ray=new THREE.Raycaster(); const ptr=new THREE.Vector2(); let ornMeshes=[];
+  function shapeMesh(p){
+    const mat=new THREE.MeshPhysicalMaterial({color:new THREE.Color(p.color),metalness:0.15,roughness:0.14,clearcoat:1,clearcoatRoughness:0.12,emissive:new THREE.Color(p.color),emissiveIntensity:0.22,envMapIntensity:1.25}); let m;
+    if(p.shape==='star'){ m=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.1,bevelEnabled:true,bevelSize:0.02,bevelThickness:0.02}),mat); m.scale.setScalar(0.6); }
+    else if(p.shape==='heart'){ const hs=new THREE.Shape(); hs.moveTo(0,-0.3); hs.bezierCurveTo(-0.52,0.08,-0.29,0.45,0,0.19); hs.bezierCurveTo(0.29,0.45,0.52,0.08,0,-0.3); m=new THREE.Mesh(new THREE.ExtrudeGeometry(hs,{depth:0.11,bevelEnabled:true,bevelSize:0.02,bevelThickness:0.02}),mat); }
+    else if(p.shape==='bell'){ m=new THREE.Mesh(new THREE.ConeGeometry(0.23,0.36,16),mat); }
+    else if(p.shape==='snow'){ m=new THREE.Mesh(new THREE.OctahedronGeometry(0.25),mat); }
+    else if(p.shape==='gift'){ m=new THREE.Mesh(new THREE.BoxGeometry(0.36,0.36,0.36),mat); }
+    else { m=new THREE.Mesh(new THREE.SphereGeometry(0.225,24,24),mat); }
+    const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.07,0.09,10),new THREE.MeshStandardMaterial({color:0xd9a821,metalness:1,roughness:0.28})); cap.position.y=0.27; m.add(cap);
+    const grp=new THREE.Group(); grp.add(m); return grp;
+  }
+  window.__render3DOrnaments=function(parts){ ornGroup.clear(); ornMeshes=[]; parts.forEach(p=>{ const tier=p.percent>=80?2:p.percent>=50?1:0; const y=[1.95,3.25,4.55][tier]+((p.no*29)%40)/100; const rad=[2.28,1.72,1.08][tier]; const a=(p.no*2.399)%(Math.PI*2); const m=shapeMesh(p); m.position.set(Math.cos(a)*rad,y,Math.sin(a)*rad+0.18); m.userData.no=p.no; m.traverse(o=>{o.userData.no=p.no;}); ornGroup.add(m); ornMeshes.push(m); }); };
+  window.__focus3D=function(p){ const m=ornMeshes.find(x=>x.userData.no===p.no); if(m){ m.scale.setScalar(1.65); setTimeout(()=>m.scale.setScalar(1),900); } };
+  if(state.data) window.__render3DOrnaments(state.data.participants);
+  canvas.addEventListener('pointerdown',e=>{ canvas.__sx=e.clientX; canvas.__sy=e.clientY; });
+  canvas.addEventListener('pointerup',e=>{ if(Math.hypot(e.clientX-canvas.__sx,e.clientY-canvas.__sy)>8) return; const r=canvas.getBoundingClientRect(); ptr.x=((e.clientX-r.left)/r.width)*2-1; ptr.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(ptr,camera); const hits=ray.intersectObjects(ornMeshes,true); if(hits.length){ let o=hits[0].object; while(o&&!o.userData.no)o=o.parent; if(o) focusOrnament(o.userData.no); } });
+  function resize(){ const w=canvas.clientWidth||innerWidth, h=480; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); } resize(); addEventListener('resize',resize);
+  const clock=new THREE.Clock();
+  (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
+    if(!controls.autoRotate && resumeAt && Date.now()>resumeAt){ controls.autoRotate=true; resumeAt=0; }
+    star.rotation.y=t*0.7; starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
+    const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.02; if(y<0)y=14; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
+    ornGroup.children.forEach((m,i)=>{ m.rotation.y=Math.sin(t*0.7+i*1.7)*0.35; m.position.y+=Math.sin(t*1.4+i)*0.0006; });
+    controls.update(); renderer.render(scene,camera); })();
+ }catch(e){ console.warn('3D failed, use 2D',e); setMode('2d'); }
+}
+boot();
+</script>
+</body>
+</html>
