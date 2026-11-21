@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>グループ限定 3D＆2Dクイズ＆性格診断クリスマスツリー</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js">
 <style>
@@ -79,7 +80,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 @keyframes sway2{0%,100%{rotate:-3.5deg}50%{rotate:3.5deg}}
 .orn2 .str{width:2px;background:linear-gradient(180deg,rgba(255,255,255,.05),#d8c58f);margin:0 auto}
 .orn2 .cap{width:12px;height:8px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#ffe9a8,#c9a227);margin-top:-1px;z-index:2}
-.orn2 .bauble{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;border:1.5px solid rgba(255,255,255,.75);box-shadow:inset -6px -8px 12px rgba(0,0,0,.28),inset 4px 6px 8px rgba(255,255,255,.35),0 6px 14px rgba(0,0,0,.35),0 0 16px currentColor;margin-top:-2px}
+.orn2 .bauble{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;border:1.5px solid rgba(255,255,255,.75);box-shadow:inset -6px -8px 12px rgba(0,0,0,.28),inset 4px 6px 8px rgba(255,255,255,.35),0 6px 14px rgba(0,0,0,.35),0 0 16px currentColor;margin-top:-2px}
 .orn2 .tag{margin-top:5px;background:rgba(10,20,45,.78);color:#fff;font-size:10px;font-weight:800;padding:2.5px 8px;border-radius:999px;white-space:nowrap;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(2px)}
 .tw{animation:twinkle 2.2s ease-in-out infinite}.tw2{animation:twinkle 3.1s ease-in-out infinite .7s}.tw3{animation:twinkle 2.6s ease-in-out infinite 1.3s}
 .smoke{animation:smokeUp 4.5s ease-in-out infinite}.smoke2{animation:smokeUp 4.5s ease-in-out infinite 1.5s}.smoke3{animation:smokeUp 4.5s ease-in-out infinite 3s}
@@ -96,6 +97,36 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 @keyframes shoot{0%,70%{transform:translate(0,0);opacity:0}74%{opacity:1}86%,100%{transform:translate(150px,66px);opacity:0}}
 .flick{animation:flick 2.6s ease-in-out infinite}
 @keyframes flick{0%,100%{opacity:1}48%{opacity:.86}55%{opacity:.97}70%{opacity:.9}}
+
+/* ===== v7: UI overhaul + hub + graphics settings ===== */
+html,body{background:linear-gradient(180deg,#160a24,#2a1240 45%,#3d1650 75%,#571f4d);font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN",system-ui,sans-serif}
+.top{position:relative}
+.top h1{font-size:24px;letter-spacing:.02em;text-shadow:0 3px 14px rgba(0,0,0,.45)}
+.badge{background:linear-gradient(135deg,rgba(255,214,110,.28),rgba(255,107,157,.22));border-color:rgba(255,255,255,.4)}
+.card{border-radius:24px;box-shadow:0 16px 38px rgba(10,2,24,.45),inset 0 0 0 1px rgba(255,255,255,.5);padding:20px}
+.btn{transition:transform .12s ease,box-shadow .2s ease}
+.btn:active{transform:scale(.965)}
+.btn-gold{box-shadow:0 10px 24px rgba(246,169,59,.5)}
+.inp{border-radius:16px}
+.inp:focus{border-color:#ff9d5c;box-shadow:0 0 0 4px rgba(255,157,92,.22)}
+.stage{border-radius:28px;min-height:520px;border:1px solid rgba(255,255,255,.35);box-shadow:0 24px 50px rgba(5,0,16,.55)}
+#canvas3d{height:520px}
+#view2d{height:520px}
+.gearbtn{position:absolute;right:2px;top:2px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.hub{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hub::-webkit-scrollbar{display:none}
+.hubcard{scroll-snap-align:start;flex:0 0 208px;border-radius:20px;padding:16px;color:#fff;position:relative;overflow:hidden;box-shadow:0 12px 26px rgba(20,4,40,.35);text-align:left}
+.hubcard h3{margin:26px 0 4px;font-size:16px;line-height:1.35;color:#fff}
+.hubcard .meta{font-size:12px;opacity:.92;font-weight:700}
+.hubcard .go{margin-top:12px;display:inline-block;background:rgba(255,255,255,.94);color:#3a1650;font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px}
+.hubcard.create{background:linear-gradient(150deg,#ff8a5c,#e63946)!important;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.hubcard .mini{position:absolute;right:10px;top:8px;opacity:.95}
+.qrow{display:flex;gap:8px;margin:10px 0}
+.qbtn{flex:1;padding:13px 6px;border-radius:14px;border:2px solid #e3e9f2;background:#fff;font-weight:800;color:#17233b}
+.qbtn.sel{border-color:#f6a93b;background:#fff3d6;box-shadow:0 0 0 3px rgba(246,169,59,.25)}
+body.q-low .tw,body.q-low .tw2,body.q-low .tw3,body.q-low .aurora1,body.q-low .aurora2,body.q-low .flick,body.q-low .shoot,body.q-low .bulbGlow,body.q-low .bulbGlow2,body.q-low .orn2{animation:none!important}
+body.q-low #snow2d{display:none}
+@media(max-width:380px){#canvas3d,#view2d{height:480px}.stage{min-height:480px}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
@@ -105,6 +136,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 <span class="badge"><svg class="ic" viewBox="0 0 24 24"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg> グループ限定 ・ 招待制</span>
 <h1><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> グループ限定<br>3D＆2Dクイズ＆性格診断<br>クリスマスツリー</h1>
 <p id="subtitle">友達だけの、秘密のクリスマスツリー</p>
+<button class="gearbtn" onclick="openSettings()" aria-label="グラフィック設定"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg></button>
 </div>
 
 <div id="msg"></div>
@@ -130,6 +162,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 
 <!-- CREATE -->
 <div id="view-create" class="hidden">
+<div class="card" style="margin-bottom:14px"><h2 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#e63946"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> みんなのツリー（グループ）</h2><p class="small">左右にスワイプして、みんなのツリーを見てまわろう。ツリーに入るには、そのツリーの招待リンクか招待コードが必要です。あなたのツリーもここに並びます。</p><div class="hub" id="hub-list"><div class="small" style="padding:8px">読み込み中…</div></div></div>
 <div class="card center" style="margin-bottom:14px"><h2 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"/></svg> 招待コードで参加</h2><p class="small">グループのリンクが開けないときは、ホストから聞いた招待コードを入力してね。リンクをタップした場合は、そのまま自動でツリーに入れます。</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><input id="join-code" class="inp codeinp" placeholder="招待コード" maxlength="12" style="max-width:230px"><button class="btn btn-gold" style="width:auto;padding:10px 20px;margin:0" onclick="joinByCode()">参加する</button></div><p id="code-err" class="small" style="color:#fda4af;min-height:16px"></p></div>
 <div class="card">
 <h2><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> ツリーを作成する</h2>
@@ -218,16 +251,20 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
           <g><rect x="122" y="356" width="4" height="52" fill="#22344f"/><circle cx="124" cy="350" r="7" fill="#ffe9a8" filter="url(#softGlow)"/><path d="M116 342 Q124 334 132 342" stroke="#22344f" stroke-width="3" fill="none"/></g>
 
           <!-- TREE (center x=212) -->
-          <rect x="202" y="392" width="21" height="50" rx="4" fill="url(#trunkG)"/>
+          <rect x="198" y="392" width="29" height="50" rx="5" fill="url(#trunkG)"/>
           <path d="M202 402 h21 M202 416 h21 M202 430 h21" stroke="#54330f" stroke-width="2" opacity=".5"/>
           <!-- Tier 4 (bottom) -->
+          <path d="M212 240 L292 362 Q268 348 252 364 Q236 350 220 366 Q212 356 204 366 Q188 350 172 364 Q156 348 132 362 Z" fill="#0a4d2c" opacity=".65"/>
           <path d="M212 236 L286 356 Q268 342 252 358 Q236 344 220 360 Q212 350 204 360 Q188 344 172 358 Q156 342 138 356 Z" fill="url(#tier4)"/>
           <path d="M212 236 L286 356 Q240 330 212 332 Q184 330 138 356 Z" fill="#fff" opacity=".07"/>
           <!-- Tier 3 -->
+          <path d="M212 182 L278 288 Q256 275 242 290 Q228 277 214 292 Q212 286 208 292 Q194 277 180 290 Q166 275 146 288 Z" fill="#0a4d2c" opacity=".6"/>
           <path d="M212 178 L272 282 Q256 269 242 284 Q228 271 214 286 Q212 280 208 286 Q194 271 180 284 Q166 269 152 282 Z" fill="url(#tier3)"/>
           <!-- Tier 2 -->
+          <path d="M212 130 L264 222 Q244 211 232 224 Q220 213 212 226 Q204 213 192 224 Q180 211 160 222 Z" fill="#0a4d2c" opacity=".6"/>
           <path d="M212 126 L258 216 Q244 205 232 218 Q220 207 212 220 Q204 207 192 218 Q180 205 166 216 Z" fill="url(#tier2)"/>
           <!-- Tier 1 (top) -->
+          <path d="M212 80 L250 158 Q232 149 222 160 Q216 152 212 162 Q208 152 202 160 Q192 149 174 158 Z" fill="#0a4d2c" opacity=".6"/>
           <path d="M212 76 L244 152 Q232 143 222 154 Q216 146 212 156 Q208 146 202 154 Q192 143 180 152 Z" fill="url(#tier1)"/>
           <!-- Snow dusting on branch tops -->
           <g fill="#fff" opacity=".85">
@@ -237,6 +274,9 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <path d="M152 252 Q212 236 272 252 Q238 260 212 256 Q186 260 152 252Z"/>
             <path d="M140 322 Q212 304 284 322 Q242 331 212 327 Q182 331 140 322Z"/>
           </g>
+          <!-- Needle texture -->
+          <g stroke="#eafff3" stroke-width="1.6" stroke-linecap="round" opacity=".28"><path d="M196 108 l7 5 M222 104 l-6 6 M186 168 l8 4 M236 164 l-8 5 M206 196 l7 5 M176 238 l8 4 M248 234 l-8 5 M198 262 l7 5 M168 306 l8 4 M252 302 l-8 5 M214 322 l7 5"/></g>
+          <g stroke="#063d22" stroke-width="2" stroke-linecap="round" opacity=".3"><path d="M188 132 l8 4 M230 138 l-7 5 M172 208 l8 4 M246 214 l-8 5 M186 282 l8 4 M238 288 l-7 5 M196 336 l8 4"/></g>
           <!-- Garland swags + bulbs -->
           <g fill="none" stroke="#f6c453" stroke-width="2.6" opacity=".95">
             <path d="M186 158 Q212 176 238 158"/><path d="M168 224 Q212 248 256 224"/><path d="M152 292 Q212 322 272 292"/>
@@ -253,7 +293,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
           <g fill="#8b5a2b"><ellipse cx="188" cy="206" rx="4.6" ry="7"/><ellipse cx="240" cy="262" rx="4.6" ry="7"/><ellipse cx="176" cy="330" rx="5" ry="7.6"/></g>
           <g stroke="#e63946" stroke-width="3.4" fill="none"><path d="M238 196 v14 a6 6 0 1 1 -6 -6"/><path d="M182 272 v14 a6 6 0 1 1 -6 -6"/></g>
           <!-- Star -->
-          <g filter="url(#softGlow)"><polygon points="212,38 218.5,56 237,56 222.5,67 227.5,85 212,74.5 196.5,85 201.5,67 187,56 205.5,56" fill="url(#goldG)" stroke="#e79b00" stroke-width="1.4"/></g>
+          <g filter="url(#softGlow)"><polygon points="212,28 220.5,52 246,52 226,67 233.5,92 212,77.5 190.5,92 198,67 178,52 203.5,52" fill="url(#goldG)" stroke="#e79b00" stroke-width="1.6"/></g>
           <!-- Front snow + gifts -->
           <path d="M0 420 Q110 398 220 416 T360 410 V480 H0 Z" fill="url(#snowG)"/>
           <g>
@@ -291,7 +331,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 <div class="bar hidden" id="bottom-bar"><div class="inner">
 <button style="background:#fff;color:#17233b" onclick="openRanking()"><svg class="ic" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#f6c453"/><path d="M7 5.2H4.2A3.2 3.2 0 0 0 7.2 8.4M17 5.2h2.8a3.2 3.2 0 0 1-3 3.2" fill="none" stroke="#f6c453" stroke-width="1.8"/><rect x="10.6" y="12.4" width="2.8" height="3.4" fill="#e79b00"/><rect x="7.6" y="15.8" width="8.8" height="2.6" rx="1" fill="#b97a00"/></svg> 順位・一覧</button>
 <button style="background:linear-gradient(135deg,#ffd66e,#f6a93b);color:#4a2b00" onclick="openJoin()"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill="#ffd66e"/></svg> 参加してツリーを飾る</button>
-</div></div>
+<button style="background:#2a1a4a;color:#fff" onclick="location.href=location.pathname"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 11l8-7 8 7v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 20z"/></svg> みんなのツリー</button></div></div>
 
 <!-- RANKING DRAWER -->
 <div class="mask" id="mask" onclick="closeAll()"></div>
@@ -312,6 +352,26 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 <p class="center" id="detail-score"></p>
 <div id="detail-msg"></div>
 <button class="btn btn-ghost" onclick="closeAll()">閉じる</button>
+</div></div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal" id="settings-modal"><div class="sheet">
+<h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#b77900" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg> グラフィック設定</h2>
+<p class="small">画質を選んでください。端末に保存され、次回もそのまま使えます。</p>
+<label>画質</label>
+<div class="qrow"><button class="qbtn" id="q-high" onclick="setQuality('high')">高画質</button><button class="qbtn" id="q-medium" onclick="setQuality('medium')">標準</button><button class="qbtn" id="q-low" onclick="setQuality('low')">軽量</button></div>
+<p class="small">高画質：3Dの影・雪・きらめき全部入り。標準：少し軽く。軽量：アニメーションと影を止めて、古いスマホでもサクサク動きます。</p>
+<button class="btn btn-ghost" onclick="closeAll()">閉じる</button>
+</div></div>
+
+<!-- HUB CODE MODAL -->
+<div class="modal" id="hub-modal"><div class="sheet">
+<h2>招待コードで入る</h2>
+<p class="small">このツリーのホストから聞いた招待コードを入力してください。</p>
+<input id="hub-code" class="inp codeinp" placeholder="招待コード" maxlength="12">
+<p id="hub-err" class="small" style="color:#e63946;min-height:16px"></p>
+<button class="btn btn-gold" onclick="hubGo()">このツリーに入る →</button>
+<button class="btn btn-ghost" onclick="closeAll()">キャンセル</button>
 </div></div>
 
 <!-- JOIN MODAL -->
@@ -364,7 +424,8 @@ async function run(fn,args){
     getTreeFull: ['get_tree_full', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
     getPreviewMessages: ['get_preview_messages', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
     joinTree: ['join_tree', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_payload: a[3] })],
-    findTreeByCode: ['find_tree_by_code', a => ({ p_code: a[0] })]
+    findTreeByCode: ['find_tree_by_code', a => ({ p_code: a[0] })],
+    listPublicTrees: ['list_public_trees', a => ({})]
   };
   const m = MAP[fn]; if(!m) throw new Error('不明な操作です。');
   const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + m[0], { method:'POST',
@@ -374,6 +435,32 @@ async function run(fn,args){
   if(!r.ok) throw new Error((j && (j.message || j.error)) || ('サーバーエラー (' + r.status + ')'));
   return j;
 }
+
+
+/* ---------- Graphics quality ---------- */
+try{ state.quality = localStorage.getItem('ct_quality') || 'high'; }catch(e){ state.quality='high'; }
+function setQuality(q){ state.quality=q; try{ localStorage.setItem('ct_quality',q); }catch(e){}
+  document.body.classList.toggle('q-low', q==='low');
+  ['high','medium','low'].forEach(k=>{ const b=$('q-'+k); if(b) b.classList.toggle('sel', k===q); });
+  if(window.__applyQ3D) window.__applyQ3D(); }
+function openSettings(){ setQuality(state.quality||'high'); $('settings-modal').classList.add('on'); }
+
+/* ---------- Group hub ---------- */
+const HUB_GRADS=['linear-gradient(150deg,#1f9d63,#0b5c36)','linear-gradient(150deg,#e63946,#8f1220)','linear-gradient(150deg,#1f7ac0,#0d3a66)','linear-gradient(150deg,#a855f7,#5b21b6)','linear-gradient(150deg,#ff8c42,#b34a12)','linear-gradient(150deg,#ec4899,#8a1450)'];
+function hubMiniTree(){ return '<svg class="mini" width="44" height="52" viewBox="0 0 24 28"><path d="M12 1l1 2.2 2.4.3-1.8 1.6.5 2.4L12 6.2 9.9 7.5l.5-2.4-1.8-1.6L11 3.2z" fill="#ffd66e"/><path d="M12 6 L18 13h-3l4 6H5l4-6H6z" fill="rgba(255,255,255,.92)"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="rgba(255,255,255,.85)"/></svg>'; }
+async function loadHub(){ const list=$('hub-list'); if(!list) return;
+  const createCard='<button class="hubcard create" onclick="scrollToCreate()"><span style="font-size:30px;font-weight:800">＋</span><h3>新しいツリーを作る</h3><span class="meta">あなたのクイズツリーを植えよう</span></button>';
+  try{ const r=await run('listPublicTrees',[]); const trees=(r&&r.trees)||[];
+    if(!trees.length){ list.innerHTML=createCard+'<div class="hubcard" style="background:linear-gradient(150deg,#33415e,#131c30)"><h3>まだツリーがありません</h3><span class="meta">最初のツリーを作るのはあなた！</span></div>'; return; }
+    list.innerHTML=createCard+trees.map((t,i)=>'<div class="hubcard" style="background:'+HUB_GRADS[i%HUB_GRADS.length]+'">'+hubMiniTree()+'<h3>'+esc(t.title||'クリスマスツリー')+'</h3><div class="meta">ホスト：'+esc(t.ownerName||'ホスト')+' ・ 参加者 '+t.participants+'人</div><span class="go" onclick="hubEnter(\''+t.id+'\')">コードで入る</span></div>').join('');
+  }catch(e){ list.innerHTML=createCard+'<div class="small" style="padding:8px">ツリー一覧を読み込めませんでした</div>'; } }
+function scrollToCreate(){ document.getElementById('c-title').scrollIntoView({behavior:'smooth',block:'center'}); }
+function hubEnter(id){ state.hubTarget=id; $('hub-err').textContent=''; $('hub-code').value=''; $('hub-modal').classList.add('on'); }
+async function hubGo(){ const code=($('hub-code').value||'').trim().toUpperCase(); const err=$('hub-err'); if(!code){ err.textContent='コードを入力してください'; return; }
+  try{ const r=await run('findTreeByCode',[code]); if(!r.ok){ err.textContent=r.error||'コードが見つかりませんでした'; return; }
+    if(r.id!==state.hubTarget){ err.textContent='そのコードは別のツリーのものです'; return; }
+    location.href=location.pathname+'?tree='+r.id+'&invite='+r.inviteToken;
+  }catch(e){ err.textContent='通信エラー：'+e.message; } }
 
 /* ---------- Creator ---------- */
 const DEFAULT_QS = [
@@ -406,7 +493,7 @@ function copyText(b64,isB64){ const text=isB64?decodeURIComponent(escape(atob(b6
 
 /* ---------- Load tree ---------- */
 async function boot(){
- if(!state.treeId){ showCreate(); $('view-loading').classList.add('hidden'); return; }
+ if(!state.treeId){ showCreate(); $('view-loading').classList.add('hidden'); setQuality(state.quality||'high'); loadHub(); return; }
  await loadData();
 }
 async function submitPasscode(){ state.passcode=$('pass-input').value.trim(); sessionStorage.setItem('ct_pass',state.passcode); errBox($('pass-err'),''); await loadData(true); }
@@ -521,7 +608,7 @@ async function init3D(){
  try{
   const THREE=await import('three'); const {OrbitControls}=await import('three/addons/controls/OrbitControls.js'); const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
   const canvas=$('canvas3d'); const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x1c1016,0.012); scene.background=new THREE.Color(0x20131c);
   const pmrem=new THREE.PMREMGenerator(renderer); scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
   const camera=new THREE.PerspectiveCamera(46,1,0.1,120); camera.position.set(0,5.2,14.2); const introFrom=camera.position.clone(), introTo=new THREE.Vector3(0,3.4,9.6); let introT=0, introDone=false;
@@ -557,15 +644,15 @@ async function init3D(){
   const sparkGeo=new THREE.BufferGeometry(); const sparkPos=[]; for(let i=0;i<120;i++){ const a=Math.random()*Math.PI*2, r=Math.random()*3.1; sparkPos.push(Math.cos(a)*r,0.05,Math.sin(a)*r); } sparkGeo.setAttribute('position',new THREE.Float32BufferAttribute(sparkPos,3)); const sparkles=new THREE.Points(sparkGeo,new THREE.PointsMaterial({color:0xffe6a8,size:0.05,transparent:true,opacity:0.8})); scene.add(sparkles);
   // ---- Wishful-quality tree: 5 displaced, flat-shaded foliage tiers ----
   function foliageTier(radius,height,y,color){
-    const geo=new THREE.ConeGeometry(radius,height,42,5);
+    const geo=new THREE.ConeGeometry(radius,height,56,7);
     const pa=geo.attributes.position; const v=new THREE.Vector3();
     for(let i=0;i<pa.count;i++){ v.fromBufferAttribute(pa,i); const a=Math.atan2(v.z,v.x); const n=Math.sin(a*7+y*3.1)*0.055+Math.cos(a*11+v.y*2.4)*0.04+Math.sin(a*17+v.y*3.7)*0.022; const d=Math.hypot(v.x,v.z); if(d>0.05){ const s=1+n; pa.setX(i,v.x*s); pa.setZ(i,v.z*s); } }
     geo.computeVertexNormals();
     const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:color,roughness:0.92,flatShading:true})); m.position.y=y; m.castShadow=true; scene.add(m); return m;
   }
-  foliageTier(2.75,2.3,1.95,0x0d5c33); foliageTier(2.3,2.1,3.0,0x0f6a3a); foliageTier(1.85,1.95,4.0,0x127a43); foliageTier(1.38,1.75,4.92,0x158a4c); foliageTier(0.9,1.5,5.72,0x18a058);
+  foliageTier(2.9,2.25,1.92,0x0b5230); foliageTier(2.55,2.1,2.72,0x0d5c33); foliageTier(2.2,2.0,3.5,0x0f6a3a); foliageTier(1.85,1.9,4.26,0x127a43); foliageTier(1.5,1.75,4.98,0x158a4c); foliageTier(1.12,1.6,5.62,0x18a058); foliageTier(0.74,1.4,6.16,0x1cb56a);
   function snowCap(r,h,y){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,42),new THREE.MeshStandardMaterial({color:0xf7fbff,roughness:0.85,flatShading:true,transparent:true,opacity:0.92})); m.position.y=y; scene.add(m); }
-  snowCap(1.15,0.85,2.98); snowCap(0.95,0.78,3.98); snowCap(0.78,0.7,4.92); snowCap(0.6,0.62,5.78); snowCap(0.42,0.55,6.42);
+  snowCap(1.1,0.8,3.55); snowCap(0.9,0.72,4.3); snowCap(0.7,0.64,5.0); snowCap(0.52,0.56,5.66); snowCap(0.36,0.48,6.24);
   const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.42,1.25,14),new THREE.MeshStandardMaterial({color:0x74522a,roughness:1})); trunk.position.y=0.6; trunk.castShadow=true; scene.add(trunk);
   // Golden spiral garland (tube along a helix)
   { const pts=[]; for(let i=0;i<=130;i++){ const t=i/130; const ang=t*Math.PI*7.5; const y=1.35+t*4.9; const rad=2.62-(t*1.95)+Math.sin(t*Math.PI)*0.06; pts.push(new THREE.Vector3(Math.cos(ang)*rad,y,Math.sin(ang)*rad)); }
@@ -575,9 +662,12 @@ async function init3D(){
   // Fairy lights: instanced glossy bulbs hugging the tiers
   const lightCols=[new THREE.Color(0xffd66e),new THREE.Color(0xff6b9d),new THREE.Color(0x7dd3fc),new THREE.Color(0xffffff),new THREE.Color(0xff8c42)];
   const bulbGeo=new THREE.SphereGeometry(0.062,10,10); const bulbMat=new THREE.MeshStandardMaterial({roughness:0.35,metalness:0.1,emissiveIntensity:2.2});
-  const bulbCount=170; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
+  const bulbCount=260; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
   for(let i=0;i<bulbCount;i++){ const t=i/bulbCount; const y=1.45+t*4.85; const rad=2.6-(t*1.92); const ang=t*Math.PI*14+i*0.35; dummy.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); dummy.updateMatrix(); bulbs.setMatrixAt(i,dummy.matrix); bulbs.setColorAt(i,lightCols[i%lightCols.length]); }
   { const pa=bulbMat; } bulbs.instanceColor.needsUpdate=true; scene.add(bulbs);
+  { const icGeo=new THREE.ConeGeometry(0.021,0.17,6); const icMat=new THREE.MeshStandardMaterial({color:0xeaf7ff,roughness:0.15,metalness:0.1,transparent:true,opacity:0.85,emissive:0x9fd8ff,emissiveIntensity:0.35}); const icCount=80; const ics=new THREE.InstancedMesh(icGeo,icMat,icCount); const d2=new THREE.Object3D();
+    for(let i=0;i<icCount;i++){ const t=i/icCount; const y=1.6+t*4.6; const rad=2.66-(t*1.95); const ang=t*Math.PI*11+i*0.5; d2.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); d2.rotation.x=Math.PI; d2.updateMatrix(); ics.setMatrixAt(i,d2.matrix); } scene.add(ics); }
+  { const sh=new THREE.Mesh(new THREE.CircleGeometry(3.05,40),new THREE.MeshBasicMaterial({map:glowTexture('rgba(0,0,0,0.4)','rgba(0,0,0,0.16)'),transparent:true,depthWrite:false})); sh.rotation.x=-Math.PI/2; sh.position.y=0.033; scene.add(sh); }
   // Star with halo
   const starShape=new THREE.Shape(); for(let i=0;i<10;i++){const r=i%2?0.23:0.52; const a=i/10*Math.PI*2-Math.PI/2; const x=Math.cos(a)*r,y=Math.sin(a)*r; i?starShape.lineTo(x,y):starShape.moveTo(x,y);} starShape.closePath();
   const star=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.16,bevelEnabled:true,bevelSize:0.045,bevelThickness:0.045}),new THREE.MeshPhysicalMaterial({color:0xffd700,metalness:0.85,roughness:0.18,emissive:0xff9d00,emissiveIntensity:1.5,clearcoat:0.7})); star.position.set(0,6.62,-0.08); scene.add(star);
@@ -626,7 +716,10 @@ async function init3D(){
   if(state.data) window.__render3DOrnaments(state.data.participants);
   canvas.addEventListener('pointerdown',e=>{ canvas.__sx=e.clientX; canvas.__sy=e.clientY; });
   canvas.addEventListener('pointerup',e=>{ if(Math.hypot(e.clientX-canvas.__sx,e.clientY-canvas.__sy)>8) return; const r=canvas.getBoundingClientRect(); ptr.x=((e.clientX-r.left)/r.width)*2-1; ptr.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(ptr,camera); const hits=ray.intersectObjects(ornMeshes,true); if(hits.length){ let o=hits[0].object; while(o&&!o.userData.no)o=o.parent; if(o) focusOrnament(o.userData.no); } });
-  function resize(){ const w=canvas.clientWidth||innerWidth, h=480; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); } resize(); addEventListener('resize',resize);
+  window.__q3d={renderer:renderer,snow:snow,sparkles:sparkles};
+  window.__applyQ3D=function(){ const q=state.quality||'high'; renderer.setPixelRatio(q==='high'?Math.min(devicePixelRatio,2):q==='medium'?Math.min(devicePixelRatio,1.5):1); renderer.shadowMap.enabled=(q!=='low'); snow.visible=(q==='high'); sparkles.visible=(q!=='low'); };
+  window.__applyQ3D();
+  function resize(){ const w=canvas.clientWidth||innerWidth, h=520; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); } resize(); addEventListener('resize',resize);
   const clock=new THREE.Clock();
   (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
     if(!introDone){ introT+=0.006; const e=1-Math.pow(1-Math.min(introT,1),3); camera.position.lerpVectors(introFrom,introTo,e); if(introT>=1) introDone=true; }
