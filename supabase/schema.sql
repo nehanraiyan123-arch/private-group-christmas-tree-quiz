@@ -87,7 +87,7 @@ create or replace function public.create_tree(p_data jsonb)
 returns jsonb language plpgsql volatile security definer set search_path = public as $$
 declare
   v_title text; v_owner text; v_questions jsonb := '[]'::jsonb; q jsonb; c jsonb;
-  v_choices jsonb; v_id text; v_token text; v_host text; v_pass text; v_tree jsonb;
+  v_choices jsonb; v_id text; v_token text; v_host text; v_pass text; v_tree jsonb; v_code text;
 begin
   v_title := left(coalesce(nullif(trim(p_data->>'title'), ''), 'みんなのクリスマスツリー'), 60);
   v_owner := left(coalesce(nullif(trim(p_data->>'ownerName'), ''), 'ホスト'), 30);
@@ -112,10 +112,14 @@ begin
     v_id := public.ct_rand(8, 'abcdefghjkmnpqrstuvwxyz23456789');
   end loop;
   v_token := public.ct_rand(24, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
+  v_code := public.ct_rand(10, 'ABCDEFGHJKMNPQRSTUVWXYZ23456789');
+  while exists (select 1 from public.trees where data->>'joinCode' = v_code) loop
+    v_code := public.ct_rand(10, 'ABCDEFGHJKMNPQRSTUVWXYZ23456789');
+  end loop;
   v_host := public.ct_rand(20, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
   v_pass := coalesce(trim(p_data->>'passcode'), '');
   v_tree := jsonb_build_object(
-    'id', v_id, 'inviteToken', v_token,
+    'id', v_id, 'inviteToken', v_token, 'joinCode', v_code,
     'hostKeyHash', public.ct_hash(v_host),
     'title', v_title, 'ownerName', v_owner,
     'passcodeHash', public.ct_hash(v_pass), 'hasPasscode', v_pass <> '',
@@ -123,7 +127,7 @@ begin
     'participants', '[]'::jsonb,
     'createdAt', to_char(now() at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"'));
   insert into public.trees(id, data) values (v_id, v_tree);
-  return jsonb_build_object('ok', true, 'id', v_id, 'inviteToken', v_token, 'hostKey', v_host,
+  return jsonb_build_object('ok', true, 'id', v_id, 'inviteToken', v_token, 'joinCode', v_code, 'hostKey', v_host,
     'url', '/?tree=' || v_id || '&invite=' || v_token);
 end $$;
 
@@ -226,7 +230,22 @@ begin
     'unlocked', now() >= timestamptz '2026-12-25 00:00:00+09');
 end $$;
 
--- Public (anon) may call ONLY the four API functions
+create or replace function public.find_tree_by_code(p_code text)
+returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare t jsonb; v_code text;
+begin
+  v_code := upper(trim(coalesce(p_code, '')));
+  if v_code = '' then
+    return jsonb_build_object('ok', false, 'error', 'コードを入力してください。');
+  end if;
+  select data into t from public.trees where data->>'joinCode' = v_code limit 1;
+  if t is null then
+    return jsonb_build_object('ok', false, 'error', 'その招待コードのツリーが見つかりませんでした。');
+  end if;
+  return jsonb_build_object('ok', true, 'id', t->>'id', 'inviteToken', t->>'inviteToken');
+end $$;
+
+-- Public (anon) may call ONLY the API functions
 revoke all on function public.ct_hash(text) from public;
 revoke all on function public.ct_rand(int, text) from public;
 revoke all on function public.ct_personality(int) from public;
@@ -236,3 +255,4 @@ grant execute on function public.create_tree(jsonb) to anon;
 grant execute on function public.get_tree_full(text, text, text, text) to anon;
 grant execute on function public.get_preview_messages(text, text, text, text) to anon;
 grant execute on function public.join_tree(text, text, text, jsonb) to anon;
+grant execute on function public.find_tree_by_code(text) to anon;

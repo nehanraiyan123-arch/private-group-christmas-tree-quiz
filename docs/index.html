@@ -85,32 +85,41 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 .bulbGlow{animation:twinkle 1.9s ease-in-out infinite}.bulbGlow2{animation:twinkle 2.4s ease-in-out infinite .9s}
 
 @media(max-width:380px){.top h1{font-size:19px}#canvas3d,#view2d{height:440px}.stage{min-height:440px}}
+.ic{width:1.2em;height:1.2em;vertical-align:-.22em;display:inline-block}
+.codeinp{letter-spacing:2px;text-transform:uppercase;text-align:center;font-weight:700}
+.aurora1{animation:aur 11s ease-in-out infinite alternate}
+.aurora2{animation:aur 15s ease-in-out infinite alternate-reverse}
+@keyframes aur{from{transform:translateX(-9px)}to{transform:translateX(11px)}}
+.shoot{opacity:0;animation:shoot 9s linear infinite}
+@keyframes shoot{0%,70%{transform:translate(0,0);opacity:0}74%{opacity:1}86%,100%{transform:translate(150px,66px);opacity:0}}
+.flick{animation:flick 2.6s ease-in-out infinite}
+@keyframes flick{0%,100%{opacity:1}48%{opacity:.86}55%{opacity:.97}70%{opacity:.9}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
 <div class="wrap">
 <div class="top">
-<span class="badge">🔒 グループ限定 ・ 招待制</span>
-<h1>🎄 グループ限定<br>3D＆2Dクイズ＆性格診断<br>クリスマスツリー</h1>
+<span class="badge"><svg class="ic" viewBox="0 0 24 24"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg> グループ限定 ・ 招待制</span>
+<h1><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> グループ限定<br>3D＆2Dクイズ＆性格診断<br>クリスマスツリー</h1>
 <p id="subtitle">友達だけの、秘密のクリスマスツリー</p>
 </div>
 
 <div id="msg"></div>
 
 <!-- LOADING -->
-<div id="view-loading" class="card center"><div style="font-size:36px">🎄</div><p><b>読み込み中…</b></p><p class="small">雪を降らせています。少々お待ちください。</p></div>
+<div id="view-loading" class="card center"><div><svg viewBox="0 0 24 24" style="width:56px;height:56px"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg></div><p><b>読み込み中…</b></p><p class="small">雪を降らせています。少々お待ちください。</p></div>
 
 <!-- BLOCKED -->
 <div id="view-blocked" class="card hidden center">
-<div style="font-size:44px">🔒</div><h2>このツリーはグループ限定です</h2>
+<div><svg viewBox="0 0 24 24" style="width:60px;height:60px"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg></div><h2>このツリーはグループ限定です</h2>
 <p id="blocked-text" style="line-height:1.7">招待リンクから開いてください。ランダムな訪問では入ることができません。</p>
-<button class="btn btn-gold" onclick="showCreate()">🎄 自分のツリーを作る</button>
+<button class="btn btn-gold" onclick="showCreate()"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> 自分のツリーを作る</button>
 </div>
 
 <!-- PASSCODE -->
 <div id="view-passcode" class="card hidden">
-<h2>🔑 合言葉を入力してください</h2>
+<h2><svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4.6" fill="none" stroke="#f6c453" stroke-width="2.2"/><path d="M11.4 10.6 L19 3m-2.4 2.4l2.6 2.6M15.4 6.4l2.2 2.2" stroke="#f6c453" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg> 合言葉を入力してください</h2>
 <p class="small">このツリーには合言葉（グループパスワード）が設定されています。ホストから聞いた合言葉を入力してください。</p>
 <label>合言葉</label><input id="pass-input" class="inp" type="password" autocomplete="off" placeholder="合言葉を入力">
 <button class="btn btn-gold" onclick="submitPasscode()">入る →</button>
@@ -119,8 +128,9 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 
 <!-- CREATE -->
 <div id="view-create" class="hidden">
+<div class="card center" style="margin-bottom:14px"><h2 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"/></svg> 招待コードで参加</h2><p class="small">グループのリンクが開けないときは、ホストから聞いた招待コードを入力してね。リンクをタップした場合は、そのまま自動でツリーに入れます。</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><input id="join-code" class="inp codeinp" placeholder="招待コード" maxlength="12" style="max-width:230px"><button class="btn btn-gold" style="width:auto;padding:10px 20px;margin:0" onclick="joinByCode()">参加する</button></div><p id="code-err" class="small" style="color:#fda4af;min-height:16px"></p></div>
 <div class="card">
-<h2>🎄 ツリーを作成する</h2>
+<h2><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> ツリーを作成する</h2>
 <p class="small">あなたに関するクイズを3〜15問作れます。友達が答えると、性格診断タイトルと一緒にオーナメントが飾られます。参加者は最初は0人です。</p>
 <label>ツリーのタイトル</label><input id="c-title" class="inp" value="みんなのクリスマスツリー">
 <label>あなたの名前（ホスト名）</label><input id="c-owner" class="inp" placeholder="例：もん">
@@ -132,14 +142,14 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 <p class="small">各質問に選択肢を4つ入力し、正解を選んでください。</p>
 <div id="q-list"></div>
 <button class="btn btn-ghost" onclick="addQuestion()">＋ 質問を追加する</button>
-<button class="btn btn-gold" onclick="createTree()">✨ ツリーを作成して招待リンクを発行する</button>
+<button class="btn btn-gold" onclick="createTree()"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill="#ffd66e"/></svg> ツリーを作成して招待リンクを発行する</button>
 <div id="create-result"></div>
 </div>
 </div>
 
 <!-- TREE -->
 <div id="view-tree" class="hidden">
-<div class="pill"><button id="tab3d" onclick="setMode('3d')">🎄 3D立体</button><button id="tab2d" class="on" onclick="setMode('2d')">🎨 2Dイラスト</button></div>
+<div class="pill"><button id="tab3d" onclick="setMode('3d')"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> 3D立体</button><button id="tab2d" class="on" onclick="setMode('2d')"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.9 0-.8-.6-1.3-.6-2.1 0-.9.7-1.6 1.7-1.6H17a4.5 4.5 0 0 0 4.5-4.5C21.3 6.6 17.1 3 12 3z" fill="#f0abfc"/><circle cx="7.5" cy="10.5" r="1.6" fill="#ef4444"/><circle cx="12" cy="7.5" r="1.6" fill="#facc15"/><circle cx="16.5" cy="10.5" r="1.6" fill="#38bdf8"/></svg> 2Dイラスト</button></div>
 
 <div class="stage">
 <canvas id="canvas3d" style="display:none"></canvas>
@@ -158,11 +168,11 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <linearGradient id="snowG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#c9def8"/></linearGradient>
             <linearGradient id="trunkG" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6b4423"/><stop offset="50%" stop-color="#8b5a2b"/><stop offset="100%" stop-color="#5d3a17"/></linearGradient>
             <radialGradient id="winG" cx="50%" cy="50%"><stop offset="0%" stop-color="#ffeeb0"/><stop offset="100%" stop-color="#ffb63d"/></radialGradient>
-            <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe97a"/><stop offset="55%" stop-color="#ffc61a"/><stop offset="100%" stop-color="#e79b00"/></linearGradient>
+            <linearGradient id="auroraG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ade80" stop-opacity="0"/><stop offset="45%" stop-color="#4ade80" stop-opacity=".75"/><stop offset="80%" stop-color="#22d3ee" stop-opacity=".35"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient><linearGradient id="auroraG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0"/><stop offset="50%" stop-color="#a78bfa" stop-opacity=".55"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient><linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe97a"/><stop offset="55%" stop-color="#ffc61a"/><stop offset="100%" stop-color="#e79b00"/></linearGradient>
             <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
-          <rect width="360" height="480" fill="url(#skyG)"/>
+          <rect width="360" height="480" fill="url(#skyG)"/><g><path class="aurora1" d="M-20 96 C60 42 120 112 200 68 C280 24 330 80 390 46 L390 -12 L-20 -12 Z" fill="url(#auroraG)"/><path class="aurora2" d="M-20 126 C70 78 150 134 230 94 C300 60 340 102 390 76 L390 -12 L-20 -12 Z" fill="url(#auroraG2)"/></g>
           <!-- Moon + halo + stars -->
           <circle cx="306" cy="58" r="44" fill="url(#haloG)"/>
           <circle cx="306" cy="58" r="21" fill="url(#moonG)"/>
@@ -172,6 +182,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <path class="tw2" d="M52 108 l2.2 5.4 5.4 2.2 -5.4 2.2 -2.2 5.4 -2.2 -5.4 -5.4 -2.2 5.4 -2.2z"/>
             <path class="tw" d="M228 52 l1.8 4.4 4.4 1.8 -4.4 1.8 -1.8 4.4 -1.8 -4.4 -4.4 -1.8 4.4 -1.8z"/>
           </g>
+          <g class="shoot"><line x1="36" y1="66" x2="82" y2="44" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/><circle cx="84" cy="43" r="2.4" fill="#fff"/></g>
           <!-- Distant pines -->
           <g fill="#0d2c4e" opacity=".85">
             <polygon points="18,330 44,258 70,330"/><polygon points="30,300 44,272 58,300" fill="#123a66"/>
@@ -188,7 +199,7 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <polygon points="14,356 62,318 110,356 102,356 62,326 22,356" fill="#ffffff"/>
             <rect x="24" y="354" width="76" height="58" rx="5" fill="#96622e"/>
             <path d="M24 368 H100 M24 382 H100 M24 396 H100" stroke="#7a4c20" stroke-width="3"/>
-            <rect x="30" y="362" width="26" height="26" rx="3" fill="url(#winG)" stroke="#5d3a17" stroke-width="3"/>
+            <rect class="flick" x="30" y="362" width="26" height="26" rx="3" fill="url(#winG)" stroke="#5d3a17" stroke-width="3"/>
             <path d="M43 362 V388 M30 375 H56" stroke="#5d3a17" stroke-width="2.4"/>
             <rect x="66" y="360" width="26" height="52" rx="3" fill="#6e4423" stroke="#54330f" stroke-width="2.5"/>
             <circle cx="87" cy="388" r="2.6" fill="#ffd66e"/>
@@ -244,40 +255,40 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
             <path d="M146 404 q20 -8 40 0 v5 h-40z M238 410 q17 -7 34 0 v4 h-34z" fill="#fff"/>
           </g>
           <g fill="#fff"><circle cx="52" cy="446" r="2" opacity=".9"/><circle cx="318" cy="452" r="2.2" opacity=".9"/><circle cx="282" cy="438" r="1.6" opacity=".8"/><circle cx="96" cy="458" r="1.7" opacity=".8"/></g>
-        </svg>
+        <g fill="#fff"><path class="tw" d="M40 448 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z"/><path class="tw2" d="M120 462 l1.3 3.2 3.2 1.3 -3.2 1.3 -1.3 3.2 -1.3 -3.2 -3.2 -1.3 3.2 -1.3z"/><path class="tw3" d="M238 452 l1.5 3.7 3.7 1.5 -3.7 1.5 -1.5 3.7 -1.5 -3.7 -3.7 -1.5 3.7 -1.5z"/><path class="tw" d="M322 464 l1.3 3.2 3.2 1.3 -3.2 1.3 -1.3 3.2 -1.3 -3.2 -3.2 -1.3 3.2 -1.3z"/><circle class="tw2" cx="86" cy="438" r="1.6"/><circle class="tw" cx="196" cy="466" r="1.5"/><circle class="tw3" cx="286" cy="438" r="1.4"/></g></svg>
         <div id="orns2d"></div>
-        <div id="empty2d" class="empty hidden">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</div>
+        <div id="empty2d" class="empty hidden">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう</div>
       </div>
 
-      <div id="empty3d" class="empty hidden" style="z-index:8">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</div>
+      <div id="empty3d" class="empty hidden" style="z-index:8">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう</div>
 </div>
 
 <div class="card">
 <h2 id="tree-title">クリスマスツリー</h2>
 <p class="small" id="tree-meta"></p>
 <div class="row">
-<button class="btn btn-line" style="margin-top:6px" onclick="copyInvite()">🔗 招待リンク</button>
-<button class="btn btn-ghost" style="margin-top:6px" onclick="openRanking()">🏆 順位・一覧</button>
+<button class="btn btn-line" style="margin-top:6px" onclick="copyInvite()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"/></svg> 招待リンク</button>
+<button class="btn btn-ghost" style="margin-top:6px" onclick="openRanking()"><svg class="ic" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#f6c453"/><path d="M7 5.2H4.2A3.2 3.2 0 0 0 7.2 8.4M17 5.2h2.8a3.2 3.2 0 0 1-3 3.2" fill="none" stroke="#f6c453" stroke-width="1.8"/><rect x="10.6" y="12.4" width="2.8" height="3.4" fill="#e79b00"/><rect x="7.6" y="15.8" width="8.8" height="2.6" rx="1" fill="#b97a00"/></svg> 順位・一覧</button>
 </div>
 <div id="invite-result"></div>
 <div id="host-box" class="hidden">
-<div class="switch"><span>🔒 12/25プレビュー<br><span class="small">ホストのみ：12/25の解除後カードをテスト表示</span></span><input type="checkbox" id="preview-toggle" style="width:26px;height:26px" onchange="togglePreview(this.checked)"></div>
+<div class="switch"><span><svg class="ic" viewBox="0 0 24 24"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg> 12/25プレビュー<br><span class="small">ホストのみ：12/25の解除後カードをテスト表示</span></span><input type="checkbox" id="preview-toggle" style="width:26px;height:26px" onchange="togglePreview(this.checked)"></div>
 </div>
-<p class="small" style="margin-top:12px">🔒 シークレットメッセージは <b>2026年12月25日 0:00（JST）</b> まで封印されます。</p>
+<p class="small" style="margin-top:12px"><svg class="ic" viewBox="0 0 24 24"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg> シークレットメッセージは <b>2026年12月25日 0:00（JST）</b> まで封印されます。</p>
 </div>
 </div>
 </div>
 
 <!-- BOTTOM BAR -->
 <div class="bar hidden" id="bottom-bar"><div class="inner">
-<button style="background:#fff;color:#17233b" onclick="openRanking()">🏆 順位・一覧</button>
-<button style="background:linear-gradient(135deg,#ffd66e,#f6a93b);color:#4a2b00" onclick="openJoin()">✨ 参加してツリーを飾る</button>
+<button style="background:#fff;color:#17233b" onclick="openRanking()"><svg class="ic" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#f6c453"/><path d="M7 5.2H4.2A3.2 3.2 0 0 0 7.2 8.4M17 5.2h2.8a3.2 3.2 0 0 1-3 3.2" fill="none" stroke="#f6c453" stroke-width="1.8"/><rect x="10.6" y="12.4" width="2.8" height="3.4" fill="#e79b00"/><rect x="7.6" y="15.8" width="8.8" height="2.6" rx="1" fill="#b97a00"/></svg> 順位・一覧</button>
+<button style="background:linear-gradient(135deg,#ffd66e,#f6a93b);color:#4a2b00" onclick="openJoin()"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill="#ffd66e"/></svg> 参加してツリーを飾る</button>
 </div></div>
 
 <!-- RANKING DRAWER -->
 <div class="mask" id="mask" onclick="closeAll()"></div>
 <div class="drawer" id="drawer">
-<h2 style="margin:0 0 6px">🏆 順位・一覧</h2>
+<h2 style="margin:0 0 6px"><svg class="ic" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#f6c453"/><path d="M7 5.2H4.2A3.2 3.2 0 0 0 7.2 8.4M17 5.2h2.8a3.2 3.2 0 0 1-3 3.2" fill="none" stroke="#f6c453" stroke-width="1.8"/><rect x="10.6" y="12.4" width="2.8" height="3.4" fill="#e79b00"/><rect x="7.6" y="15.8" width="8.8" height="2.6" rx="1" fill="#b97a00"/></svg> 順位・一覧</h2>
 <p class="small">人をタップすると、その人のオーナメントに注目します。</p>
 <div class="pill" style="background:#eef3f9;border-color:#e3e9f2;max-width:none"><button id="sort-rank" class="on" style="color:#17233b" onclick="setSort('rank')">正解数ランキング</button><button id="sort-join" style="color:#17233b" onclick="setSort('join')">参加順</button></div>
 <div id="rank-list"></div>
@@ -297,28 +308,28 @@ label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12p
 
 <!-- JOIN MODAL -->
 <div class="modal" id="join-modal"><div class="sheet">
-<h2>✨ 参加してツリーを飾る</h2>
+<h2><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill="#ffd66e"/></svg> 参加してツリーを飾る</h2>
 <div id="join-step1">
 <label>ニックネーム</label><input id="j-name" class="inp" placeholder="例：ゆき" maxlength="20">
 <div id="join-qs"></div>
-<h3>🎀 オーナメントを選ぶ</h3>
+<h3><svg class="ic" viewBox="0 0 24 24"><path d="M12 12C9 7.5 4.5 7 3.6 9.6 2.8 12 6 13.4 12 12zm0 0c3-4.5 7.5-5 8.4-2.4.8 2.4-2.4 3.8-8.4 2.4z" fill="#f472b6"/><circle cx="12" cy="12" r="1.9" fill="#e75480"/><path d="M11 13.6l-1.4 5M13 13.6l1.4 5" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round"/></svg> オーナメントを選ぶ</h3>
 <div class="shapes" id="shape-box">
-<button data-shape="ball" class="sel" onclick="pickShape(this)">🔴<br><small>まる</small></button>
-<button data-shape="star" onclick="pickShape(this)">⭐<br><small>ほし</small></button>
-<button data-shape="heart" onclick="pickShape(this)">💗<br><small>ハート</small></button>
-<button data-shape="bell" onclick="pickShape(this)">🔔<br><small>ベル</small></button>
-<button data-shape="snow" onclick="pickShape(this)">❄️<br><small>ゆき</small></button>
-<button data-shape="gift" onclick="pickShape(this)">🎁<br><small>ギフト</small></button>
+<button data-shape="ball" class="sel" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24"><rect x="10" y="2.6" width="4" height="3" rx="1" fill="#f6c453"/><circle cx="12" cy="14" r="7.4" fill="#e63946"/><ellipse cx="9.6" cy="11" rx="2.2" ry="3" fill="#fff" opacity=".45"/></svg><br><small>まる</small></button>
+<button data-shape="star" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2.6l2.7 5.9 6.4.7-4.8 4.3 1.4 6.3L12 16.6l-5.7 3.2 1.4-6.3L2.9 9.2l6.4-.7z" fill="#ffd66e"/></svg><br><small>ほし</small></button>
+<button data-shape="heart" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20.5S4 15.2 4 9.8C4 7 6 5.2 8.3 5.2c1.5 0 3 .8 3.7 2.1.7-1.3 2.2-2.1 3.7-2.1C18 5.2 20 7 20 9.8c0 5.4-8 10.7-8 10.7z" fill="#f472b6"/></svg><br><small>ハート</small></button>
+<button data-shape="bell" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3.2a5.8 5.8 0 0 1 5.8 5.8c0 3.9 1.4 5.2 1.4 5.2H4.8S6.2 12.9 6.2 9A5.8 5.8 0 0 1 12 3.2z" fill="#f6c453"/><circle cx="12" cy="17.4" r="2.1" fill="#e79b00"/></svg><br><small>ベル</small></button>
+<button data-shape="snow" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24" stroke="#7dd3fc" stroke-width="1.9" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M12 3l-2 2.2M12 3l2 2.2M12 21l-2-2.2M12 21l2-2.2"/></svg><br><small>ゆき</small></button>
+<button data-shape="gift" onclick="pickShape(this)"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="10.4" width="16" height="8.8" rx="1" fill="#38bdf8"/><rect x="3.4" y="6.8" width="17.2" height="3.8" rx="1" fill="#0ea5e9"/><rect x="10.8" y="6.8" width="2.4" height="12.4" fill="#f6c453"/><path d="M12 6.6C10.2 3.6 6.8 3.9 7 5.8c.1 1.5 2.8 1.3 5 .8zm0 0c1.8-3 5.2-2.7 5-.8-.1 1.5-2.8 1.3-5 .8z" fill="#f6c453"/></svg><br><small>ギフト</small></button>
 </div>
 <label>オーナメントの色</label>
 <div class="colors" id="color-box"></div>
 <label>シークレットメッセージ（12/25に公開）</label>
 <textarea id="j-msg" class="inp" rows="3" maxlength="300" placeholder="12月25日まで秘密のメッセージを書こう…"></textarea>
-<button class="btn btn-red" onclick="submitJoin()">🎄 この内容で飾る！</button>
+<button class="btn btn-red" onclick="submitJoin()"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1.4l1.1 2.4 2.6.3-2 1.7.6 2.6L12 7l-2.3 1.4.6-2.6-2-1.7 2.6-.3z" fill="#ffd66e"/><path d="M12 5 L18.6 13h-3.4L19.6 19H4.4L8.8 13H5.4z" fill="#2f9e5f"/><rect x="10.9" y="19" width="2.2" height="3.4" rx=".6" fill="#8a5a33"/></svg> この内容で飾る！</button>
 <div id="join-err"></div>
 </div>
 <div id="join-done" class="hidden center">
-<div style="font-size:52px">🎉</div><h2 id="done-title"></h2><p id="done-desc" style="line-height:1.7"></p><p id="done-no" style="font-weight:800"></p>
+<div><svg viewBox="0 0 24 24" style="width:56px;height:56px"><circle cx="12" cy="13.6" r="7.6" fill="#e63946"/><rect x="10.2" y="4.4" width="3.6" height="2.6" rx=".8" fill="#f6c453"/><ellipse cx="9.4" cy="10.4" rx="2" ry="2.8" fill="#fff" opacity=".4"/><path d="M12 8.2l1.1 2.6 2.8.3-2.1 1.9.6 2.8L12 14.3l-2.4 1.5.6-2.8-2.1-1.9 2.8-.3z" fill="#fff"/></svg></div><h2 id="done-title"></h2><p id="done-desc" style="line-height:1.7"></p><p id="done-no" style="font-weight:800"></p>
 <button class="btn btn-gold" onclick="closeAll()">ツリーを見る</button>
 </div>
 <button class="btn btn-ghost" onclick="closeAll()">キャンセル</button>
@@ -329,7 +340,9 @@ const INITIAL_TREE = "";
 const INITIAL_INVITE = "";
 const UNLOCK_MS = Date.UTC(2026,11,24,15,0,0);
 let state = { modeDefault:'2d', treeId: INITIAL_TREE || new URLSearchParams(location.search).get('tree') || '', invite: INITIAL_INVITE || new URLSearchParams(location.search).get('invite') || '', passcode: sessionStorage.getItem('ct_pass')||'', data:null, mode:'2d', sort:'rank', shape:'ball', color:'#e63946', preview:false, previewMsgs:{}};
-const SHAPE_EMOJI = {ball:'🔴',star:'⭐',heart:'💗',bell:'🔔',snow:'❄️',gift:'🎁'};
+const SHAPE_GLYPHS={ball:'',star:'<path d="M12 8.2l1.1 2.6 2.8.3-2.1 1.9.6 2.8L12 14.3l-2.4 1.5.6-2.8-2.1-1.9 2.8-.3z" fill="#fff"/>',heart:'<path d="M12 15.6S7.6 13 7.6 10.4c0-1.4 1-2.4 2.3-2.4.9 0 1.7.5 2.1 1.2.4-.7 1.2-1.2 2.1-1.2 1.3 0 2.3 1 2.3 2.4 0 2.6-4.4 5.2-4.4 5.2z" fill="#fff"/>',bell:'<path d="M12 7.4a3.8 3.8 0 0 1 3.8 3.8c0 2.4.9 3.2.9 3.2H7.3s.9-.8.9-3.2A3.8 3.8 0 0 1 12 7.4z" fill="#fff"/><circle cx="12" cy="15.8" r="1.3" fill="#fff"/>',snow:'<path d="M12 7v10M7.7 9.5l8.6 5M16.3 9.5l-8.6 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none"/>',gift:'<rect x="7.4" y="10" width="9.2" height="6.4" rx=".8" fill="#fff"/><rect x="11.2" y="10" width="1.6" height="6.4" fill="COLOR"/><path d="M12 9.8C10.8 7.8 8.6 8 8.8 9.3c.1 1 1.8.8 3.2.5zm0 0c1.2-2 3.4-1.8 3.2-.5-.1 1-1.8.8-3.2.5z" fill="#fff"/>'};
+function shapeGlyph(shape,color){ return '<svg viewBox="0 0 24 24" style="width:1.05em;height:1.05em;vertical-align:-.18em">'+(SHAPE_GLYPHS[shape]||'').replace('COLOR',color||'#fff')+'</svg>'; }
+function shapeArt(shape,color,size){ size=size||30; return '<svg viewBox="0 0 24 24" style="width:'+size+'px;height:'+size+'px;vertical-align:middle"><rect x="10.2" y="1.8" width="3.6" height="2.6" rx=".8" fill="#f6c453"/><circle cx="12" cy="13.6" r="7.6" fill="'+color+'"/><ellipse cx="9.4" cy="10.4" rx="2" ry="2.8" fill="#fff" opacity=".4"/>'+(SHAPE_GLYPHS[shape]||'').replace('COLOR',color)+'</svg>'; }
 const COLORS = ['#e63946','#f6c453','#ff6b9d','#7dd3fc','#2ecc71','#a78bfa','#ff8c42','#ffffff'];
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -342,7 +355,8 @@ async function run(fn,args){
     createTree: ['create_tree', a => ({ p_data: a[0] })],
     getTreeFull: ['get_tree_full', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
     getPreviewMessages: ['get_preview_messages', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_host: a[3] || '' })],
-    joinTree: ['join_tree', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_payload: a[3] })]
+    joinTree: ['join_tree', a => ({ p_id: a[0], p_token: a[1], p_pass: a[2] || '', p_payload: a[3] })],
+    findTreeByCode: ['find_tree_by_code', a => ({ p_code: a[0] })]
   };
   const m = MAP[fn]; if(!m) throw new Error('不明な操作です。');
   const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + m[0], { method:'POST',
@@ -365,17 +379,19 @@ function questionCard(q,i){
 return '<div class="qbox" data-q="'+i+'"><button class="del" onclick="removeQuestion('+i+')">削除</button><label>質問 '+(i+1)+'</label><input class="inp qq" value="'+esc(q.q)+'"><label>選択肢（4つ）と正解</label>'+q.choices.map((c,j)=>'<div style="display:flex;gap:8px;margin:6px 0;align-items:center"><input type="radio" name="ans-'+i+'" value="'+j+'" '+(q.answer===j?'checked':'')+' style="width:22px;height:22px"><input class="inp qc" value="'+esc(c)+'" placeholder="選択肢'+(j+1)+'"></div>').join('')+'</div>';
 }
 function renderQuestions(qs){ $('q-list').innerHTML = qs.map(questionCard).join(''); $('q-count').textContent = qs.length;}
-function collectQuestions(){ const out=[]; document.querySelectorAll('#q-list.qbox').forEach(box=>{ const choices=[...box.querySelectorAll('.qc')].map(x=>x.value.trim()); const ans=box.querySelector('input[type=radio]:checked'); out.push({q:box.querySelector('.qq').value.trim(),choices:choices,answer:ans?parseInt(ans.value):0});}); return out;}
+function collectQuestions(){ const out=[]; document.querySelectorAll('#q-list .qbox').forEach(box=>{ const choices=[...box.querySelectorAll('.qc')].map(x=>x.value.trim()); const ans=box.querySelector('input[type=radio]:checked'); out.push({q:box.querySelector('.qq').value.trim(),choices:choices,answer:ans?parseInt(ans.value):0});}); return out;}
 function addQuestion(){ const qs=collectQuestions(); if(qs.length>=15){alert('質問は最大15問までです');return;} qs.push({q:'',choices:['','','',''],answer:0}); renderQuestions(qs);}
 function removeQuestion(i){ const qs=collectQuestions(); if(qs.length<=3){alert('質問は最低3問必要です');return;} qs.splice(i,1); renderQuestions(qs);}
 function showCreate(){ show('view-create'); if(!$('q-list').innerHTML) renderQuestions(JSON.parse(JSON.stringify(DEFAULT_QS))); window.scrollTo({top:0,behavior:'smooth'});}
+async function joinByCode(){ const code=($('join-code').value||'').trim().toUpperCase(); const err=$('code-err'); err.textContent=''; if(!code){ err.textContent='コードを入力してください'; return; } try{ const r=await run('findTreeByCode',[code]); if(!r.ok){ err.textContent=r.error||'コードが見つかりませんでした'; return; } location.href=location.pathname+'?tree='+r.id+'&invite='+r.inviteToken; }catch(e){ err.textContent='通信エラー：'+e.message; } }
 async function createTree(){
 const payload={title:$('c-title').value.trim(),ownerName:$('c-owner').value.trim(),passcode:$('c-pass').value.trim(),questions:collectQuestions()};
+if(r.joinCode) lineMsg+='\n招待コード：'+r.joinCode+'（リンクが開けない人はトップページで入力）';
 $('create-result').innerHTML='<p class="small">作成中…</p>';
 try{ const r=await run('createTree',[payload]); if(!r.ok){errBox($('create-result'),r.error);return;}
-localStorage.setItem('ct_host_'+r.id, r.hostKey);
-const lineMsg='🎄'+payload.title+'\nホスト：'+(payload.ownerName||'ホスト')+'\nクイズに答えてツリーを飾ってね！シークレットメッセージは12/25に公開✨\n▼参加はこちら（グループ限定）\n'+(location.origin+r.url)+(payload.passcode?'\n合言葉：'+payload.passcode:'');
-$('create-result').innerHTML='<div class="okbox" style="margin-top:12px">✅ ツリーを作成しました！参加者はまだ0人です。<br>下のボタンでLINE招待メッセージをコピーして、グループに送ってください。</div><button class="btn btn-line" onclick="copyText(`'+btoa(unescape(encodeURIComponent(lineMsg)))+'`,true)">🔗 招待リンクをコピー（LINE用）</button><button class="btn btn-gold" onclick="location.href=\''+(location.origin+r.url).replace(/'/g,'')+'\'">自分のツリーを開く →</button>';
+localStorage.setItem('ct_host_'+r.id, r.hostKey); try{ if(r.joinCode) localStorage.setItem('ct_code_'+r.id, r.joinCode); }catch(e){}
+let lineMsg=payload.title+'\nホスト：'+(payload.ownerName||'ホスト')+'\nクイズに答えてツリーを飾ってね！シークレットメッセージは12/25に公開\n▼参加はこちら（グループ限定）\n'+(location.origin+r.url)+(payload.passcode?'\n合言葉：'+payload.passcode:'');
+$('create-result').innerHTML='<div class="okbox" style="margin-top:12px"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#22c55e"/><path d="M8 12.5l2.6 2.6L16 9.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg> ツリーを作成しました！参加者はまだ0人です。<br>下のボタンでLINE招待メッセージをコピーして、グループに送ってください。</div>'+(r.joinCode?'<div class="okbox" style="margin-top:10px;text-align:center">招待コード<br><b style="font-size:22px;letter-spacing:3px">'+r.joinCode+'</b><br><span class="small">リンクが開けない人は、トップページでこのコードを入力すれば参加できます</span></div>':'')+'<button class="btn btn-line" onclick="copyText(`'+btoa(unescape(encodeURIComponent(lineMsg)))+'`,true)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"/></svg> 招待リンクをコピー（LINE用）</button><button class="btn btn-gold" onclick="location.href=\''+(location.origin+r.url).replace(/'/g,'')+'\'">自分のツリーを開く →</button>';
 }catch(e){ errBox($('create-result'),e.message||String(e));}
 }
 function copyText(b64,isB64){ const text=isB64?decodeURIComponent(escape(atob(b64))):b64; navigator.clipboard.writeText(text).then(()=>alert('コピーしました！LINEに貼り付けて送ってください。')).catch(()=>{prompt('コピーしてください',text)});}
@@ -393,7 +409,7 @@ async function loadData(fromPass){
   if(!d.ok){ if(d.code==='NEED_PASSCODE'||d.code==='BAD_PASSCODE'){ $('subtitle').textContent=(d.title||'クリスマスツリー')+' ・ ホスト：'+(d.ownerName||''); show('view-passcode'); if(fromPass) errBox($('pass-err'),d.error); return; } $('blocked-text').textContent=d.error; show('view-blocked'); return; }
   state.data=d; show('view-tree'); $('bottom-bar').classList.remove('hidden');
   $('subtitle').textContent = d.title+' ・ ホスト：'+d.ownerName;
-  $('tree-title').textContent='🎄 '+d.title; $('tree-meta').textContent='ホスト：'+d.ownerName+' ・ 参加者 '+d.participants.length+'人 ・ 質問 '+d.questions.length+'問'+(d.unlocked?' ・ 🔓 メッセージ公開中':' ・ 🔒 メッセージは12/25まで封印');
+  $('tree-title').textContent=d.title; $('tree-meta').textContent='ホスト：'+d.ownerName+' ・ 参加者 '+d.participants.length+'人 ・ 質問 '+d.questions.length+'問'+(d.unlocked?' ・ メッセージ公開中':' ・ メッセージは12/25まで封印');
   $('host-box').classList.toggle('hidden',!d.isHost);
   setMode('2d'); renderOrnaments(); renderJoinQs();
   // 3D is heavy: preload it quietly AFTER the tree is already on screen
@@ -405,8 +421,8 @@ const d=state.data; if(!d) return;
 const url=location.origin+location.pathname+'?tree='+state.treeId+'&invite='+state.invite;
 // In Apps Script, location may be script.google.com URL - use current href base without extra params
 const base=location.href.split('?')[0]; const fullUrl=base+'?tree='+state.treeId+'&invite='+state.invite;
-const msg='🎄'+d.title+'\nホスト：'+d.ownerName+'\nクイズに答えて、あなただけのオーナメントでツリーを飾ってね！\n性格診断タイトルももらえるよ✨ シークレットメッセージは12/25に公開！\n▼参加はこちら（グループ限定）\n'+fullUrl+(state.passcode?'\n合言葉：'+state.passcode:'');
-navigator.clipboard.writeText(msg).then(()=>{$('invite-result').innerHTML='<div class="okbox" style="margin-top:10px">✅ LINE招待メッセージをコピーしました！グループに貼り付けてください。</div>';}).catch(()=>prompt('コピーしてください',msg));
+let msg=d.title+'\nホスト：'+d.ownerName+'\nクイズに答えて、あなただけのオーナメントでツリーを飾ってね！\n性格診断タイトルももらえるよ シークレットメッセージは12/25に公開！\n▼参加はこちら（グループ限定）\n'+fullUrl+(state.passcode?'\n合言葉：'+state.passcode:''); try{ const c=localStorage.getItem('ct_code_'+state.treeId); if(c) msg+='\n招待コード：'+c+'（リンクが開けない人はトップページで入力）'; }catch(e){}
+navigator.clipboard.writeText(msg).then(()=>{$('invite-result').innerHTML='<div class="okbox" style="margin-top:10px"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#22c55e"/><path d="M8 12.5l2.6 2.6L16 9.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg> LINE招待メッセージをコピーしました！グループに貼り付けてください。</div>';}).catch(()=>prompt('コピーしてください',msg));
 }
 
 /* ---------- Ornaments positioning ---------- */
@@ -421,7 +437,7 @@ function posFor(p,idx,total){
 function renderOrnaments(){
  const parts=state.data?state.data.participants:[]; const empty=parts.length===0;
  $('empty2d').classList.toggle('hidden',!empty); $('empty3d').classList.toggle('hidden',!empty);
- $('orns2d').innerHTML=parts.map((p,i)=>{const pos=posFor(p,i,parts.length); const strH=10+((p.no*23)%16); return '<button class="orn2" style="left:'+pos.x+'%;top:'+pos.y+'%" onclick="focusOrnament('+p.no+',true)"><span class="str" style="height:'+strH+'px"></span><span class="cap"></span><span class="bauble" style="background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),rgba(255,255,255,0) 42%),'+esc(p.color)+';color:'+esc(p.color)+'"><span style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)">'+SHAPE_EMOJI[p.shape]+'</span></span><span class="tag">No.'+p.no+' '+esc(p.nickname)+'</span></button>';}).join('');
+ $('orns2d').innerHTML=parts.map((p,i)=>{const pos=posFor(p,i,parts.length); const strH=10+((p.no*23)%16); return '<button class="orn2" style="left:'+pos.x+'%;top:'+pos.y+'%" onclick="focusOrnament('+p.no+',true)"><span class="str" style="height:'+strH+'px"></span><span class="cap"></span><span class="bauble" style="background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),rgba(255,255,255,0) 42%),'+esc(p.color)+';color:'+esc(p.color)+'"><span style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)">'+shapeGlyph(p.shape,p.color)+'</span></span><span class="tag">No.'+p.no+' '+esc(p.nickname)+'</span></button>';}).join('');
  if(window.__render3DOrnaments) window.__render3DOrnaments(parts);
  renderRanking();
 }
@@ -432,7 +448,7 @@ return parts;
 }
 function renderRanking(){
 const parts=sortedParts();
-$('rank-list').innerHTML= parts.length? parts.map((p,i)=>{const rankLabel=state.sort==='rank'?(i+1)+'位':'No.'+p.no; return '<button class="rank" onclick="focusOrnament('+p.no+')"><span style="font-size:26px">'+SHAPE_EMOJI[p.shape]+'</span><span><b>'+esc(rankLabel)+'　'+esc(p.nickname)+'</b><br><small>'+esc(p.personality)+' ・ '+p.score+'/'+p.total+'問正解</small></span><span class="no">No.'+p.no+'</span></button>';}).join(''): '<p class="center" style="padding:18px;line-height:1.7">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう🎄</p>';
+$('rank-list').innerHTML= parts.length? parts.map((p,i)=>{const rankLabel=state.sort==='rank'?(i+1)+'位':'No.'+p.no; return '<button class="rank" onclick="focusOrnament('+p.no+')"><span style="font-size:26px">'+shapeArt(p.shape,p.color)+'</span><span><b>'+esc(rankLabel)+'　'+esc(p.nickname)+'</b><br><small>'+esc(p.personality)+' ・ '+p.score+'/'+p.total+'問正解</small></span><span class="no">No.'+p.no+'</span></button>';}).join(''): '<p class="center" style="padding:18px;line-height:1.7">まだオーナメントがありません！<br>最初の1人（No.1）になってツリーを飾ろう</p>';
 }
 function setSort(s){ state.sort=s; $('sort-rank').classList.toggle('on',s==='rank'); $('sort-join').classList.toggle('on',s==='join'); $('sort-rank').style.background=s==='rank'?'#fff':''; $('sort-join').style.background=s==='join'?'#fff':''; renderRanking();}
 function openRanking(){ $('mask').classList.add('on'); $('drawer').classList.add('open'); renderRanking();}
@@ -443,13 +459,13 @@ if(state.mode==='3d' && window.__focus3D) window.__focus3D(p);
 openDetail(p);
 }
 function openDetail(p){
-$('detail-emoji').textContent=SHAPE_EMOJI[p.shape]; $('detail-name').textContent=p.nickname+' さん（No.'+p.no+'）';
-$('detail-title').textContent='🏅 '+p.personality; $('detail-desc').textContent=p.personalityDesc||''; $('detail-score').innerHTML='<b>'+p.score+' / '+p.total+' 問正解</b>（'+p.percent+'%）';
+$('detail-emoji').innerHTML=shapeArt(p.shape,p.color,46); $('detail-name').textContent=p.nickname+' さん（No.'+p.no+'）';
+$('detail-title').textContent=p.personality; $('detail-desc').textContent=p.personalityDesc||''; $('detail-score').innerHTML='<b>'+p.score+' / '+p.total+' 問正解</b>（'+p.percent+'%）';
 const unlocked=state.data.unlocked || state.preview;
 let msg=p.message;
 if(state.preview && state.previewMsgs[p.no]!==undefined) msg=state.previewMsgs[p.no];
-if(unlocked && msg!==null && msg!==undefined){ $('detail-msg').innerHTML='<div class="unlockedMsg">💌 シークレットメッセージ'+(state.preview&&!state.data.unlocked?'（プレビュー）':'')+'<br>'+esc(msg||'（メッセージなし）')+'</div>';}
-else { $('detail-msg').innerHTML='<div class="sealed">🔒 シークレットメッセージは封印中<br><small>2026年12月25日 0:00（JST）に公開されます</small></div>';}
+if(unlocked && msg!==null && msg!==undefined){ $('detail-msg').innerHTML='<div class="unlockedMsg"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" fill="#fda4af"/><path d="M3.5 7.2L12 13l8.5-5.8" fill="none" stroke="#fff" stroke-width="1.8"/></svg> シークレットメッセージ'+(state.preview&&!state.data.unlocked?'（プレビュー）':'')+'<br>'+esc(msg||'（メッセージなし）')+'</div>';}
+else { $('detail-msg').innerHTML='<div class="sealed"><svg class="ic" viewBox="0 0 24 24"><path d="M7 10.5V8a5 5 0 0 1 10 0v2.5" fill="none" stroke="#f6c453" stroke-width="2.2"/><rect x="5" y="10.5" width="14" height="9.5" rx="2" fill="#f6c453"/><circle cx="12" cy="15" r="1.8" fill="#7a4d00"/></svg> シークレットメッセージは封印中<br><small>2026年12月25日 0:00（JST）に公開されます</small></div>';}
 $('detail-modal').classList.add('on');
 }
 async function togglePreview(on){
@@ -475,7 +491,7 @@ if(missing){errBox($('join-err'),'すべての質問に答えてください');r
 try{ const r=await run('joinTree',[state.treeId,state.invite,state.passcode,{nickname:nickname,answers:answers,shape:state.shape,color:state.color,message:$('j-msg').value.trim()}]);
 if(!r.ok){errBox($('join-err'),r.error);return;}
 $('join-step1').classList.add('hidden'); $('join-done').classList.remove('hidden');
-$('done-title').textContent=r.participant.personality; $('done-desc').textContent=r.participant.personalityDesc+'\n'+r.participant.score+'/'+r.participant.total+'問正解（'+r.participant.percent+'%）でした！'; $('done-no').textContent='あなたは No.'+r.participant.no+' です🎄 ツリーに飾られました！';
+$('done-title').textContent=r.participant.personality; $('done-desc').textContent=r.participant.personalityDesc+'\n'+r.participant.score+'/'+r.participant.total+'問正解（'+r.participant.percent+'%）でした！'; $('done-no').textContent='あなたは No.'+r.participant.no+' です！ツリーに飾られました！';
 await loadData();
 }catch(e){errBox($('join-err'),e.message||String(e));}
 }
@@ -511,6 +527,7 @@ async function init3D(){
   function glowTexture(inner,outer){ const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d'); const g=x.createRadialGradient(64,64,4,64,64,64); g.addColorStop(0,inner); g.addColorStop(0.4,outer); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); }
   const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(6.4,7.6,-7); scene.add(moon);
   const moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,246,200,0.85)','rgba(255,240,180,0.28)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); moonGlow.scale.setScalar(4.2); moonGlow.position.copy(moon.position); scene.add(moonGlow);
+  { const cnv=document.createElement('canvas'); cnv.width=256; cnv.height=128; const g2=cnv.getContext('2d'); const gr=g2.createLinearGradient(0,0,0,128); gr.addColorStop(0,'rgba(90,255,175,0)'); gr.addColorStop(0.5,'rgba(90,255,175,0.6)'); gr.addColorStop(0.8,'rgba(130,130,255,0.25)'); gr.addColorStop(1,'rgba(130,130,255,0)'); g2.fillStyle=gr; g2.fillRect(0,0,256,128); const aur=new THREE.Mesh(new THREE.PlaneGeometry(30,10),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cnv),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); aur.position.set(-2,9.8,-14); aur.name='aurora3d'; scene.add(aur); }
   // Snowy island with soft drifts
   const island=new THREE.Mesh(new THREE.CylinderGeometry(5.0,3.7,1.15,40),new THREE.MeshStandardMaterial({color:0xe8f1ff,roughness:1})); island.position.y=-0.58; island.receiveShadow=true; scene.add(island);
   const groundGeo=new THREE.CircleGeometry(5.0,48,0,Math.PI*2); { const pa=groundGeo.attributes.position; for(let i=0;i<pa.count;i++){ const x=pa.getX(i),y=pa.getY(i); const d=Math.hypot(x,y); if(d>0.6) pa.setZ(i,Math.sin(x*2.1)*Math.cos(y*1.7)*0.05); } groundGeo.computeVertexNormals(); }
@@ -530,10 +547,12 @@ async function init3D(){
   // Golden spiral garland (tube along a helix)
   { const pts=[]; for(let i=0;i<=130;i++){ const t=i/130; const ang=t*Math.PI*7.5; const y=1.35+t*4.9; const rad=2.62-(t*1.95)+Math.sin(t*Math.PI)*0.06; pts.push(new THREE.Vector3(Math.cos(ang)*rad,y,Math.sin(ang)*rad)); }
     const garland=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),260,0.032,8),new THREE.MeshStandardMaterial({color:0xf6c453,metalness:0.95,roughness:0.22,emissive:0x664400,emissiveIntensity:0.35})); scene.add(garland); }
+  { const pts=[]; for(let i=0;i<=130;i++){ const t=i/130; const ang=t*Math.PI*7.5+1.15; const y=1.5+t*4.75; const rad=2.6-(t*1.93)+Math.sin(t*Math.PI)*0.06; pts.push(new THREE.Vector3(Math.cos(ang)*rad,y,Math.sin(ang)*rad)); }
+    const ribbon=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),260,0.021,6),new THREE.MeshStandardMaterial({color:0xd7263d,metalness:0.35,roughness:0.38,emissive:0x550011,emissiveIntensity:0.5})); scene.add(ribbon); }
   // Fairy lights: instanced glossy bulbs hugging the tiers
   const lightCols=[new THREE.Color(0xffd66e),new THREE.Color(0xff6b9d),new THREE.Color(0x7dd3fc),new THREE.Color(0xffffff),new THREE.Color(0xff8c42)];
   const bulbGeo=new THREE.SphereGeometry(0.062,10,10); const bulbMat=new THREE.MeshStandardMaterial({roughness:0.35,metalness:0.1,emissiveIntensity:2.2});
-  const bulbCount=110; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
+  const bulbCount=170; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
   for(let i=0;i<bulbCount;i++){ const t=i/bulbCount; const y=1.45+t*4.85; const rad=2.6-(t*1.92); const ang=t*Math.PI*14+i*0.35; dummy.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); dummy.updateMatrix(); bulbs.setMatrixAt(i,dummy.matrix); bulbs.setColorAt(i,lightCols[i%lightCols.length]); }
   { const pa=bulbMat; } bulbs.instanceColor.needsUpdate=true; scene.add(bulbs);
   // Star with halo
@@ -548,6 +567,7 @@ async function init3D(){
   const cbase=new THREE.Mesh(new THREE.BoxGeometry(1.35,0.9,1.05),new THREE.MeshStandardMaterial({color:0x8b5a2b,roughness:0.95})); cbase.position.y=0.45; cbase.castShadow=true; cabin.add(cbase);
   const croof=new THREE.Mesh(new THREE.ConeGeometry(1.22,0.62,4),new THREE.MeshStandardMaterial({color:0xf4f9ff,roughness:0.9,flatShading:true})); croof.position.y=1.2; croof.rotation.y=Math.PI/4; cabin.add(croof);
   const chim=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.5,0.2),new THREE.MeshStandardMaterial({color:0x7c4a26})); chim.position.set(0.36,1.3,-0.2); cabin.add(chim);
+  for(let i=0;i<5;i++){ const ic=new THREE.Mesh(new THREE.ConeGeometry(0.045,0.24,6),new THREE.MeshStandardMaterial({color:0xdff3ff,roughness:0.12,metalness:0.05,transparent:true,opacity:0.92})); ic.rotation.x=Math.PI; ic.position.set(-0.52+i*0.26,0.82,0.52); cabin.add(ic); }
   const winMat=new THREE.MeshBasicMaterial({color:0xffca55}); const win1=new THREE.Mesh(new THREE.PlaneGeometry(0.36,0.36),winMat); win1.position.set(-0.28,0.48,0.53); cabin.add(win1); const win2=new THREE.Mesh(new THREE.PlaneGeometry(0.3,0.42),winMat); win2.position.set(0.34,0.46,0.53); cabin.add(win2);
   const cLight=new THREE.PointLight(0xffb63d,7,5,1.8); cLight.position.set(0,0.5,0.9); cabin.add(cLight);
   cabin.position.set(-3.35,0,-0.55); cabin.rotation.y=0.5; scene.add(cabin);
@@ -576,7 +596,7 @@ async function init3D(){
   const clock=new THREE.Clock();
   (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
     if(!controls.autoRotate && resumeAt && Date.now()>resumeAt){ controls.autoRotate=true; resumeAt=0; }
-    star.rotation.y=t*0.7; starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
+    star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
     const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.02; if(y<0)y=14; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
     ornGroup.children.forEach((m,i)=>{ m.rotation.y=Math.sin(t*0.7+i*1.7)*0.35; m.position.y+=Math.sin(t*1.4+i)*0.0006; });
     controls.update(); renderer.render(scene,camera); })();
