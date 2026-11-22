@@ -203,7 +203,7 @@ body.q-low #snow2d{display:none}
             <linearGradient id="snowG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#c9def8"/></linearGradient>
             <linearGradient id="trunkG" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6b4423"/><stop offset="50%" stop-color="#8b5a2b"/><stop offset="100%" stop-color="#5d3a17"/></linearGradient>
             <radialGradient id="winG" cx="50%" cy="50%"><stop offset="0%" stop-color="#ffeeb0"/><stop offset="100%" stop-color="#ffb63d"/></radialGradient>
-            <linearGradient id="auroraG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ade80" stop-opacity="0"/><stop offset="45%" stop-color="#4ade80" stop-opacity=".75"/><stop offset="80%" stop-color="#22d3ee" stop-opacity=".35"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient><linearGradient id="auroraG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0"/><stop offset="50%" stop-color="#a78bfa" stop-opacity=".55"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient><linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe97a"/><stop offset="55%" stop-color="#ffc61a"/><stop offset="100%" stop-color="#e79b00"/></linearGradient>
+            <linearGradient id="auroraG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ade80" stop-opacity="0"/><stop offset="45%" stop-color="#4ade80" stop-opacity=".75"/><stop offset="80%" stop-color="#22d3ee" stop-opacity=".35"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient><linearGradient id="auroraG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0"/><stop offset="50%" stop-color="#a78bfa" stop-opacity=".55"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient><linearGradient id="beamG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff3c4" stop-opacity=".34"/><stop offset="100%" stop-color="#fff3c4" stop-opacity="0"/></linearGradient><linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe97a"/><stop offset="55%" stop-color="#ffc61a"/><stop offset="100%" stop-color="#e79b00"/></linearGradient>
             <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
@@ -228,6 +228,9 @@ body.q-low #snow2d{display:none}
             <g fill="#e63946"><circle cx="160" cy="98" r="2.6"/><circle cx="171" cy="105" r="2.6"/><circle cx="170" cy="120" r="2.6"/><circle cx="160" cy="126" r="2.6"/><circle cx="150" cy="120" r="2.6"/><circle cx="149" cy="105" r="2.6"/></g>
             <path d="M160 130 l-7 -5 v10 z M160 130 l7 -5 v10 z" fill="#e63946"/><circle cx="160" cy="130" r="2.4" fill="#c81e2e"/>
           </g>
+          <!-- Moonlight beam + floating dust (v9) -->
+          <polygon points="28,44 128,44 296,428 176,428" fill="url(#beamG)"/>
+          <g fill="#fff7d6"><circle class="tw" cx="150" cy="150" r="1.8" opacity=".65"/><circle class="tw2" cx="196" cy="238" r="1.5" opacity=".55"/><circle class="tw3" cx="118" cy="286" r="1.6" opacity=".6"/><circle class="tw2" cx="238" cy="330" r="1.4" opacity=".5"/><circle class="tw" cx="86" cy="210" r="1.3" opacity=".55"/><circle class="tw3" cx="268" cy="180" r="1.3" opacity=".45"/></g>
           <!-- Garland swag across the top of the wall -->
           <g>
             <path d="M150 18 Q212 52 274 18" fill="none" stroke="#1d9157" stroke-width="5" stroke-linecap="round"/>
@@ -604,7 +607,7 @@ await loadData();
 }
 
 /* ---------- Mode / Snow 2D ---------- */
-function setMode(m){ state.mode=m; if(m==='3d') init3D(); $('tab3d').classList.toggle('on',m==='3d'); $('tab2d').classList.toggle('on',m==='2d'); $('canvas3d').style.display=m==='3d'?'block':'none'; $('view2d').style.display=m==='2d'?'block':'none'; $('empty3d').style.display=(m==='3d'&&state.data&&state.data.participants.length===0)?'block':'none'; if(m==='2d') startSnow2D();}
+function setMode(m){ state.mode=m; if(m==='3d') init3D(); $('tab3d').classList.toggle('on',m==='3d'); $('tab2d').classList.toggle('on',m==='2d'); $('canvas3d').style.display=m==='3d'?'block':'none'; $('view2d').style.display=m==='2d'?'block':'none'; $('empty3d').style.display=(m==='3d'&&state.data&&state.data.participants.length===0)?'block':'none'; if(m==='3d'){ const cv=$('canvas3d'); cv.style.transition='none'; cv.style.opacity='0'; requestAnimationFrame(()=>requestAnimationFrame(()=>{ cv.style.transition='opacity .55s ease'; cv.style.opacity='1'; })); } if(m==='2d') startSnow2D();}
 function startSnow2D(){
 const c=$('snow2d'); if(c.__running) return; c.__running=true; const ctx=c.getContext('2d');
 function size(){c.width=c.offsetWidth*devicePixelRatio;c.height=c.offsetHeight*devicePixelRatio;} size();
@@ -618,7 +621,7 @@ async function init3D(){
  if(threeStarted) { if(window.__render3DOrnaments&&state.data) window.__render3DOrnaments(state.data.participants); return; }
  threeStarted=true;
  try{
-  const THREE=await import('three'); const {OrbitControls}=await import('three/addons/controls/OrbitControls.js'); const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
+  const THREE=await import('three'); const {OrbitControls}=await import('three/addons/controls/OrbitControls.js'); const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js'); const {EffectComposer}=await import('three/addons/postprocessing/EffectComposer.js'); const {RenderPass}=await import('three/addons/postprocessing/RenderPass.js'); const {UnrealBloomPass}=await import('three/addons/postprocessing/UnrealBloomPass.js'); const {OutputPass}=await import('three/addons/postprocessing/OutputPass.js');
   const canvas=$('canvas3d'); const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x1c1016,0.012); scene.background=new THREE.Color(0x20131c);
@@ -744,10 +747,23 @@ async function init3D(){
   if(state.data) window.__render3DOrnaments(state.data.participants);
   canvas.addEventListener('pointerdown',e=>{ canvas.__sx=e.clientX; canvas.__sy=e.clientY; });
   canvas.addEventListener('pointerup',e=>{ if(Math.hypot(e.clientX-canvas.__sx,e.clientY-canvas.__sy)>8) return; const r=canvas.getBoundingClientRect(); ptr.x=((e.clientX-r.left)/r.width)*2-1; ptr.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(ptr,camera); const hits=ray.intersectObjects(ornMeshes,true); if(hits.length){ let o=hits[0].object; while(o&&!o.userData.no)o=o.parent; if(o) focusOrnament(o.userData.no); } });
-  window.__q3d={renderer:renderer,snow:snow,sparkles:sparkles};
-  window.__applyQ3D=function(){ const q=state.quality||'high'; renderer.setPixelRatio(q==='high'?Math.min(devicePixelRatio,2):q==='medium'?Math.min(devicePixelRatio,1.5):1); renderer.shadowMap.enabled=(q!=='low'); snow.visible=(q==='high'); sparkles.visible=(q!=='low'); };
+  // ---- OHZI-style selective bloom (v9): threshold keeps only lights/star/fire glowing, High quality only ----
+  let composer=null, bloomPass=null;
+  try{ composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera)); bloomPass=new UnrealBloomPass(new THREE.Vector2(canvas.clientWidth||innerWidth,520),0.55,0.65,0.85); composer.addPass(bloomPass); composer.addPass(new OutputPass()); }catch(e){ composer=null; }
+  // ---- Floating dust motes drifting in the warm light (v9) ----
+  const dustGeo=new THREE.BufferGeometry(); const dustBase=[]; const dustPos=[]; const dustPhase=[];
+  for(let i=0;i<170;i++){ const bx=(Math.random()-0.5)*9, by=0.4+Math.random()*5.4, bz=(Math.random()-0.5)*6-0.8; dustBase.push(bx,by,bz); dustPos.push(bx,by,bz); dustPhase.push(Math.random()*6.28); }
+  dustGeo.setAttribute('position',new THREE.Float32BufferAttribute(dustPos,3));
+  const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({map:glowTexture('rgba(255,240,200,0.9)','rgba(255,220,150,0.25)'),color:0xffe9b8,size:0.075,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  dust.name='dustMotes'; scene.add(dust);
+  // ---- Pointer light: soft glow that follows the visitor's mouse/finger (v9) ----
+  const ptrLight=new THREE.PointLight(0xffd9a0,5,7,1.8); ptrLight.position.set(0,3.4,3.2); scene.add(ptrLight);
+  const ptrTarget=new THREE.Vector3(0,3.4,3.2);
+  canvas.addEventListener('pointermove',e=>{ if(e.buttons) return; const r=canvas.getBoundingClientRect(); const nx=((e.clientX-r.left)/r.width)*2-1, ny=-((e.clientY-r.top)/r.height)*2+1; const v=new THREE.Vector3(nx,ny,0.5).unproject(camera); const dir=v.sub(camera.position).normalize(); ptrTarget.copy(camera.position).addScaledVector(dir,7.5); });
+  window.__q3d={renderer:renderer,snow:snow,sparkles:sparkles,dust:dust,composer:composer};
+  window.__applyQ3D=function(){ const q=state.quality||'high'; renderer.setPixelRatio(q==='high'?Math.min(devicePixelRatio,2):q==='medium'?Math.min(devicePixelRatio,1.5):1); renderer.shadowMap.enabled=(q!=='low'); snow.visible=(q==='high'); sparkles.visible=(q!=='low'); dust.visible=(q!=='low'); if(composer) composer.setPixelRatio(q==='high'?Math.min(devicePixelRatio,2):1); };
   window.__applyQ3D();
-  function resize(){ const w=canvas.clientWidth||innerWidth, h=520; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); } resize(); addEventListener('resize',resize);
+  function resize(){ const w=canvas.clientWidth||innerWidth, h=520; renderer.setSize(w,h,false); if(composer) composer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); } resize(); addEventListener('resize',resize);
   const clock=new THREE.Clock();
   (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
     if(!introDone){ introT+=0.006; const e=1-Math.pow(1-Math.min(introT,1),3); camera.position.lerpVectors(introFrom,introTo,e); if(introT>=1) introDone=true; }
@@ -755,7 +771,9 @@ async function init3D(){
     star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } const fl3=scene.getObjectByName('fireLight'); if(fl3){ fl3.intensity=8.5+Math.sin(t*11)*1.7+Math.sin(t*23+1.3)*1.2; } const fp3=scene.getObjectByName('flameP'); if(fp3){ fp3.scale.set(1,0.94+Math.sin(t*9.2)*0.09,1); } starGlow.material.opacity=0.82+Math.sin(t*2.2)*0.18; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
     const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.012; if(y<2.45)y=4.85; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
     ornGroup.children.forEach((m,i)=>{ m.rotation.y=Math.sin(t*0.7+i*1.7)*0.35; m.position.y+=Math.sin(t*1.4+i)*0.0006; });
-    controls.update(); renderer.render(scene,camera); })();
+    if(dust.visible){ const dp=dust.geometry.attributes.position; for(let i=0;i<dp.count;i++){ dp.setX(i,dustBase[i*3]+Math.sin(t*0.24+dustPhase[i])*0.35); dp.setY(i,dustBase[i*3+1]+Math.sin(t*0.16+dustPhase[i]*1.7)*0.28); } dp.needsUpdate=true; }
+    ptrLight.position.lerp(ptrTarget,0.06);
+    controls.update(); if(composer && (state.quality||'high')==='high') composer.render(); else renderer.render(scene,camera); })();
  }catch(e){ console.warn('3D failed, use 2D',e); setMode('2d'); }
 }
 boot();
