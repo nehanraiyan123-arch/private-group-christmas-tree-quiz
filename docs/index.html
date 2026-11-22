@@ -219,6 +219,14 @@ body.q-low #snow2d{display:none}
             <path d="M75 37 V205 M21 121 H129" stroke="#5d3a17" stroke-width="5"/>
             <rect x="8" y="208" width="134" height="9" rx="4" fill="#7a4c20"/>
             <path d="M21 205 L34 190 L48 205 L62 190 L76 205 L90 190 L104 205 L118 190 L129 205 L129 212 L21 212 Z" fill="#fff" opacity=".9"/>
+            <g fill="#fff" opacity=".38"><path d="M21 37 h26 q-14 4 -18 14 q-6 -6 -8 -14z"/><path d="M129 37 h-24 q12 4 16 13 q6 -5 8 -13z"/><path d="M21 205 h22 q-12 -3 -15 -11 q-5 4 -7 11z"/><path d="M129 205 h-22 q12 -3 15 -11 q5 4 7 11z"/></g>
+          </g>
+          <!-- Wall wreath (v8) -->
+          <g>
+            <circle cx="160" cy="112" r="15" fill="none" stroke="#1d9157" stroke-width="7"/>
+            <circle cx="160" cy="112" r="15" fill="none" stroke="#147a47" stroke-width="7" stroke-dasharray="4 6" opacity=".7"/>
+            <g fill="#e63946"><circle cx="160" cy="98" r="2.6"/><circle cx="171" cy="105" r="2.6"/><circle cx="170" cy="120" r="2.6"/><circle cx="160" cy="126" r="2.6"/><circle cx="150" cy="120" r="2.6"/><circle cx="149" cy="105" r="2.6"/></g>
+            <path d="M160 130 l-7 -5 v10 z M160 130 l7 -5 v10 z" fill="#e63946"/><circle cx="160" cy="130" r="2.4" fill="#c81e2e"/>
           </g>
           <!-- Garland swag across the top of the wall -->
           <g>
@@ -286,14 +294,18 @@ body.q-low #snow2d{display:none}
             <circle class="bulbGlow2" cx="182" cy="236" r="3.6" fill="#ffd66e"/><circle class="bulbGlow" cx="200" cy="243" r="3.6" fill="#ff8c42"/><circle class="bulbGlow2" cx="218" cy="243" r="3.6" fill="#ff6b9d"/><circle class="bulbGlow" cx="236" cy="236" r="3.6" fill="#7dd3fc"/>
             <circle class="bulbGlow" cx="172" cy="306" r="3.8" fill="#7dd3fc"/><circle class="bulbGlow2" cx="194" cy="314" r="3.8" fill="#ff6b9d"/><circle class="bulbGlow" cx="216" cy="315" r="3.8" fill="#ffd66e"/><circle class="bulbGlow2" cx="238" cy="308" r="3.8" fill="#2ecc71"/><circle class="bulbGlow" cx="254" cy="300" r="3.8" fill="#ff8c42"/>
           </g>
+          <!-- Berry clusters (v8) -->
+          <g fill="#e63946"><circle cx="196" cy="188" r="2.8"/><circle cx="201" cy="192" r="2.8"/><circle cx="195" cy="195" r="2.8"/><circle cx="232" cy="248" r="2.8"/><circle cx="237" cy="252" r="2.8"/><circle cx="231" cy="255" r="2.8"/><circle cx="188" cy="292" r="2.8"/><circle cx="193" cy="296" r="2.8"/><circle cx="187" cy="299" r="2.8"/></g>
           <!-- Bows -->
           <g fill="#e63946"><path d="M212 158 l-11 -7 v14 z M212 158 l11 -7 v14 z"/><circle cx="212" cy="158" r="3.2" fill="#c81e2e"/>
           <path d="M212 226 l-12 -8 v16 z M212 226 l12 -8 v16 z"/><circle cx="212" cy="226" r="3.4" fill="#c81e2e"/></g>
           <!-- Pinecones + candy -->
           <g fill="#8b5a2b"><ellipse cx="188" cy="206" rx="4.6" ry="7"/><ellipse cx="240" cy="262" rx="4.6" ry="7"/><ellipse cx="176" cy="330" rx="5" ry="7.6"/></g>
           <g stroke="#e63946" stroke-width="3.4" fill="none"><path d="M238 196 v14 a6 6 0 1 1 -6 -6"/><path d="M182 272 v14 a6 6 0 1 1 -6 -6"/></g>
+          <circle cx="212" cy="58" r="46" fill="url(#haloG)"/>
           <!-- Star -->
           <g filter="url(#softGlow)"><polygon points="212,28 220.5,52 246,52 226,67 233.5,92 212,77.5 190.5,92 198,67 178,52 203.5,52" fill="url(#goldG)" stroke="#e79b00" stroke-width="1.6"/></g>
+          <ellipse cx="212" cy="446" rx="120" ry="20" fill="#ffd66e" opacity=".13"/>
           <!-- Front snow + gifts -->
           <path d="M0 420 Q110 398 220 416 T360 410 V480 H0 Z" fill="url(#snowG)"/>
           <g>
@@ -623,10 +635,14 @@ async function init3D(){
   const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(-3.72,4.32,-5.33); moon.scale.setScalar(0.5); scene.add(moon);
   const moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,246,200,0.85)','rgba(255,240,180,0.28)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); moonGlow.scale.setScalar(1.7); moonGlow.position.copy(moon.position); scene.add(moonGlow);
   { const cnv=document.createElement('canvas'); cnv.width=256; cnv.height=128; const g2=cnv.getContext('2d'); const gr=g2.createLinearGradient(0,0,0,128); gr.addColorStop(0,'rgba(90,255,175,0)'); gr.addColorStop(0.5,'rgba(90,255,175,0.6)'); gr.addColorStop(0.8,'rgba(130,130,255,0.25)'); gr.addColorStop(1,'rgba(130,130,255,0)'); g2.fillStyle=gr; g2.fillRect(0,0,256,128); const aur=new THREE.Mesh(new THREE.PlaneGeometry(3.0,1.8),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cnv),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); aur.position.set(-3.05,4.35,-5.35); aur.name='aurora3d'; scene.add(aur); }
+  // ---- Real CC0 textures (Poly Haven) downloaded into assets/ (v8) ----
+  const texLoader=new THREE.TextureLoader();
+  function loadTex(f,rx,ry,srgb){ const t=texLoader.load('assets/'+f); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(rx,ry); if(srgb)t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
   // ---- Cozy room (WishfulTree style): wood floor, rug, walls, window ----
-  const floor=new THREE.Mesh(new THREE.CircleGeometry(10,48),new THREE.MeshStandardMaterial({color:0x7c4f2a,roughness:0.85})); floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(10,48),new THREE.MeshStandardMaterial({map:loadTex('floor_diff.jpg',4,4,true),normalMap:loadTex('floor_nor.jpg',4,4,false),roughness:0.72})); floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
   const rug=new THREE.Mesh(new THREE.CircleGeometry(3.45,44),new THREE.MeshStandardMaterial({color:0xa83240,roughness:0.95})); rug.rotation.x=-Math.PI/2; rug.position.y=0.021; rug.receiveShadow=true; scene.add(rug);
   const rug2=new THREE.Mesh(new THREE.CircleGeometry(2.65,44),new THREE.MeshStandardMaterial({color:0xbf4553,roughness:0.95})); rug2.rotation.x=-Math.PI/2; rug2.position.y=0.026; scene.add(rug2);
+  const rugRing=new THREE.Mesh(new THREE.RingGeometry(3.28,3.44,48),new THREE.MeshStandardMaterial({color:0xf6c453,metalness:0.65,roughness:0.35})); rugRing.rotation.x=-Math.PI/2; rugRing.position.y=0.028; scene.add(rugRing);
   const wallMat=new THREE.MeshStandardMaterial({color:0xefd9b8,roughness:1});
   const wallB=new THREE.Mesh(new THREE.PlaneGeometry(17,9),wallMat); wallB.position.set(0,4.5,-5.4); scene.add(wallB);
   const wallL=new THREE.Mesh(new THREE.PlaneGeometry(13,9),new THREE.MeshStandardMaterial({color:0xe9d2ab,roughness:1})); wallL.rotation.y=Math.PI/2; wallL.position.set(-6.6,4.5,-0.6); scene.add(wallL);
@@ -640,6 +656,18 @@ async function init3D(){
     const fM=new THREE.Mesh(new THREE.BoxGeometry(0.07,2.75,0.06),frameMat); fM.position.set(-3.05,3.6,-5.31); scene.add(fM);
     const fM2=new THREE.Mesh(new THREE.BoxGeometry(2.35,0.07,0.06),frameMat); fM2.position.set(-3.05,3.6,-5.31); scene.add(fM2);
     const sill=new THREE.Mesh(new THREE.BoxGeometry(2.8,0.1,0.3),frameMat); sill.position.set(-3.05,2.08,-5.25); scene.add(sill); }
+  // Wreath + light swag on the back wall (v8 garnish)
+  { const wreath=new THREE.Group(); const wring=new THREE.Mesh(new THREE.TorusGeometry(0.42,0.13,10,28),new THREE.MeshStandardMaterial({color:0x14632f,roughness:0.9,flatShading:true})); wreath.add(wring);
+    const berryMat=new THREE.MeshStandardMaterial({color:0xe63946,roughness:0.3,emissive:0x660000,emissiveIntensity:0.4});
+    for(let i=0;i<9;i++){ const a=i/9*Math.PI*2; const b=new THREE.Mesh(new THREE.SphereGeometry(0.045,8,8),berryMat); b.position.set(Math.cos(a)*0.42,Math.sin(a)*0.42,0.11); wreath.add(b); }
+    const wbow=new THREE.Mesh(new THREE.TorusGeometry(0.09,0.035,8,16),new THREE.MeshStandardMaterial({color:0xd7263d,roughness:0.5})); wbow.position.set(0,-0.5,0.08); wreath.add(wbow);
+    wreath.position.set(1.55,3.95,-5.3); scene.add(wreath); }
+  { const swagCols=[0xffd66e,0xff6b9d,0x7dd3fc,0xffffff,0xff8c42];
+    const spts=[]; for(let i=0;i<=40;i++){ const t=i/40; spts.push(new THREE.Vector3(-5.6+t*11.2, 5.72-Math.abs(Math.sin(t*Math.PI*3))*0.55, -5.3)); }
+    const swag=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(spts),120,0.05,7),new THREE.MeshStandardMaterial({color:0x14632f,roughness:0.9})); scene.add(swag);
+    const swagBulbs=new THREE.InstancedMesh(new THREE.SphereGeometry(0.05,8,8),new THREE.MeshStandardMaterial({roughness:0.3,emissiveIntensity:2.0}),36); const sd=new THREE.Object3D();
+    for(let i=0;i<36;i++){ const t=i/36; sd.position.set(-5.6+t*11.2, 5.72-Math.abs(Math.sin(t*Math.PI*3))*0.55-0.09, -5.25); sd.updateMatrix(); swagBulbs.setMatrixAt(i,sd.matrix); swagBulbs.setColorAt(i,new THREE.Color(swagCols[i%swagCols.length])); }
+    swagBulbs.instanceColor.needsUpdate=true; scene.add(swagBulbs); }
   // Warm sparkles on the rug
   const sparkGeo=new THREE.BufferGeometry(); const sparkPos=[]; for(let i=0;i<120;i++){ const a=Math.random()*Math.PI*2, r=Math.random()*3.1; sparkPos.push(Math.cos(a)*r,0.05,Math.sin(a)*r); } sparkGeo.setAttribute('position',new THREE.Float32BufferAttribute(sparkPos,3)); const sparkles=new THREE.Points(sparkGeo,new THREE.PointsMaterial({color:0xffe6a8,size:0.05,transparent:true,opacity:0.8})); scene.add(sparkles);
   // ---- Wishful-quality tree: 5 displaced, flat-shaded foliage tiers ----
@@ -677,7 +705,7 @@ async function init3D(){
   const snowGeo=new THREE.BufferGeometry(); const snowPos=[]; for(let i=0;i<240;i++){snowPos.push(Math.random()*2.2-4.15,Math.random()*2.3+2.5,-5.32);} snowGeo.setAttribute('position',new THREE.Float32BufferAttribute(snowPos,3)); const snow=new THREE.Points(snowGeo,new THREE.PointsMaterial({color:0xffffff,size:0.115,transparent:true,opacity:0.95})); scene.add(snow);
   // Fireplace with flickering fire, stockings and mantel candles
   const fireG=new THREE.Group();
-  const fbrick=new THREE.Mesh(new THREE.BoxGeometry(1.7,1.5,0.6),new THREE.MeshStandardMaterial({color:0x9a4a3a,roughness:0.95})); fbrick.position.y=0.75; fbrick.castShadow=true; fireG.add(fbrick);
+  const fbrick=new THREE.Mesh(new THREE.BoxGeometry(1.7,1.5,0.6),new THREE.MeshStandardMaterial({map:loadTex('brick_diff.jpg',1.6,1.4,true),normalMap:loadTex('brick_nor.jpg',1.6,1.4,false),roughness:0.95})); fbrick.position.y=0.75; fbrick.castShadow=true; fireG.add(fbrick);
   const mantel=new THREE.Mesh(new THREE.BoxGeometry(1.95,0.12,0.78),new THREE.MeshStandardMaterial({color:0x6e4423,roughness:0.85})); mantel.position.y=1.56; fireG.add(mantel);
   const fbox=new THREE.Mesh(new THREE.BoxGeometry(0.95,0.82,0.1),new THREE.MeshBasicMaterial({color:0x140a08})); fbox.position.set(0,0.55,0.29); fireG.add(fbox);
   const logMat=new THREE.MeshStandardMaterial({color:0x5d3a17,roughness:1});
