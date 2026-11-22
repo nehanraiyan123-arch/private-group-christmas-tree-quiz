@@ -219,7 +219,7 @@ body.q-low #snow2d{display:none}
             <path d="M75 37 V205 M21 121 H129" stroke="#5d3a17" stroke-width="5"/>
             <rect x="8" y="208" width="134" height="9" rx="4" fill="#7a4c20"/>
             <path d="M21 205 L34 190 L48 205 L62 190 L76 205 L90 190 L104 205 L118 190 L129 205 L129 212 L21 212 Z" fill="#fff" opacity=".9"/>
-            <g fill="#fff" opacity=".38"><path d="M21 37 h26 q-14 4 -18 14 q-6 -6 -8 -14z"/><path d="M129 37 h-24 q12 4 16 13 q6 -5 8 -13z"/><path d="M21 205 h22 q-12 -3 -15 -11 q-5 4 -7 11z"/><path d="M129 205 h-22 q12 -3 15 -11 q5 4 7 11z"/></g>
+            <g fill="#fff" opacity=".68"><path d="M21 37 h26 q-14 4 -18 14 q-6 -6 -8 -14z"/><path d="M129 37 h-24 q12 4 16 13 q6 -5 8 -13z"/><path d="M21 205 h22 q-12 -3 -15 -11 q-5 4 -7 11z"/><path d="M129 205 h-22 q12 -3 15 -11 q5 4 7 11z"/></g>
           </g>
           <!-- Wall wreath (v8) -->
           <g>
@@ -639,7 +639,7 @@ async function init3D(){
   const texLoader=new THREE.TextureLoader();
   function loadTex(f,rx,ry,srgb){ const t=texLoader.load('assets/'+f); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(rx,ry); if(srgb)t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
   // ---- Cozy room (WishfulTree style): wood floor, rug, walls, window ----
-  const floor=new THREE.Mesh(new THREE.CircleGeometry(10,48),new THREE.MeshStandardMaterial({map:loadTex('floor_diff.jpg',4,4,true),normalMap:loadTex('floor_nor.jpg',4,4,false),roughness:0.72})); floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(10,48),new THREE.MeshStandardMaterial({map:loadTex('floor_diff.jpg',5,5,true),normalMap:loadTex('floor_nor.jpg',5,5,false),color:0xcbb59a,roughness:0.72})); floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
   const rug=new THREE.Mesh(new THREE.CircleGeometry(3.45,44),new THREE.MeshStandardMaterial({color:0xa83240,roughness:0.95})); rug.rotation.x=-Math.PI/2; rug.position.y=0.021; rug.receiveShadow=true; scene.add(rug);
   const rug2=new THREE.Mesh(new THREE.CircleGeometry(2.65,44),new THREE.MeshStandardMaterial({color:0xbf4553,roughness:0.95})); rug2.rotation.x=-Math.PI/2; rug2.position.y=0.026; scene.add(rug2);
   const rugRing=new THREE.Mesh(new THREE.RingGeometry(3.28,3.44,48),new THREE.MeshStandardMaterial({color:0xf6c453,metalness:0.65,roughness:0.35})); rugRing.rotation.x=-Math.PI/2; rugRing.position.y=0.028; scene.add(rugRing);
@@ -661,7 +661,7 @@ async function init3D(){
     const berryMat=new THREE.MeshStandardMaterial({color:0xe63946,roughness:0.3,emissive:0x660000,emissiveIntensity:0.4});
     for(let i=0;i<9;i++){ const a=i/9*Math.PI*2; const b=new THREE.Mesh(new THREE.SphereGeometry(0.045,8,8),berryMat); b.position.set(Math.cos(a)*0.42,Math.sin(a)*0.42,0.11); wreath.add(b); }
     const wbow=new THREE.Mesh(new THREE.TorusGeometry(0.09,0.035,8,16),new THREE.MeshStandardMaterial({color:0xd7263d,roughness:0.5})); wbow.position.set(0,-0.5,0.08); wreath.add(wbow);
-    wreath.position.set(1.55,3.95,-5.3); scene.add(wreath); }
+    wreath.position.set(5.15,4.2,-5.3); scene.add(wreath); }
   { const swagCols=[0xffd66e,0xff6b9d,0x7dd3fc,0xffffff,0xff8c42];
     const spts=[]; for(let i=0;i<=40;i++){ const t=i/40; spts.push(new THREE.Vector3(-5.6+t*11.2, 5.72-Math.abs(Math.sin(t*Math.PI*3))*0.55, -5.3)); }
     const swag=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(spts),120,0.05,7),new THREE.MeshStandardMaterial({color:0x14632f,roughness:0.9})); scene.add(swag);
