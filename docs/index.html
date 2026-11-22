@@ -266,8 +266,8 @@ body.q-low #snow2d{display:none}
           <g><path d="M6 24 q12 92 4 196 l20 0 q-8 -100 -2 -196 z" fill="#c0392b"/><path d="M136 24 q-12 92 -4 196 l-20 0 q8 -100 2 -196 z" fill="#c0392b"/><circle cx="17" cy="128" r="3.4" fill="#f6c453"/><circle cx="125" cy="128" r="3.4" fill="#f6c453"/></g>
           <g><circle cx="320" cy="92" r="17" fill="#fdf6e3" stroke="#6e4423" stroke-width="3.4"/><path d="M320 92 v-10 M320 92 l8 5" stroke="#2b2b2b" stroke-width="2.4" stroke-linecap="round"/><circle cx="320" cy="92" r="2" fill="#2b2b2b"/></g>
           <g><rect x="293" y="144" width="54" height="42" rx="2" fill="#6e4423"/><rect x="297" y="148" width="46" height="34" fill="#16305e"/><circle cx="332" cy="158" r="5.4" fill="#fdf3c4"/><path d="M297 182 l10 -14 l8 10 l9 -16 l10 20 z" fill="#0a2e1f"/><path d="M297 182 h46 v0 h-46z" fill="#fff"/><rect x="297" y="178" width="46" height="4" fill="#f4f9ff"/></g>
-          <g stroke-width="2" opacity=".95"><path d="M96 0 v50 M258 0 v56" stroke="#c9d6e8" stroke-width="1.2"/><g stroke="#ffffff"><path d="M96 64 l-10 -10 M96 64 l10 -10 M96 64 l-10 10 M96 64 l10 10 M86 64 h20 M96 54 v20"/></g><g stroke="#9db8dd"><path d="M258 72 l-10 -10 M258 72 l10 -10 M258 72 l-10 10 M258 72 l10 10 M248 72 h20 M258 62 v20"/></g></g>
-          <g><ellipse cx="88" cy="430" rx="17" ry="7.5" fill="#3a3f4a"/><circle cx="72" cy="426" r="7" fill="#3a3f4a"/><path d="M67 421 l-2.6 -5 l5 2.4 z M77 420 l1 -5.4 l3.4 4.4 z" fill="#3a3f4a"/><path d="M104 430 q10 -2 8 -10" stroke="#3a3f4a" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M68 426 q2.4 1.8 4.8 0" stroke="#f4f9ff" stroke-width="1.3" fill="none"/></g>
+          <g stroke-width="2" opacity=".95"><path d="M64 37 v44 M258 0 v56" stroke="#c9d6e8" stroke-width="1.2"/><g stroke="#7fb0e8"><path d="M64 94 l-10 -10 M64 94 l10 -10 M64 94 l-10 10 M64 94 l10 10 M54 94 h20 M64 84 v20"/></g><g stroke="#9db8dd"><path d="M258 72 l-10 -10 M258 72 l10 -10 M258 72 l-10 10 M258 72 l10 10 M248 72 h20 M258 62 v20"/></g></g>
+          <g><ellipse cx="82" cy="241" rx="16" ry="6.5" fill="#3a3f4a"/><circle cx="67" cy="238" r="6.4" fill="#3a3f4a"/><path d="M62.6 233.4 l-2.4 -4.6 l4.6 2.2 z M71.6 232.6 l0.9 -5 l3.2 4.1 z" fill="#3a3f4a"/><path d="M97 241 q9 -2 7.4 -9.4" stroke="#3a3f4a" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M63.4 238.4 q2.2 1.6 4.4 0" stroke="#f4f9ff" stroke-width="1.2" fill="none"/></g>
           <!-- TREE (center x=212) -->
           <rect x="198" y="392" width="29" height="50" rx="5" fill="url(#trunkG)"/>
           <path d="M202 402 h21 M202 416 h21 M202 430 h21" stroke="#54330f" stroke-width="2" opacity=".5"/>
@@ -633,13 +633,13 @@ async function init3D(){
   renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.02; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x1c1016,0.012); scene.background=new THREE.Color(0x20131c);
   const pmrem=new THREE.PMREMGenerator(renderer); scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
-  const camera=new THREE.PerspectiveCamera(46,1,0.1,120); camera.position.set(0,5.2,14.2); const introFrom=camera.position.clone(), introTo=new THREE.Vector3(0,3.6,10.6); let introT=0, introDone=false;
-  const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.enablePan=false; controls.minDistance=5.5; controls.maxDistance=11.5; controls.maxPolarAngle=1.53; controls.target.set(0,2.9,0); controls.autoRotate=true; controls.autoRotateSpeed=0.55;
+  const camera=new THREE.PerspectiveCamera(46,1,0.1,120); camera.position.set(0,5.2,14.2); const introFrom=camera.position.clone(), introTo=new THREE.Vector3(0,3.7,11.2); let introT=0, introDone=false;
+  const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.enablePan=false; controls.minDistance=5.5; controls.maxDistance=11.5; controls.maxPolarAngle=1.53; controls.target.set(0,3.0,0); controls.autoRotate=true; controls.autoRotateSpeed=0.55;
   let resumeAt=0; controls.addEventListener('start',()=>{controls.autoRotate=false; introDone=true;}); controls.addEventListener('end',()=>{resumeAt=Date.now()+5000;});
   scene.add(new THREE.AmbientLight(0x93a7ff,0.55));
   const moonLight=new THREE.DirectionalLight(0xdceaff,1.6); moonLight.position.set(-6,10,5); moonLight.castShadow=true; moonLight.shadow.mapSize.set(1024,1024); moonLight.shadow.camera.left=-7; moonLight.shadow.camera.right=7; moonLight.shadow.camera.top=9; moonLight.shadow.camera.bottom=-3; scene.add(moonLight);
   const warm=new THREE.PointLight(0xffc766,26,18,1.6); warm.position.set(0,3.2,2.4); scene.add(warm);
-  const starLight=new THREE.PointLight(0xffd700,13,12,1.5); starLight.position.set(0,5.9,0.6); scene.add(starLight);
+  const starLight=new THREE.PointLight(0xffd700,7,9,1.5); starLight.position.set(0,5.0,1.8); scene.add(starLight);
   // Moon + glow
   function glowTexture(inner,outer){ const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d'); const g=x.createRadialGradient(64,64,4,64,64,64); g.addColorStop(0,inner); g.addColorStop(0.4,outer); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); }
   const moon=new THREE.Mesh(new THREE.SphereGeometry(0.55,20,20),new THREE.MeshBasicMaterial({color:0xfff6cf})); moon.position.set(-3.72,4.32,-5.33); moon.scale.setScalar(0.5); scene.add(moon);
@@ -711,8 +711,10 @@ async function init3D(){
     const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:color,roughness:0.92,flatShading:true})); m.position.y=y; m.castShadow=true; scene.add(m); return m;
   }
   foliageTier(2.9,2.25,1.92,0x0b5230); foliageTier(2.55,2.1,2.72,0x0d5c33); foliageTier(2.2,2.0,3.5,0x0f6a3a); foliageTier(1.85,1.9,4.26,0x127a43); foliageTier(1.5,1.75,4.98,0x158a4c); foliageTier(1.12,1.6,5.62,0x18a058); foliageTier(0.74,1.4,6.16,0x1cb56a);
-  function snowCap(r,h,y){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,42),new THREE.MeshStandardMaterial({color:0xdfeaf6,roughness:0.9,flatShading:true,transparent:true,opacity:0.92})); m.position.y=y; scene.add(m); }
+  function snowCap(r,h,y){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,42),new THREE.MeshStandardMaterial({color:0xc9d9ee,roughness:1,flatShading:true,transparent:true,opacity:0.85})); m.position.y=y; scene.add(m); }
   snowCap(1.1,0.8,3.55); snowCap(0.9,0.72,4.3); snowCap(0.7,0.64,5.0); snowCap(0.52,0.56,5.66); snowCap(0.36,0.48,6.24);
+  // Branch skirts: drooping bough rings at each tier rim for the layered fir silhouette
+  [[2.9,0.8],[2.55,1.67],[2.2,2.5],[1.85,3.31],[1.5,4.11],[1.12,4.82],[0.74,5.46]].forEach((sk,i)=>{ const m=new THREE.Mesh(new THREE.ConeGeometry(sk[0]*1.06,0.42,40),new THREE.MeshStandardMaterial({color:i%2?0x0c4f2c:0x0a4527,roughness:1,flatShading:true})); m.position.y=sk[1]+0.1; m.castShadow=true; scene.add(m); });
   // ---- Lush branch tufts: hundreds of little cones break the smooth cone silhouette (v9 detail) ----
   const tierData=[[2.9,2.25,1.92],[2.55,2.1,2.72],[2.2,2.0,3.5],[1.85,1.9,4.26],[1.5,1.75,4.98],[1.12,1.6,5.62],[0.74,1.4,6.16]];
   const tuftCount=900;
@@ -723,10 +725,10 @@ async function init3D(){
       td.position.set(px,py,pz);
       const dir=new THREE.Vector3(Math.cos(ang),-0.5,Math.sin(ang)).normalize(); td.quaternion.setFromUnitVectors(up,dir);
       const sc=0.8+Math.random()*1.1; td.scale.set(sc,sc*(0.85+Math.random()*0.5),sc); td.updateMatrix(); tufts.setMatrixAt(i,td.matrix);
-      const c=new THREE.Color(greens[i%greens.length]); c.offsetHSL(0,0,(Math.random()-0.5)*0.05); tufts.setColorAt(i,c); }
+      const c=new THREE.Color(greens[i%greens.length]); c.offsetHSL(0,0,(Math.random()*0.09-0.01)); tufts.setColorAt(i,c); }
     tufts.instanceColor.needsUpdate=true; tufts.castShadow=true; scene.add(tufts); }
   // Inner warm micro-lights woven deep in the foliage so the tree glows from inside
-  { const mlCount=150; const mls=new THREE.InstancedMesh(new THREE.SphereGeometry(0.034,8,8),new THREE.MeshStandardMaterial({roughness:0.4,emissive:0xffc37a,emissiveIntensity:1.15}),mlCount); const md=new THREE.Object3D(); const warm=[0xffd66e,0xffb84d,0xfff1c4];
+  { const mlCount=150; const mls=new THREE.InstancedMesh(new THREE.SphereGeometry(0.034,8,8),new THREE.MeshStandardMaterial({roughness:0.4,emissive:0xffc37a,emissiveIntensity:1.7}),mlCount); const md=new THREE.Object3D(); const warm=[0xffd66e,0xffb84d,0xfff1c4];
     for(let i=0;i<mlCount;i++){ const t=i/mlCount; const y=1.5+t*4.6; const rad=(2.6-(t*1.92))*0.9; const ang=t*Math.PI*16+i*0.61; md.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); md.updateMatrix(); mls.setMatrixAt(i,md.matrix); mls.setColorAt(i,new THREE.Color(warm[i%warm.length])); }
     mls.instanceColor.needsUpdate=true; scene.add(mls); }
   const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.42,1.25,14),new THREE.MeshStandardMaterial({color:0x74522a,roughness:1})); trunk.position.y=0.6; trunk.castShadow=true; scene.add(trunk);
@@ -737,16 +739,16 @@ async function init3D(){
     const ribbon=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),260,0.021,6),new THREE.MeshStandardMaterial({color:0xd7263d,metalness:0.35,roughness:0.38,emissive:0x550011,emissiveIntensity:0.5})); scene.add(ribbon); }
   // Fairy lights: instanced glossy bulbs hugging the tiers
   const lightCols=[new THREE.Color(0xffd66e),new THREE.Color(0xff6b9d),new THREE.Color(0x7dd3fc),new THREE.Color(0xffffff),new THREE.Color(0xff8c42)];
-  const bulbGeo=new THREE.SphereGeometry(0.062,10,10); const bulbMat=new THREE.MeshStandardMaterial({roughness:0.35,metalness:0.1,emissiveIntensity:2.2});
+  const bulbGeo=new THREE.SphereGeometry(0.062,10,10); const bulbMat=new THREE.MeshBasicMaterial({});
   const bulbCount=260; const bulbs=new THREE.InstancedMesh(bulbGeo,bulbMat,bulbCount); const dummy=new THREE.Object3D();
   for(let i=0;i<bulbCount;i++){ const t=i/bulbCount; const y=1.45+t*4.85; const rad=2.6-(t*1.92); const ang=t*Math.PI*14+i*0.35; dummy.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); dummy.updateMatrix(); bulbs.setMatrixAt(i,dummy.matrix); bulbs.setColorAt(i,lightCols[i%lightCols.length]); }
-  { const pa=bulbMat; } bulbs.instanceColor.needsUpdate=true; scene.add(bulbs);
+  { const arr=bulbs.instanceColor.array; for(let k=0;k<arr.length;k++) arr[k]*=1.6; } bulbs.instanceColor.needsUpdate=true; scene.add(bulbs);
   { const icGeo=new THREE.ConeGeometry(0.021,0.17,6); const icMat=new THREE.MeshStandardMaterial({color:0xeaf7ff,roughness:0.15,metalness:0.1,transparent:true,opacity:0.85,emissive:0x9fd8ff,emissiveIntensity:0.35}); const icCount=80; const ics=new THREE.InstancedMesh(icGeo,icMat,icCount); const d2=new THREE.Object3D();
     for(let i=0;i<icCount;i++){ const t=i/icCount; const y=1.6+t*4.6; const rad=2.66-(t*1.95); const ang=t*Math.PI*11+i*0.5; d2.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad); d2.rotation.x=Math.PI; d2.updateMatrix(); ics.setMatrixAt(i,d2.matrix); } scene.add(ics); }
   { const sh=new THREE.Mesh(new THREE.CircleGeometry(3.05,40),new THREE.MeshBasicMaterial({map:glowTexture('rgba(0,0,0,0.4)','rgba(0,0,0,0.16)'),transparent:true,depthWrite:false})); sh.rotation.x=-Math.PI/2; sh.position.y=0.033; scene.add(sh); }
   // Star with halo
   const starShape=new THREE.Shape(); for(let i=0;i<10;i++){const r=i%2?0.23:0.52; const a=i/10*Math.PI*2-Math.PI/2; const x=Math.cos(a)*r,y=Math.sin(a)*r; i?starShape.lineTo(x,y):starShape.moveTo(x,y);} starShape.closePath();
-  const star=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.16,bevelEnabled:true,bevelSize:0.045,bevelThickness:0.045}),new THREE.MeshPhysicalMaterial({color:0xffd700,metalness:0.85,roughness:0.18,emissive:0xff9d00,emissiveIntensity:1.15,clearcoat:0.7})); star.position.set(0,6.62,-0.08); scene.add(star);
+  const star=new THREE.Mesh(new THREE.ExtrudeGeometry(starShape,{depth:0.16,bevelEnabled:true,bevelSize:0.045,bevelThickness:0.045}),new THREE.MeshPhysicalMaterial({color:0xffd700,metalness:0.85,roughness:0.18,emissive:0xff9d00,emissiveIntensity:1.15,clearcoat:0.7})); star.position.set(0,6.66,-0.08); star.scale.setScalar(1.35); scene.add(star);
   const starGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,215,0,0.95)','rgba(255,180,0,0.35)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); starGlow.scale.setScalar(2.4); starGlow.position.set(0,6.62,0); scene.add(starGlow);
   // Sky stars + falling snow
   const skyGeo=new THREE.BufferGeometry(); const skyPos=[]; for(let i=0;i<130;i++){skyPos.push(Math.random()*2.2-4.15,Math.random()*2.3+2.5,-5.34);} skyGeo.setAttribute('position',new THREE.Float32BufferAttribute(skyPos,3)); scene.add(new THREE.Points(skyGeo,new THREE.PointsMaterial({color:0xffffff,size:0.05,transparent:true,opacity:0.9})));
@@ -797,7 +799,7 @@ async function init3D(){
   canvas.addEventListener('pointerup',e=>{ if(Math.hypot(e.clientX-canvas.__sx,e.clientY-canvas.__sy)>8) return; const r=canvas.getBoundingClientRect(); ptr.x=((e.clientX-r.left)/r.width)*2-1; ptr.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(ptr,camera); const hits=ray.intersectObjects(ornMeshes,true); if(hits.length){ let o=hits[0].object; while(o&&!o.userData.no)o=o.parent; if(o) focusOrnament(o.userData.no); } });
   // ---- OHZI-style selective bloom (v9): threshold keeps only lights/star/fire glowing, High quality only ----
   let composer=null, bloomPass=null;
-  try{ composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera)); bloomPass=new UnrealBloomPass(new THREE.Vector2(canvas.clientWidth||innerWidth,520),0.3,0.4,1.0); composer.addPass(bloomPass); composer.addPass(new OutputPass()); }catch(e){ composer=null; }
+  try{ composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera)); bloomPass=new UnrealBloomPass(new THREE.Vector2(canvas.clientWidth||innerWidth,520),0.38,0.45,0.75); composer.addPass(bloomPass); composer.addPass(new OutputPass()); }catch(e){ composer=null; }
   // ---- Floating dust motes drifting in the warm light (v9) ----
   const dustGeo=new THREE.BufferGeometry(); const dustBase=[]; const dustPos=[]; const dustPhase=[];
   for(let i=0;i<170;i++){ const bx=(Math.random()-0.5)*9, by=0.4+Math.random()*5.4, bz=(Math.random()-0.5)*6-0.8; dustBase.push(bx,by,bz); dustPos.push(bx,by,bz); dustPhase.push(Math.random()*6.28); }
@@ -816,7 +818,7 @@ async function init3D(){
   (function animate(){ requestAnimationFrame(animate); if(state.mode!=='3d'||document.hidden) return; const t=clock.getElapsedTime();
     if(!introDone){ introT+=0.006; const e=1-Math.pow(1-Math.min(introT,1),3); camera.position.lerpVectors(introFrom,introTo,e); if(introT>=1) introDone=true; }
     if(!controls.autoRotate && resumeAt && Date.now()>resumeAt){ controls.autoRotate=true; resumeAt=0; }
-    star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } const fl3=scene.getObjectByName('fireLight'); if(fl3){ fl3.intensity=8.5+Math.sin(t*11)*1.7+Math.sin(t*23+1.3)*1.2; } const fp3=scene.getObjectByName('flameP'); if(fp3){ fp3.scale.set(1,0.94+Math.sin(t*9.2)*0.09,1); } starGlow.material.opacity=0.6+Math.sin(t*2.2)*0.12; bulbMat.emissiveIntensity=1.7+Math.sin(t*2.6)*0.7; sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
+    star.rotation.y=t*0.7; const aur3=scene.getObjectByName('aurora3d'); if(aur3){ aur3.material.opacity=0.4+Math.sin(t*0.55)*0.15; aur3.rotation.z=Math.sin(t*0.2)*0.045; } const fl3=scene.getObjectByName('fireLight'); if(fl3){ fl3.intensity=8.5+Math.sin(t*11)*1.7+Math.sin(t*23+1.3)*1.2; } const fp3=scene.getObjectByName('flameP'); if(fp3){ fp3.scale.set(1,0.94+Math.sin(t*9.2)*0.09,1); } starGlow.material.opacity=0.6+Math.sin(t*2.2)*0.12; bulbMat.color.setScalar(0.88+Math.sin(t*2.6)*0.14); sparkles.material.opacity=0.55+Math.sin(t*3.1)*0.35;
     const pos=snow.geometry.attributes.position; for(let i=0;i<pos.count;i++){ let y=pos.getY(i)-0.012; if(y<2.45)y=4.85; pos.setY(i,y); pos.setX(i,pos.getX(i)+Math.sin(t*0.9+i)*0.0022);} pos.needsUpdate=true;
     ornGroup.children.forEach((m,i)=>{ m.rotation.y=Math.sin(t*0.7+i*1.7)*0.35; m.position.y+=Math.sin(t*1.4+i)*0.0006; });
     if(dust.visible){ const dp=dust.geometry.attributes.position; for(let i=0;i<dp.count;i++){ dp.setX(i,dustBase[i*3]+Math.sin(t*0.24+dustPhase[i])*0.35); dp.setY(i,dustBase[i*3+1]+Math.sin(t*0.16+dustPhase[i]*1.7)*0.28); } dp.needsUpdate=true; }
